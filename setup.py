@@ -10,7 +10,7 @@ setup(
     author_email = "spam@jeenaparadies.net",
     url = "http://jabs.nu/feedthemonkey",
     license = "BSD license",
-    scripts = ["feedthemonkey.py"],
+    scripts = ["feedthemonkey"],
     data_files=[
         ('/usr/share/applications', ["feedthemonkey.desktop"]),
         ('/usr/share/pixmaps', ["feedthemonkey.xpm"])
