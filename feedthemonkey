@@ -101,6 +101,7 @@ class MainWindow(QtGui.QMainWindow):
 		dialog.exec_()
 
 	def logOut(self):
+		self.content.evaluateJavaScript("setArticle()")
 		self.tinyTinyRSS.logOut()
 		self.tinyTinyRSS = None
 		self.put("session_id", None)

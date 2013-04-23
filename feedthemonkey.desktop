@@ -1,9 +1,9 @@
 [Desktop Entry]
 Version=0.1.0
 Comment=A desktop client for the TinyTinyRSS feed reader.
-Exec=/usr/bin/feedthemonkey
+Exec=feedthemonkey
 GenericName=Feed Reader
-Icon=feedthemonkey.py
+Icon=feedthemonkey
 Name=Feed the Monkey
 NoDisplay=false
 StartupNotify=true
