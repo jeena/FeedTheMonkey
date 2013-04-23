@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=0.1.0
+Comment=A desktop client for the TinyTinyRSS feed reader.
+Exec=/usr/bin/feedthemonkey
+GenericName=Feed Reader
+Icon=feedthemonkey
+Name=Feed the Monkey
+NoDisplay=false
+StartupNotify=true
+Terminal=false
+Type=Application
+Categories=Network;Qt

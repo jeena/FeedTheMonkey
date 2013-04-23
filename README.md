@@ -1,1 +1,1 @@
-ttrssl is a desktop client for TinyTinyRSS
+Feed the Monkey is a desktop client for TinyTinyRSS.
