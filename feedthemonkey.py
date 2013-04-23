@@ -9,27 +9,55 @@ settings = QtCore.QSettings("jabs.nu", "ttrssl")
 class MainWindow(QtGui.QMainWindow):
 	def __init__(self):
 		QtGui.QMainWindow.__init__(self)
+		self.setWindowIcon(QtGui.QIcon("feedmonkey"))
 		self.addAction(QtGui.QAction("Full Screen", self, checkable=True, toggled=lambda v: self.showFullScreen() if v else self.showNormal(), shortcut="F11"))
 		self.history = self.get("history", [])
 		self.restoreGeometry(QtCore.QByteArray.fromRawData(settings.value("geometry").toByteArray()))
 		self.restoreState(QtCore.QByteArray.fromRawData(settings.value("state").toByteArray()))
 
+		self.initUI()
+
 		session_id = self.get("session_id")
 		server_url = self.get("server_url")
-		if not (session_id and server_url):
-			session_id = sys.argv[2]
-			server_url = sys.argv[1]
-			self.put("session_id", session_id)
-			self.put("session_id", server_url)
 
-		self.tinyTinyRSS = TinyTinyRSS(self, server_url, session_id)
-	
+		if not (session_id and server_url):
+			self.authenticate()
+		else:
+			self.initApp()
+
+	def initUI(self):
 		self.content = Content(self)
 		self.setCentralWidget(self.content)
 
+		menubar = self.menuBar()
+
+		reloadAction = QtGui.QAction("&Reload", self)
+		reloadAction.setStatusTip("Load new data")
+		reloadAction.setShortcut("r")
+		reloadAction.triggered.connect(self.content.reload)
+
+		logOutAction = QtGui.QAction("&Log Out", self)
+		logOutAction.setStatusTip("Log out from this entity")
+		logOutAction.triggered.connect(self.logOut)
+
+		exitAction = QtGui.QAction("&Exit", self)
+		exitAction.setShortcut("Ctrl+Q")
+		exitAction.setStatusTip("Exit Feed the Monkey")
+		exitAction.triggered.connect(self.close)
+
+		fileMenu = menubar.addMenu("&File")
+		fileMenu.addAction(reloadAction)
+		fileMenu.addAction(logOutAction)
+		fileMenu.addSeparator()
+		fileMenu.addAction(exitAction)
+
+	def initApp(self):
+		session_id = self.get("session_id")
+		server_url = self.get("server_url")
+		self.tinyTinyRSS = TinyTinyRSS(self, server_url, session_id)
+
 		self.content.evaluateJavaScript("setArticle()")
 		self.content.reload()
-
 
 	def closeEvent(self, ev):
 		settings.setValue("geometry", self.saveGeometry())
@@ -48,6 +76,36 @@ class MainWindow(QtGui.QMainWindow):
 
 	def setWindowTitle(self, t):
 		super(QtGui.QMainWindow, self).setWindowTitle("Feed the Monkey" + t)
+
+	def authenticate(self):
+		
+		dialog = Login()
+
+		def callback():
+
+			server_url = str(dialog.textServerUrl.text())
+			user = str(dialog.textName.text())
+			password = str(dialog.textPass.text())
+
+			session_id = TinyTinyRSS.login(server_url, user, password)
+			if session_id:
+				self.put("session_id", session_id)
+				self.put("server_url", server_url)
+				self.initApp()
+			else:
+				self.authenticate()
+
+
+		dialog.accepted.connect(callback)
+
+		dialog.exec_()
+
+	def logOut(self):
+		self.tinyTinyRSS.logOut()
+		self.tinyTinyRSS = None
+		self.put("session_id", None)
+		self.put("server_url", None)
+		self.authenticate()
 
 
 
@@ -223,8 +281,11 @@ class Content(QtGui.QWidget):
 class TinyTinyRSS:
 	def __init__(self, app, server_url, session_id):
 		self.app = app
-		self.server_url = server_url
-		self.session_id = session_id
+		if server_url and session_id:
+			self.server_url = server_url
+			self.session_id = session_id
+		else:
+			self.app.authenticate()
 
 	def doOperation(self, operation, options=None):
 		url = self.server_url + "/api/"
@@ -252,6 +313,64 @@ class TinyTinyRSS:
 		l = lambda: self.doOperation("updateArticle", {'article_ids':article_id, 'mode': 0, 'field': 2})
 		t = Thread(target=l)
 		t.start()
+
+	def logOut(self):
+		self.doOperation("logout")
+
+	@classmethod
+	def login(self, server_url, user, password):
+		url = server_url + "/api/"
+		options = {"op": "login", "user": user, "password": password}
+		json_string = json.dumps(options)
+		req = urllib2.Request(url)
+		fd = urllib2.urlopen(req, json_string)
+		body = ""
+		while 1:
+			data = fd.read(1024)
+			if not len(data):
+				break
+			body += data
+
+		body = json.loads(body)["content"]
+
+		if body.has_key("error"):
+			msgBox = QtGui.QMessageBox()
+			msgBox.setText(body["error"])
+			msgBox.exec_()
+			return None
+
+		return body["session_id"]
+
+
+class Login(QtGui.QDialog):
+	def __init__(self):
+		QtGui.QDialog.__init__(self)
+		self.setWindowIcon(QtGui.QIcon("feedmonkey.png"))
+		self.setWindowTitle("Feed the Monkey - Login")
+
+		self.label = QtGui.QLabel(self)
+		self.label.setText("Please specify a server url, a username and a password.")
+
+		self.textServerUrl = QtGui.QLineEdit(self)
+		self.textServerUrl.setPlaceholderText("http://example.com/ttrss/")
+		self.textServerUrl.setText("http://")
+
+		self.textName = QtGui.QLineEdit(self)
+		self.textName.setPlaceholderText("username")
+
+		self.textPass = QtGui.QLineEdit(self)
+		self.textPass.setEchoMode(QtGui.QLineEdit.Password);
+		self.textPass.setPlaceholderText("password")
+		
+		self.buttons = QtGui.QDialogButtonBox(QtGui.QDialogButtonBox.Ok)
+		self.buttons.accepted.connect(self.accept)
+
+		layout = QtGui.QVBoxLayout(self)
+		layout.addWidget(self.label)
+		layout.addWidget(self.textServerUrl)
+		layout.addWidget(self.textName)
+		layout.addWidget(self.textPass)
+		layout.addWidget(self.buttons)
 
 
 if __name__ == "__main__":

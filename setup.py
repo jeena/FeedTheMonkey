@@ -11,7 +11,7 @@ setup(
     url = "http://jabs.nu/feedthemonkey",
     license = "BSD license",
     packages = ['feedthemonkey'],
-    scripts = ["feedthemonkey"],
+    scripts = ["feedthemonkey.py"],
     data_files=[
         ('/usr/share/applications', ["feedthemonkey.desktop"]),
         ('/usr/share/pixmaps', ["feedthemonkey.xpm"])
