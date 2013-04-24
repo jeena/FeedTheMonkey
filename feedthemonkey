@@ -4,7 +4,7 @@ import sys, os, json, tempfile, urllib2, urllib, json
 from PyQt4 import QtGui, QtCore, QtWebKit, QtNetwork
 from threading import Thread
 
-settings = QtCore.QSettings("jabs.nu", "ttrssl")
+settings = QtCore.QSettings("jabs.nu", "feedthemonkey")
 
 class MainWindow(QtGui.QMainWindow):
 	def __init__(self):
@@ -29,27 +29,35 @@ class MainWindow(QtGui.QMainWindow):
 		self.content = Content(self)
 		self.setCentralWidget(self.content)
 
-		menubar = self.menuBar()
+		def mkAction(name, connect, shortcut=None):
+			action = QtGui.QAction(name, self)
+			action.triggered.connect(connect)
+			if shortcut:
+				action.setShortcut(shortcut)
+			return action
 
-		reloadAction = QtGui.QAction("&Reload", self)
-		reloadAction.setStatusTip("Load new data")
-		reloadAction.setShortcut("r")
-		reloadAction.triggered.connect(self.content.reload)
+		mb = self.menuBar()
 
-		logOutAction = QtGui.QAction("&Log Out", self)
-		logOutAction.setStatusTip("Log out from this entity")
-		logOutAction.triggered.connect(self.logOut)
-
-		exitAction = QtGui.QAction("&Exit", self)
-		exitAction.setShortcut("Ctrl+Q")
-		exitAction.setStatusTip("Exit Feed the Monkey")
-		exitAction.triggered.connect(self.close)
-
-		fileMenu = menubar.addMenu("&File")
-		fileMenu.addAction(reloadAction)
-		fileMenu.addAction(logOutAction)
+		fileMenu = mb.addMenu("&File")
+		fileMenu.addAction(mkAction("&Close", self.close, "Ctrl+W"))
+		fileMenu.addAction(mkAction("&Log Out", self.content.reload))
 		fileMenu.addSeparator()
-		fileMenu.addAction(exitAction)
+		fileMenu.addAction(mkAction("&Exit", self.close, "Ctrl+Q"))
+
+		actionMenu = mb.addMenu("&Action")
+		actionMenu.addAction(mkAction("&Reload", self.content.reload, "R"))
+		actionMenu.addAction(mkAction("&Next", self.content.showNext, "J"))
+		actionMenu.addAction(mkAction("&Previous", self.content.showPrevious, "K"))
+		actionMenu.addAction(mkAction("&Open in Browser", self.content.openCurrent, "Return"))
+
+		viewMenu = mb.addMenu("&View")
+		viewMenu.addAction(mkAction("Zoom &In", lambda: self.content.wb.setZoomFactor(self.content.wb.zoomFactor() + 0.2), "Ctrl++"))
+		viewMenu.addAction(mkAction("Zoom &Out", lambda: self.content.wb.setZoomFactor(self.content.wb.zoomFactor() - 0.2), "Ctrl+-"))
+		viewMenu.addAction(mkAction("&Reset", lambda: self.content.wb.setZoomFactor(1), "Ctrl+0"))
+
+
+		helpMenu = mb.addMenu("&Help")
+		helpMenu.addAction(mkAction("&About", lambda: QtGui.QDesktopServices.openUrl(QtCore.QUrl("http://jabs.nu/feedthemonkey", QtCore.QUrl.TolerantMode)) ))
 
 	def initApp(self):
 		session_id = self.get("session_id")
@@ -95,7 +103,6 @@ class MainWindow(QtGui.QMainWindow):
 			else:
 				self.authenticate()
 
-
 		dialog.accepted.connect(callback)
 
 		dialog.exec_()
@@ -118,8 +125,6 @@ class Content(QtGui.QWidget):
 		self.index = 0
 
 		self.wb = QtWebKit.QWebView(titleChanged=lambda t: container.setWindowTitle(t))
-		#self.wb.setPage(WebPage(self.wb))
-
 		self.wb.page().setLinkDelegationPolicy(QtWebKit.QWebPage.DelegateAllLinks)
 		self.wb.linkClicked.connect(lambda url: self.openLink(url))
 
@@ -127,18 +132,8 @@ class Content(QtGui.QWidget):
 		self.layout().setContentsMargins(0, 0, 0, 0)
 		self.layout().addWidget(self.wb)
 
-		self.do_close = QtGui.QShortcut("Ctrl+W", self, activated=lambda: container.close())
-		self.do_show_next = QtGui.QShortcut("Space", self, activated=lambda: self.showNext())
-		self.do_show_previous = QtGui.QShortcut("Backspace", self, activated=lambda: self.showPrevious())
-		self.do_show_previous_k = QtGui.QShortcut("k", self, activated=lambda: self.showPrevious())
-		self.do_show_next_j = QtGui.QShortcut("j", self, activated=lambda: self.showNext())
-		self.do_open_current = QtGui.QShortcut("Return", self, activated=lambda: self.openCurrent())
-		self.do_reload = QtGui.QShortcut("r", self, activated=lambda: self.reload())
-
-		self.do_quit = QtGui.QShortcut("Ctrl+q", self, activated=lambda: container.close())
-		self.zoomIn = QtGui.QShortcut("Ctrl++", self, activated=lambda: self.wb.setZoomFactor(self.wb.zoomFactor() + 0.2))
-		self.zoomOut = QtGui.QShortcut("Ctrl+-", self, activated=lambda: self.wb.setZoomFactor(self.wb.zoomFactor() - 0.2))
-		self.zoomOne = QtGui.QShortcut("Ctrl+0", self, activated=lambda: self.wb.setZoomFactor(1))
+		self.do_show_next = QtGui.QShortcut(QtCore.Qt.Key_Right, self, activated=self.showNext)
+		self.do_show_previous = QtGui.QShortcut(QtCore.Qt.Key_Left, self, activated=self.showPrevious)
 
 		self.wb.settings().setAttribute(QtWebKit.QWebSettings.PluginsEnabled, True)
 		self.wb.settings().setIconDatabasePath(tempfile.mkdtemp())
@@ -151,27 +146,25 @@ class Content(QtGui.QWidget):
 
 	def reload(self):
 		self.unread_articles = self.app.tinyTinyRSS.getUnreadFeeds()
-		self.index = 0
+		self.index = -1
 		self.setUnreadCount()
 		if len(self.unread_articles) > 0:
 			self.showNext()
 
 	def showNext(self):
+		if self.index >= 0 and self.index < len(self.unread_articles):
+			previous = self.unread_articles[self.index]
+			self.app.tinyTinyRSS.setArticleRead(previous["id"])
 
-		if len(self.unread_articles) > self.index:
-			if self.index > 0:
-				previous = self.unread_articles[self.index - 1]
-				self.app.tinyTinyRSS.setArticleRead(previous["id"])
-
-			next = self.unread_articles[self.index]
-			self.setArticle(next)
-			self.setUnreadCount()
+		if len(self.unread_articles) > self.index + 1:
 			self.index += 1
+			current = self.unread_articles[self.index]
+			self.setArticle(current)
 		else:
-			if self.index > 0:
-				previous = self.unread_articles[self.index - 1]
-				self.app.tinyTinyRSS.setArticleRead(previous["id"])
-			self.setUnreadCount()
+			if self.index < len(self.unread_articles):
+				self.index += 1
+
+		self.setUnreadCount()
 
 	def showPrevious(self):
 		if self.index > 0:
@@ -194,7 +187,11 @@ class Content(QtGui.QWidget):
 
 	def setUnreadCount(self):
 		length = len(self.unread_articles)
-		unread = length - self.index
+		i = 0
+		if self.index > 0:
+			i = self.index
+		unread = length - i
+
 		self.app.setWindowTitle(" (" + str(unread) + "/" + str(length) + ")")
 		if unread < 1:
 			self.evaluateJavaScript("setArticle()")
@@ -211,7 +208,7 @@ class Content(QtGui.QWidget):
 		}
 
 		function setArticle(article) {
-			window.scrollBy(0,0);
+		window.scrollTo(0, 0);
 
 			if(article) {
 				$("date").innerHTML = (new Date(parseInt(article.updated, 10) * 1000)).toLocaleString();
@@ -308,7 +305,7 @@ class TinyTinyRSS:
 		return json.loads(body)["content"]
 
 	def getUnreadFeeds(self):
-		return self.doOperation("getHeadlines", {"show_excerpt":False, "view_mode":"unread", "show_content":True, "feed_id": -3})
+		return self.doOperation("getHeadlines", {"show_excerpt":False, "view_mode":"unread", "show_content":True, "feed_id": -4})
 
 	def setArticleRead(self, article_id):
 		l = lambda: self.doOperation("updateArticle", {'article_ids':article_id, 'mode': 0, 'field': 2})
