@@ -41,7 +41,7 @@ class MainWindow(QtGui.QMainWindow):
 
 		fileMenu = mb.addMenu("&File")
 		fileMenu.addAction(mkAction("&Close", self.close, "Ctrl+W"))
-		fileMenu.addAction(mkAction("&Log Out", self.content.reload))
+		fileMenu.addAction(mkAction("&Log Out", self.logOut))
 		fileMenu.addSeparator()
 		fileMenu.addAction(mkAction("&Exit", self.close, "Ctrl+Q"))
 
@@ -66,6 +66,7 @@ class MainWindow(QtGui.QMainWindow):
 
 		self.content.evaluateJavaScript("setArticle('loading')")
 		self.content.reload()
+		self.show()
 
 	def closeEvent(self, ev):
 		settings.setValue("geometry", self.saveGeometry())
@@ -108,6 +109,7 @@ class MainWindow(QtGui.QMainWindow):
 		dialog.exec_()
 
 	def logOut(self):
+		self.hide()
 		self.content.evaluateJavaScript("setArticle('logout')")
 		self.tinyTinyRSS.logOut()
 		self.tinyTinyRSS = None
