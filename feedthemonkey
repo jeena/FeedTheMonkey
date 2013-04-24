@@ -25,6 +25,7 @@ class MainWindow(QtGui.QMainWindow):
 		else:
 			self.initApp()
 
+
 	def initUI(self):
 		self.content = Content(self)
 		self.setCentralWidget(self.content)
@@ -55,7 +56,6 @@ class MainWindow(QtGui.QMainWindow):
 		viewMenu.addAction(mkAction("Zoom &Out", lambda: self.content.wb.setZoomFactor(self.content.wb.zoomFactor() - 0.2), "Ctrl+-"))
 		viewMenu.addAction(mkAction("&Reset", lambda: self.content.wb.setZoomFactor(1), "Ctrl+0"))
 
-
 		helpMenu = mb.addMenu("&Help")
 		helpMenu.addAction(mkAction("&About", lambda: QtGui.QDesktopServices.openUrl(QtCore.QUrl("http://jabs.nu/feedthemonkey", QtCore.QUrl.TolerantMode)) ))
 
@@ -64,7 +64,7 @@ class MainWindow(QtGui.QMainWindow):
 		server_url = self.get("server_url")
 		self.tinyTinyRSS = TinyTinyRSS(self, server_url, session_id)
 
-		self.content.evaluateJavaScript("setArticle()")
+		self.content.evaluateJavaScript("setArticle('loading')")
 		self.content.reload()
 
 	def closeEvent(self, ev):
@@ -145,8 +145,15 @@ class Content(QtGui.QWidget):
 		QtGui.QDesktopServices.openUrl(url)
 
 	def reload(self):
+		w = WorkerThread(self.app, self._reload)
+		self.connect(w, QtCore.SIGNAL("reload_done()"), self.reload_done)
+		w.start()
+
+	def _reload(self):
 		self.unread_articles = self.app.tinyTinyRSS.getUnreadFeeds()
 		self.index = -1
+
+	def reload_done(self):
 		self.setUnreadCount()
 		if len(self.unread_articles) > 0:
 			self.showNext()
@@ -194,7 +201,7 @@ class Content(QtGui.QWidget):
 
 		self.app.setWindowTitle(" (" + str(unread) + "/" + str(length) + ")")
 		if unread < 1:
-			self.evaluateJavaScript("setArticle()")
+			self.evaluateJavaScript("setArticle('empty')")
 
 	def templateString(self):
 		return """
@@ -208,9 +215,26 @@ class Content(QtGui.QWidget):
 		}
 
 		function setArticle(article) {
-		window.scrollTo(0, 0);
+			window.scrollTo(0, 0);
 
-			if(article) {
+			$("date").innerHTML = "";
+			$("title").innerHTML = "";
+			$("title").href = "";
+			$("title").title = "";
+			$("feed_title").innerHTML = "";
+			$("author").innerHTML = "";
+			$("article").innerHTML = "";
+
+			if(article == "empty") {
+
+				$("article").innerHTML = "No unread articles to display.";
+
+			} else if(article == "loading") {
+
+				$("article").innerHTML = "Loading <blink>&hellip;</blink>";
+
+			} else if(article) {
+
 				$("date").innerHTML = (new Date(parseInt(article.updated, 10) * 1000)).toLocaleString();
 				$("title").innerHTML = article.title;
 				$("title").href = article.link;
@@ -220,14 +244,6 @@ class Content(QtGui.QWidget):
 				if(article.author && article.author.length > 0)
 					$("author").innerHTML = "&ndash; " + article.author
 				$("article").innerHTML = article.content;
-			} else {
-				$("date").innerHTML = "";
-				$("title").innerHTML = "";
-				$("title").href = "";
-				$("title").title = "";
-				$("feed_title").innerHTML = "";
-				$("author").innerHTML = "";
-				$("article").innerHTML = "No unread articles found to display.";
 			}
 		}
 	</script>
@@ -296,7 +312,7 @@ class TinyTinyRSS:
 		req = urllib2.Request(url)
 		fd = urllib2.urlopen(req, json_string)
 		body = ""
-		while 1:
+		while True:
 			data = fd.read(1024)
 			if not len(data):
 				break
@@ -305,7 +321,21 @@ class TinyTinyRSS:
 		return json.loads(body)["content"]
 
 	def getUnreadFeeds(self):
-		return self.doOperation("getHeadlines", {"show_excerpt":False, "view_mode":"unread", "show_content":True, "feed_id": -4})
+		unread_articles = []
+		def more(skip):
+			return self.doOperation("getHeadlines", {"show_excerpt": False, "view_mode": "unread", "show_content": True, "feed_id": -4, "skip": skip})
+		
+		skip = 0
+		while True:
+			new = more( skip)
+			unread_articles += new
+			length = len(new)
+
+			if length < 1:
+				break
+			skip += length
+
+		return unread_articles
 
 	def setArticleRead(self, article_id):
 		l = lambda: self.doOperation("updateArticle", {'article_ids':article_id, 'mode': 0, 'field': 2})
@@ -369,6 +399,18 @@ class Login(QtGui.QDialog):
 		layout.addWidget(self.textName)
 		layout.addWidget(self.textPass)
 		layout.addWidget(self.buttons)
+
+class WorkerThread(QtCore.QThread):
+
+	def __init__(self, parent, do_reload):
+		super(WorkerThread, self).__init__(parent)
+		self.do_reload = do_reload
+		self.isRunning = True
+
+	def run(self):
+		self.do_reload()
+		self.emit(QtCore.SIGNAL("reload_done()"))
+		self.isRunning = False
 
 
 if __name__ == "__main__":
