@@ -4,11 +4,11 @@
 
 Feed the Monkey is a desktop client for [TinyTinyRSS](http://tt-rss.org). That means that it doesn't work as a standalone feed reader but only as a client for the TinyTinyRSS API which it uses to get the normalized feeds and to synchronize the "article read" marks.
 
-It is written in PyQt and uses Webkit to show the contents.
+It is written in PyQt and uses WebKit to show the contents.
+
+You need to have PyQt installed and a account on a TinyTinyRSS server.
 
 ## Installation
-
-You need to have PyQt installed and a account on a TinyTinyRSS instance.
 
 Download the [ZIP](https://github.com/jeena/feedthemonkey/archive/master.zip)-file, unzip it and then run:
 
