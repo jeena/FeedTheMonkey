@@ -8,6 +8,8 @@ It is written in PyQt and uses WebKit to show the contents.
 
 You need to have PyQt installed and a account on a TinyTinyRSS server.
 
+License: BSD
+
 ## Installation
 
 Download the [ZIP](https://github.com/jeena/feedthemonkey/archive/master.zip)-file, unzip it and then run:
