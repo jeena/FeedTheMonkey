@@ -12,6 +12,8 @@ License: BSD
 
 ## Installation
 
+### Linux + Windows
+
 Download the [ZIP](https://github.com/jeena/feedthemonkey/archive/master.zip)-file, unzip it and then run:
 
 On Linux you can just do (if you have PyQt already installed):  
@@ -23,6 +25,10 @@ On Windows you need to install (those are links to the binary packages):
 - [PyQt x32](http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.10.1/PyQt4-4.10.1-gpl-Py2.7-Qt4.8.4-x32.exe) or [PyQt x64](http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.10.1/PyQt4-4.10.1-gpl-Py2.7-Qt4.8.4-x64.exe)
 
 Then rename `freethemonkey` to `freethemonkey.pyw` and then you can run it by double-clicking.
+
+### OS X
+
+Download [FeedTheMonkey.app.zip](http://jabs.nu/feedthemonkey/download/FeedTheMonkey.app.zip) unzip it and move it to your Applications folder. After that just run it like every other app.
 
 ## Keyboard shortcuts
 
