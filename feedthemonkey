@@ -27,8 +27,17 @@ class MainWindow(QtGui.QMainWindow):
 
 
 	def initUI(self):
+		self.list = List(self)
 		self.content = Content(self)
-		self.setCentralWidget(self.content)
+
+		self.splitter = QtGui.QSplitter(QtCore.Qt.Vertical, self)
+		self.splitter.setHandleWidth(1)
+		self.splitter.addWidget(self.list)
+		self.splitter.addWidget(self.content)
+		self.splitter.restoreState(settings.value("splitterSizes").toByteArray());
+		self.splitter.splitterMoved.connect(self.splitterMoved)
+
+		self.setCentralWidget(self.splitter)
 
 		def mkAction(name, connect, shortcut=None):
 			action = QtGui.QAction(name, self)
@@ -47,6 +56,7 @@ class MainWindow(QtGui.QMainWindow):
 
 		actionMenu = mb.addMenu("&Action")
 		actionMenu.addAction(mkAction("&Reload", self.content.reload, "R"))
+		actionMenu.addAction(mkAction("Set &Unread", self.content.setUnread, "U"))
 		actionMenu.addAction(mkAction("&Next", self.content.showNext, "J"))
 		actionMenu.addAction(mkAction("&Previous", self.content.showPrevious, "K"))
 		actionMenu.addAction(mkAction("&Open in Browser", self.content.openCurrent, "N"))
@@ -86,6 +96,9 @@ class MainWindow(QtGui.QMainWindow):
 	def setWindowTitle(self, t):
 		super(QtGui.QMainWindow, self).setWindowTitle("Feed the Monkey" + t)
 
+	def splitterMoved(self, pos, index):
+		settings.setValue("splitterSizes", self.splitter.saveState());
+
 	def authenticate(self):
 		
 		dialog = Login()
@@ -117,7 +130,62 @@ class MainWindow(QtGui.QMainWindow):
 		self.put("server_url", None)
 		self.authenticate()
 
+class List(QtGui.QTableWidget):
+	def __init__(self, container):
+		QtGui.QTableWidget.__init__(self)
+		self.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+		self.app = container
+		self.itemSelectionChanged.connect(self.rowSelected)
 
+	def initHeader(self):
+		self.clear()
+		self.setColumnCount(3)
+		self.setHorizontalHeaderLabels(("Feed", "Title", "Date"))
+		self.horizontalHeader().setResizeMode(0, QtGui.QHeaderView.ResizeToContents)
+		self.horizontalHeader().setResizeMode(1, QtGui.QHeaderView.Stretch)
+		self.horizontalHeader().setResizeMode(2, QtGui.QHeaderView.ResizeToContents)
+		self.verticalHeader().hide()
+
+	def setItems(self, articles):
+		self.initHeader()
+		self.setRowCount(len(articles))
+		row = 0
+		for article in articles:
+			if "feed_title" in article:
+				feed_title = QtGui.QTableWidgetItem(article["feed_title"])
+				feed_title.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.setItem(row, 0, feed_title)
+			if "title" in article:
+				title = QtGui.QTableWidgetItem(article["title"])
+				title.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.setItem(row, 1, title)
+			if "updated" in article:
+				date = QtCore.QDateTime.fromTime_t(article["updated"]).toString(QtCore.Qt.SystemLocaleShortDate)
+				d = QtGui.QTableWidgetItem(date)
+				d.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.setItem(row, 2, d)
+			if "author" in article:
+				author = QtGui.QTableWidgetItem(article["author"])
+				author.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.setItem(row, 3, author)
+			self.resizeRowToContents(row)
+			row += 1
+		self.selectRow(0)
+
+
+	def rowSelected(self):
+		indexes = self.selectedIndexes()
+		if len(indexes) > 0:
+			row = indexes[0].row()
+			self.app.content.showIndex(row)
+
+	def updateRead(self):
+		for row, article in enumerate(self.app.content.unread_articles):
+			for x in xrange(0,3):
+				item = self.item(row, x)
+				font = item.font()
+				font.setBold(article["unread"])
+				item.setFont(font)
 
 class Content(QtGui.QWidget):
 	def __init__(self, container):
@@ -152,6 +220,12 @@ class Content(QtGui.QWidget):
 		self.connect(w, QtCore.SIGNAL("reload_done()"), self.reload_done)
 		w.start()
 
+	def setUnread(self):
+		article = self.unread_articles[self.index]
+		article["unread"] = True
+		article["set_unread"] = True
+		self.app.list.updateRead()
+
 	def _reload(self):
 		self.unread_articles = self.app.tinyTinyRSS.getUnreadFeeds()
 		self.index = -1
@@ -160,11 +234,30 @@ class Content(QtGui.QWidget):
 		self.setUnreadCount()
 		if len(self.unread_articles) > 0:
 			self.showNext()
+		self.app.list.setItems(self.unread_articles)
+
+	def showIndex(self, index):
+		previous = self.unread_articles[self.index]
+		if not "set_unread" in previous or not previous["set_unread"]:
+			self.app.tinyTinyRSS.setArticleRead(previous["id"])
+			previous["unread"] = False
+			self.app.list.updateRead()
+		else:
+			previous["set_unread"] = False
+		self.index = index
+		current = self.unread_articles[self.index]
+		self.setArticle(current)
+		self.setUnreadCount()
 
 	def showNext(self):
 		if self.index >= 0 and self.index < len(self.unread_articles):
 			previous = self.unread_articles[self.index]
-			self.app.tinyTinyRSS.setArticleRead(previous["id"])
+			if not "set_unread" in previous or not previous["set_unread"]:
+				self.app.tinyTinyRSS.setArticleRead(previous["id"])
+				previous["unread"] = False
+				self.app.list.updateRead()
+			else:
+				previous["set_unread"] = False
 
 		if len(self.unread_articles) > self.index + 1:
 			self.index += 1
@@ -175,6 +268,7 @@ class Content(QtGui.QWidget):
 				self.index += 1
 
 		self.setUnreadCount()
+		self.app.list.selectRow(self.index)
 
 	def showPrevious(self):
 		if self.index > 0:
@@ -182,6 +276,7 @@ class Content(QtGui.QWidget):
 			previous = self.unread_articles[self.index]
 			self.setArticle(previous)
 			self.setUnreadCount()
+			self.app.list.selectRow(self.index)
 
 	def openCurrent(self):
 		current = self.unread_articles[self.index]
@@ -211,6 +306,7 @@ class Content(QtGui.QWidget):
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
 	<title>ttrssl</title>
 	<script type="text/javascript">
 		function $(id) {
