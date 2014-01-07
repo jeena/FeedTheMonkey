@@ -4,7 +4,7 @@ import os, PyQt4
 from setuptools import setup
 from sys import platform as _platform
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 APP = ["feedthemonkey"]
 
 files = []

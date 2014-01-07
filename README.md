@@ -1,4 +1,4 @@
-<img align=right src="http://jabs.nu/feedthemonkey/feedthemonkey-icon.png" width=256 alt='Icon'>
+<img align=right src="http://jabs.nu/feedthemonkey/feedthemonkey-icon.png" width='256' alt='Icon'>
 
 # Feed the Monkey
 

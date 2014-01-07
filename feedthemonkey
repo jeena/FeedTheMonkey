@@ -3,6 +3,7 @@
 import sys, os, json, tempfile, urllib2, urllib, json
 from PyQt4 import QtGui, QtCore, QtWebKit, QtNetwork
 from threading import Thread
+from sys import platform as _platform
 
 settings = QtCore.QSettings("jabs.nu", "feedthemonkey")
 
@@ -136,6 +137,7 @@ class List(QtGui.QTableWidget):
 		self.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
 		self.app = container
 		self.itemSelectionChanged.connect(self.rowSelected)
+		self.setShowGrid(False)
 
 	def initHeader(self):
 		self.clear()
@@ -172,7 +174,6 @@ class List(QtGui.QTableWidget):
 			row += 1
 		self.selectRow(0)
 
-
 	def rowSelected(self):
 		indexes = self.selectedIndexes()
 		if len(indexes) > 0:
@@ -186,6 +187,7 @@ class List(QtGui.QTableWidget):
 				font = item.font()
 				font.setBold(article["unread"])
 				item.setFont(font)
+
 
 class Content(QtGui.QWidget):
 	def __init__(self, container):
@@ -302,95 +304,98 @@ class Content(QtGui.QWidget):
 			self.evaluateJavaScript("setArticle('empty')")
 
 	def templateString(self):
-		return """
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>ttrssl</title>
-	<script type="text/javascript">
-		function $(id) {
-			return document.getElementById(id);
-		}
+		html="""
+			<!DOCTYPE html>
+			<html>
+			<head>
+				<meta charset="utf-8">
+				<title>ttrssl</title>
+				<script type="text/javascript">
+					function $(id) {
+						return document.getElementById(id);
+					}
 
-		function setArticle(article) {
-			window.scrollTo(0, 0);
+					function setArticle(article) {
+						window.scrollTo(0, 0);
 
-			$("date").innerHTML = "";
-			$("title").innerHTML = "";
-			$("title").href = "";
-			$("title").title = "";
-			$("feed_title").innerHTML = "";
-			$("author").innerHTML = "";
-			$("article").innerHTML = "";
+						$("date").innerHTML = "";
+						$("title").innerHTML = "";
+						$("title").href = "";
+						$("title").title = "";
+						$("feed_title").innerHTML = "";
+						$("author").innerHTML = "";
+						$("article").innerHTML = "";
 
-			if(article == "empty") {
+						if(article == "empty") {
 
-				$("article").innerHTML = "No unread articles to display.";
+							$("article").innerHTML = "No unread articles to display.";
 
-			} else if(article == "loading") {
+						} else if(article == "loading") {
 
-				$("article").innerHTML = "Loading <blink>&hellip;</blink>";
+							$("article").innerHTML = "Loading <blink>&hellip;</blink>";
 
-			} else if (article == "logout") {
+						} else if (article == "logout") {
 
-			} else if(article) {
+						} else if(article) {
 
-				$("date").innerHTML = (new Date(parseInt(article.updated, 10) * 1000)).toLocaleString();
-				$("title").innerHTML = article.title;
-				$("title").href = article.link;
-				$("title").title = article.link;
-				$("feed_title").innerHTML = article.feed_title;
-				$("author").innerHTML = "";
-				if(article.author && article.author.length > 0)
-					$("author").innerHTML = "&ndash; " + article.author
-				$("article").innerHTML = article.content;
-			}
-		}
-	</script>
-	<style type="text/css">
-		body {
-			font-family: "Ubuntu", "Lucida Grande","Tahoma";
-			padding: 1em 2em 1em 2em;
-		}
-		h1 {
-			font-weight: normal;
-			margin: 0;
-			padding: 0;
-		}
-		header {
-			margin-bottom: 1em;
-			border-bottom: 1px solid #aaa;
-			padding-bottom: 1em;
-		}
-		header p {
-			color: #aaa;
-			margin: 0;
-			padding: 0
-		}
-		a {
-			color: #772953;
-			text-decoration: none;
-		}
-		img {
-			max-width: 100%;
-			height: auto;
-		}
-		article {
-			line-height: 1.6;
-		}
-	</style>
-</head>
-<body>
-	<header>
-		<p><span id="feed_title"></span> <span id="author"></span></p>
-		<h1><a id="title" href=""></a></h1>
-		<p><timedate id="date"></timedate></p>
-	</header>
-	<article id="article"></article>
-</body>
-</html>
-		"""
+							$("date").innerHTML = (new Date(parseInt(article.updated, 10) * 1000));
+							$("title").innerHTML = article.title;
+							$("title").href = article.link;
+							$("title").title = article.link;
+							$("feed_title").innerHTML = article.feed_title;
+							$("author").innerHTML = "";
+							if(article.author && article.author.length > 0)
+								$("author").innerHTML = "&ndash; " + article.author
+							$("article").innerHTML = article.content;
+						}
+					}
+				</script>
+				<style type="text/css">
+					body {
+						font-family: "Ubuntu", "Lucida Grande", "Tahoma", sans-serif;
+						padding: 1em 2em 1em 2em;
+					}
+					body.darwin {
+						font-family: "LucidaGrande", sans-serif;
+					}
+					h1 {
+						font-weight: normal;
+						margin: 0;
+						padding: 0;
+					}
+					header {
+						margin-bottom: 1em;
+						border-bottom: 1px solid #aaa;
+						padding-bottom: 1em;
+					}
+					header p {
+						color: #aaa;
+						margin: 0;
+						padding: 0
+					}
+					a {
+						color: #772953;
+						text-decoration: none;
+					}
+					img {
+						max-width: 100%;
+						height: auto;
+					}
+					article {
+						line-height: 1.6;
+					}
+				</style>
+			</head>
+			<body class='""" + _platform + """''>
+				<header>
+					<p><span id="feed_title"></span> <span id="author"></span></p>
+					<h1><a id="title" href=""></a></h1>
+					<p><timedate id="date"></timedate></p>
+				</header>
+				<article id="article"></article>
+			</body>
+			</html>"""
+		return html # string.replace(html, "<body", "<body class='" + _platform + "'")
 
 
 
