@@ -67,6 +67,9 @@ class MainWindow(QtGui.QMainWindow):
 		viewMenu.addAction(mkAction("Zoom &Out", lambda: self.content.wb.setZoomFactor(self.content.wb.zoomFactor() - 0.2), "Ctrl+-"))
 		viewMenu.addAction(mkAction("&Reset", lambda: self.content.wb.setZoomFactor(1), "Ctrl+0"))
 
+		windowMenu = mb.addMenu("&Window")
+		windowMenu.addAction(mkAction("Reset to Default", self.resetSplitter, "Ctrl+D"))
+
 		helpMenu = mb.addMenu("&Help")
 		helpMenu.addAction(mkAction("&About", lambda: QtGui.QDesktopServices.openUrl(QtCore.QUrl("http://jabs.nu/feedthemonkey", QtCore.QUrl.TolerantMode)) ))
 
@@ -99,6 +102,14 @@ class MainWindow(QtGui.QMainWindow):
 
 	def splitterMoved(self, pos, index):
 		settings.setValue("splitterSizes", self.splitter.saveState());
+
+	def resetSplitter(self):
+		sizes = self.splitter.sizes()
+		top = sizes[0]
+		bottom = sizes[1]
+		sizes[0] = 200
+		sizes[1] = bottom + top - 200
+		self.splitter.setSizes(sizes)
 
 	def authenticate(self):
 		

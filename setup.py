@@ -48,8 +48,6 @@ if is_osx:
             if filename == "Icon.icns":
                 files += [(dirname, [os.path.join(dirname, filename)])]
 
-print setup_requires
-
 setup(
     app = APP,
     name = "FeedTheMonkey",
