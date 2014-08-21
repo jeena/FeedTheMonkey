@@ -2,3 +2,5 @@ build
 dist
 .DS_Store
 FeedTheMonkey.app
+FeedTheMonkey.egg-info/
+feedthemonkey.egg-info/
