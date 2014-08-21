@@ -1,6 +1,0 @@
-feedthemonkey
-setup.py
-FeedTheMonkey.egg-info/PKG-INFO
-FeedTheMonkey.egg-info/SOURCES.txt
-FeedTheMonkey.egg-info/dependency_links.txt
-FeedTheMonkey.egg-info/top_level.txt
