@@ -16,13 +16,13 @@ License: BSD
 
 Download the [ZIP](https://github.com/jeena/feedthemonkey/archive/master.zip)-file, unzip it and then run:
 
-On Linux you can just do (if you have PyQt already installed):  
-`sudo python setup.py install`
+On Linux you can just do (if you have PyQt4, python2 and python2-autotools already installed):  
+`sudo python2 setup.py install`
 
 On Windows you need to install (those are links to the binary packages):
 
-- [Python x32](http://www.python.org/ftp/python/2.7.4/python-2.7.4.msi) or [Python x64](http://www.python.org/ftp/python/2.7.4/python-2.7.4.amd64.msi) 
-- [PyQt x32](http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.10.1/PyQt4-4.10.1-gpl-Py2.7-Qt4.8.4-x32.exe) or [PyQt x64](http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.10.1/PyQt4-4.10.1-gpl-Py2.7-Qt4.8.4-x64.exe)
+- [Python2 x32](http://www.python.org/ftp/python/2.7.4/python-2.7.4.msi) or [Python x64](http://www.python.org/ftp/python/2.7.4/python-2.7.4.amd64.msi) 
+- [PyQt4 x32](http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.10.1/PyQt4-4.10.1-gpl-Py2.7-Qt4.8.4-x32.exe) or [PyQt x64](http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.10.1/PyQt4-4.10.1-gpl-Py2.7-Qt4.8.4-x64.exe)
 
 Then rename `feedthemonkey` to `feedthemonkey.pyw` and then you can run it by double-clicking.
 

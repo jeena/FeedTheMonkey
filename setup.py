@@ -16,7 +16,7 @@ is_linux = not is_osx and not is_win
 
 if is_linux:
     setup(
-        name = "feedthemonkey",
+        name = "FeedTheMonkey",
         version = VERSION,
         author = "Jeena Paradies",
         author_email = "spam@jeenaparadies.net",
