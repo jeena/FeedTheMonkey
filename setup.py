@@ -4,8 +4,7 @@ import os, PyQt4
 from setuptools import setup
 from sys import platform as _platform
 
-VERSION = "0.1.1"
-APP = ["feedthemonkey"]
+VERSION = "0.1.2"
 
 files = []
 options = {}
@@ -16,8 +15,19 @@ is_win = os.name == "nt"
 is_linux = not is_osx and not is_win
 
 if is_linux:
-    files += ('/usr/share/applications', ["feedthemonkey.desktop"])
-    files += ('/usr/share/pixmaps', ["feedthemonkey.xpm"])
+    setup(
+        name = "feedthemonkey",
+        version = VERSION,
+        author = "Jeena Paradies",
+        author_email = "spam@jeenaparadies.net",
+        url = "http://jabs.nu/feedthemonkey",
+        license = "BSD license",
+        scripts = ["feedthemonkey"],
+        data_files=[
+            ('/usr/share/applications', ["feedthemonkey.desktop"]),
+            ('/usr/share/pixmaps', ["feedthemonkey.xpm"])
+        ]
+    )
 
 if is_osx:
     options = {
@@ -42,22 +52,23 @@ if is_osx:
     }
 
     setup_requires = ["py2app"]
+    APP = ["feedthemonkey"]
 
     for dirname, dirnames, filenames in os.walk('.'):
         for filename in filenames:
             if filename == "Icon.icns":
                 files += [(dirname, [os.path.join(dirname, filename)])]
 
-setup(
-    app = APP,
-    name = "FeedTheMonkey",
-    options = options,
-    version = VERSION,
-    author = "Jeena Paradies",
-    author_email = "spam@jeenaparadies.net",
-    url = "http://jabs.nu/feedthemonkey",
-    license = "BSD license",
-    scripts = ["feedthemonkey"],
-    data_files = files,
-    setup_requires = setup_requires
-)
+    setup(
+        app = APP,
+        name = "FeedTheMonkey",
+        options = options,
+        version = VERSION,
+        author = "Jeena Paradies",
+        author_email = "spam@jeenaparadies.net",
+        url = "http://jabs.nu/feedthemonkey",
+        license = "BSD license",
+        scripts = ["feedthemonkey"],
+        data_files = files,
+        setup_requires = setup_requires
+    )
