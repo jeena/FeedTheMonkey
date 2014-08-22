@@ -45,6 +45,8 @@ The keyboard shortcuts are inspired by other feed readers which are inspired by 
 `Ctrl -` zoom out  
 `Ctrl 0` reset zoom
 
+On OS X use `Cmd` instead of `Ctrl`.
+
 ## Trivia
 
 I just hacked together this one within one day so it is not feature complete yet and has no real error handling.
