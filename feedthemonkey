@@ -155,6 +155,7 @@ class List(QtGui.QTableWidget):
 		self.app = container
 		self.itemSelectionChanged.connect(self.rowSelected)
 		self.setShowGrid(False)
+		self.setAlternatingRowColors(True)
 
 	def initHeader(self):
 		self.clear()
