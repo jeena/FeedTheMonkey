@@ -1,5 +1,4 @@
 #!/usr/bin/env python2
-# coding: utf-8
 
 try:
     import urllib.request as urllib2
@@ -32,7 +31,6 @@ class MainWindow(QtGui.QMainWindow):
 		else:
 			self.initApp()
 
-
 	def initUI(self):
 		self.list = List(self)
 		self.content = Content(self)
@@ -64,7 +62,7 @@ class MainWindow(QtGui.QMainWindow):
 		actionMenu = mb.addMenu("&Action")
 		actionMenu.addAction(mkAction("&Reload", self.content.reload, "R"))
 		actionMenu.addAction(mkAction("Show &Starred", self.content.showStarred, "*"))
-		actionMenu.addAction(mkAction("Set &Starred", self.content.setUnread, "S"))
+		actionMenu.addAction(mkAction("Set &Starred", self.content.setStarred, "S"))
 		actionMenu.addAction(mkAction("Set &Unread", self.content.setUnread, "U"))
 		actionMenu.addAction(mkAction("&Next", self.content.showNext, "J"))
 		actionMenu.addAction(mkAction("&Previous", self.content.showPrevious, "K"))
@@ -212,6 +210,10 @@ class List(QtGui.QTableWidget):
 				font.setBold(article["unread"])
 				item.setFont(font)
 
+	def setStarred(self, index, starred):
+		widget = self.itemAt(index, 0)
+		widget.setText("*" if starred else "")
+
 
 class Content(QtGui.QWidget):
 	def __init__(self, container):
@@ -256,6 +258,13 @@ class Content(QtGui.QWidget):
 		article["unread"] = True
 		article["set_unread"] = True
 		self.app.list.updateRead()
+		self.app.tinyTinyRSS.setArticleRead(article["id"], False)
+
+	def setStarred(self):
+		article = self.unread_articles[self.index]
+		article["marked"] = not article["marked"]
+		self.app.tinyTinyRSS.setArticleStarred(article["id"], article["marked"])
+		self.app.list.setStarred(self.index, article["marked"])
 
 	def _reload(self):
 		self.unread_articles = self.app.tinyTinyRSS.getUnreadFeeds()
@@ -286,33 +295,12 @@ class Content(QtGui.QWidget):
 		self.setUnreadCount()
 
 	def showNext(self):
-		if self.index >= 0 and self.index < len(self.unread_articles):
-			previous = self.unread_articles[self.index]
-			if not "set_unread" in previous or not previous["set_unread"]:
-				self.app.tinyTinyRSS.setArticleRead(previous["id"])
-				previous["unread"] = False
-				self.app.list.updateRead()
-			else:
-				previous["set_unread"] = False
-
-		if len(self.unread_articles) > self.index + 1:
-			self.index += 1
-			current = self.unread_articles[self.index]
-			self.setArticle(current)
-		else:
-			if self.index < len(self.unread_articles):
-				self.index += 1
-
-		self.setUnreadCount()
-		self.app.list.selectRow(self.index)
+		if self.index + 1 < len(self.unread_articles):
+			self.app.list.selectRow(self.index + 1)
 
 	def showPrevious(self):
 		if self.index > 0:
-			self.index -= 1
-			previous = self.unread_articles[self.index]
-			self.setArticle(previous)
-			self.setUnreadCount()
-			self.app.list.selectRow(self.index)
+			self.app.list.selectRow(self.index - 1)
 
 	def openCurrent(self):
 		current = self.unread_articles[self.index]
@@ -481,8 +469,14 @@ class TinyTinyRSS:
 	def getStarredFeeds(self):
 		return self.getUnreadFeeds("marked")
 
-	def setArticleRead(self, article_id):
-		l = lambda: self.doOperation("updateArticle", {'article_ids':article_id, 'mode': 0, 'field': 2})
+	def setArticleRead(self, article_id, read=True):
+		self.updateArticle(article_id, 2, not read)
+
+	def setArticleStarred(self, article_id, starred=True):
+		self.updateArticle(article_id, 0, starred)
+
+	def updateArticle(self, article_id, field, true=True):
+		l = lambda: self.doOperation("updateArticle", {'article_ids':article_id, 'mode': 1 if true else 0, 'field': field})
 		t = Thread(target=l)
 		t.start()
 
