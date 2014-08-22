@@ -37,7 +37,9 @@ The keyboard shortcuts are inspired by other feed readers which are inspired by 
 `j` or `→` show nex article  
 `k` or `←` show previous article  
 `n` or `Return` open current article in the default browser  
-`r` reload articles  
+`r` reload articles
+`s` star current article
+`Ctrl S` show starred articles
 `Ctrl Q` quit  
 `Ctrl +` zoom in  
 `Ctrl -` zoom out  
