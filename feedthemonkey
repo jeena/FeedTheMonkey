@@ -265,6 +265,7 @@ class Content(QtGui.QWidget):
 		article["marked"] = not article["marked"]
 		self.app.tinyTinyRSS.setArticleStarred(article["id"], article["marked"])
 		self.app.list.setStarred(self.index, article["marked"])
+		self.setArticle(article)
 
 	def _reload(self):
 		self.unread_articles = self.app.tinyTinyRSS.getUnreadFeeds()
@@ -365,6 +366,7 @@ class Content(QtGui.QWidget):
 							$("title").href = article.link;
 							$("title").title = article.link;
 							$("feed_title").innerHTML = article.feed_title;
+							$("title").className = article.marked ? "starred" : "";
 							$("author").innerHTML = "";
 							if(article.author && article.author.length > 0)
 								$("author").innerHTML = "&ndash; " + article.author
@@ -389,6 +391,9 @@ class Content(QtGui.QWidget):
 						margin-bottom: 1em;
 						border-bottom: 1px solid #aaa;
 						padding-bottom: 1em;
+					}
+					.starred:after {
+						content: "*";
 					}
 					header p {
 						color: #aaa;
@@ -417,7 +422,7 @@ class Content(QtGui.QWidget):
 				<article id="article"></article>
 			</body>
 			</html>"""
-		return html # string.replace(html, "<body", "<body class='" + _platform + "'")
+		return html
 
 
 
