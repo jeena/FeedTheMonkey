@@ -61,7 +61,7 @@ class MainWindow(QtGui.QMainWindow):
 
 		actionMenu = mb.addMenu("&Action")
 		actionMenu.addAction(mkAction("&Reload", self.content.reload, "R"))
-		actionMenu.addAction(mkAction("Show &Starred", self.content.showStarred, "*"))
+		actionMenu.addAction(mkAction("Show &Starred", self.content.showStarred, "Ctrl+S"))
 		actionMenu.addAction(mkAction("Set &Starred", self.content.setStarred, "S"))
 		actionMenu.addAction(mkAction("Set &Unread", self.content.setUnread, "U"))
 		actionMenu.addAction(mkAction("&Next", self.content.showNext, "J"))
