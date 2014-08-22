@@ -161,7 +161,7 @@ class List(QtGui.QTableWidget):
 		self.setColumnCount(5)
 		self.setHorizontalHeaderLabels(("*", "Feed", "Title", "Date", "Author"))
 		self.horizontalHeader().setResizeMode(0, QtGui.QHeaderView.ResizeToContents)
-		self.horizontalHeader().setResizeMode(1, QtGui.QHeaderView.Stretch)
+		self.horizontalHeader().setResizeMode(1, QtGui.QHeaderView.ResizeToContents)
 		self.horizontalHeader().setResizeMode(2, QtGui.QHeaderView.Stretch)
 		self.horizontalHeader().setResizeMode(3, QtGui.QHeaderView.ResizeToContents)
 		self.horizontalHeader().setResizeMode(4, QtGui.QHeaderView.ResizeToContents)
@@ -193,6 +193,7 @@ class List(QtGui.QTableWidget):
 				author = QtGui.QTableWidgetItem(article["author"])
 				author.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
 				self.setItem(row, 4, author)
+			self.resizeRowToContents(row)
 			row += 1
 		self.selectRow(0)
 
