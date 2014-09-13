@@ -7,6 +7,7 @@ except:
 
 import sys, os, json, tempfile, urllib, json
 from PyQt4 import QtGui, QtCore, QtWebKit, QtNetwork
+from PyQt4.QtNetwork import *
 from threading import Thread
 from sys import platform as _platform
 
@@ -228,6 +229,11 @@ class Content(QtGui.QWidget):
 		self.wb.page().setLinkDelegationPolicy(QtWebKit.QWebPage.DelegateAllLinks)
 		self.wb.linkClicked.connect(lambda url: self.openLink(url))
 
+                diskCache = QNetworkDiskCache()
+                diskCache.setCacheDirectory("/tmp/feedmonkey")
+                diskCache.setMaximumCacheSize(5*124*124)
+                self.wb.page().networkAccessManager().setCache(diskCache)
+                
 		self.setLayout(QtGui.QVBoxLayout(spacing=0))
 		self.layout().setContentsMargins(0, 0, 0, 0)
 		self.layout().addWidget(self.wb)
