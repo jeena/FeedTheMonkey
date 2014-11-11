@@ -1,0 +1,37 @@
+body {
+        font-family: "Ubuntu", "Lucida Grande", "Tahoma", sans-serif;
+        padding: 1em 2em 1em 2em;
+        background: red;
+}
+body.darwin {
+        font-family: "LucidaGrande", sans-serif;
+}
+h1 {
+        font-weight: normal;
+        margin: 0;
+        padding: 0;
+}
+header {
+        margin-bottom: 1em;
+        border-bottom: 1px solid #aaa;
+        padding-bottom: 1em;
+}
+.starred:after {
+        content: "*";
+}
+header p {
+        color: #aaa;
+        margin: 0;
+        padding: 0
+}
+a {
+        color: #772953;
+        text-decoration: none;
+}
+img {
+        max-width: 100%;
+        height: auto;
+}
+article {
+        line-height: 1.6;
+}
