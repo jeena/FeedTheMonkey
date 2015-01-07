@@ -2,83 +2,95 @@ import QtQuick.Controls 1.2
 
 MenuBar {
 
+    function loggedIn() {
+        return false;
+    }
+
     Menu {
-        title: "File"
+        title: qsTr("File")
         MenuItem {
-            text: "Close"
+            text: qsTr("Close")
             shortcut: "Ctrl+W"
         }
         MenuItem {
-            text: "Log Out"
+            text: qsTr("Log Out")
+            enabled: loggedIn()
         }
         MenuSeparator { }
         MenuItem {
-            text: "Exit"
+            text: qsTr("Exit")
             shortcut: "Ctrl+Q"
             onTriggered: Qt.quit()
         }
     }
 
     Menu {
-        title: "Action"
+        title: qsTr("Action")
         MenuItem {
-            text: "Reload"
+            text: qsTr("Reload")
             shortcut: "R"
+            enabled: loggedIn()
         }
         MenuItem {
-            text: "Show &Starred"
+            text: qsTr("Show &Starred")
             shortcut: "Ctrl+S"
+            enabled: loggedIn()
         }
         MenuItem {
-            text: "Set &Starred"
+            text: qsTr("Set &Starred")
             shortcut: "S"
+            enabled: loggedIn()
         }
         MenuItem {
-            text: "Set &Unread"
+            text: qsTr("Set &Unread")
             shortcut: "U"
+            enabled: loggedIn()
         }
         MenuItem {
-            text: "Next"
+            text: qsTr("Next")
             shortcut: "J"
+            enabled: loggedIn()
         }
         MenuItem {
-            text: "Previous"
+            text: qsTr("Previous")
             shortcut: "K"
+            enabled: loggedIn()
         }
         MenuItem {
-            text: "Open in Browser"
+            text: qsTr("Open in Browser")
             shortcut: "N"
+            enabled: loggedIn()
         }
     }
 
     Menu {
-        title: "View"
+        title: qsTr("View")
         MenuItem {
-            text: "Zoom In"
+            text: qsTr("Zoom In")
             shortcut: "Ctrl++"
         }
         MenuItem {
-            text: "Zoom Out"
+            text: qsTr("Zoom Out")
             shortcut: "Ctrl+-"
         }
         MenuItem {
-            text: "Reset"
+            text: qsTr("Reset")
             shortcut: "Ctrl+0"
         }
     }
 
     Menu {
-        title: "Window"
+        title: qsTr("Window")
         MenuItem {
-            text: "Reset to default"
+            text: qsTr("Reset to default")
             shortcut: "Ctrl+D"
         }
     }
 
     Menu {
-        title: "Help"
+        title: qsTr("Help")
         MenuItem {
-            text: "About"
+            text: qsTr("About")
             onTriggered: Qt.openUrlExternally("http://jabs.nu/feedthemonkey");
         }
     }

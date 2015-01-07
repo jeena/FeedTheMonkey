@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>TheMenuBar.qml</file>
         <file>Content.qml</file>
+        <file>Login.qml</file>
     </qresource>
 </RCC>

@@ -2,7 +2,8 @@ TEMPLATE = app
 
 QT += qml quick
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    tinytinyrss.cpp
 
 RESOURCES += qml.qrc \
     html.qrc
@@ -20,3 +21,6 @@ OTHER_FILES += \
     content.html \
     content.css \
     content.js
+
+HEADERS += \
+    tinytinyrss.h

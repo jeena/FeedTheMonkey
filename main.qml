@@ -11,5 +11,11 @@ ApplicationWindow {
 
     Content {
         anchors.fill: parent
+        visible: false
+    }
+
+    Login {
+        anchors.fill: parent
+        visible: true
     }
 }
