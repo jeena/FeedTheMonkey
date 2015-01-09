@@ -13,13 +13,14 @@ class TinyTinyRSS : QObject
 public:
     TinyTinyRSS(QString serverUrl, QString sessionId);
     ~TinyTinyRSS();
+    void login();
+    void replyFinishedOperation(QNetworkReply *reply);
 
 private:
     QString serverUrl;
     QString sessionId;
 
     void doOperation(QString operation, QVariantMap opts);
-    void replyFinishedOperation(QNetworkReply *reply);
 };
 
 #endif // TINYTINYRSS_H
