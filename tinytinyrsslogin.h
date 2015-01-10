@@ -2,18 +2,34 @@
 #define TINYTINYRSSLOGIN_H
 
 #include <QObject>
+#include <QMetaType>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
 
 class TinyTinyRSSLogin : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString sessionId READ sessionId NOTIFY sessionIdChanged)
+    Q_PROPERTY(QUrl serverUrl READ serverUrl)
+
 public:
-    explicit TinyTinyRSSLogin(QObject *parent = 0);
-    login(QString serverUrl, QString user, QString password);
+    TinyTinyRSSLogin(QObject *parent = 0);
+    ~TinyTinyRSSLogin();
+    QString sessionId() const { return mSessionId; }
+    QUrl serverUrl() const { return mServerUrl; }
+
+    Q_INVOKABLE void login(const QString serverUrl, const QString user, const QString password);
 
 signals:
-    replyLogin(QNetworkReply reply);
+    void sessionIdChanged(QString);
 
-public slots:
+private slots:
+    void reply();
+
+private:
+    QString mSessionId;
+    QUrl mServerUrl;
+    QNetworkAccessManager *mNetworkManager;
 
 };
 

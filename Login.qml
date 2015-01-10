@@ -1,12 +1,18 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.2
+import TTRSS 1.0
 
 Rectangle {
     color: "white"
     anchors.fill: parent
 
-    function login() {
+    Login {
+        id: ttrsslogin
+        onSessionIdChanged: parent.visible = false
+    }
 
+    function login() {
+        ttrsslogin.login(serverUrl.getText(), userName.getText(), password.getText())
     }
 
     Column {

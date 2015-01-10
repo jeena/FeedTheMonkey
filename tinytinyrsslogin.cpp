@@ -1,12 +1,23 @@
 #include "tinytinyrsslogin.h"
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QNetworkReply>
 
 TinyTinyRSSLogin::TinyTinyRSSLogin(QObject *parent) :
     QObject(parent)
 {
+    mNetworkManager = new QNetworkAccessManager(this);
 }
 
-void TinyTinyRSSLogin::login(QString serverUrl, QString user, QString password)
+TinyTinyRSSLogin::~TinyTinyRSSLogin()
 {
+    delete mNetworkManager;
+}
+
+void TinyTinyRSSLogin::login(const QString serverUrl, const QString user, const QString password)
+{
+    mServerUrl = QUrl(serverUrl + "/api/");
+
     QVariantMap options;
     options.insert("op", "login");
     options.insert("user", user);
@@ -15,18 +26,27 @@ void TinyTinyRSSLogin::login(QString serverUrl, QString user, QString password)
     QJsonObject jsonobj = QJsonObject::fromVariantMap(options);
     QJsonDocument json = QJsonDocument(jsonobj);
 
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-
-    QUrl url(serverUrl + "/api/");
-    QNetworkRequest request(url);
+    QNetworkRequest request(mServerUrl);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
-    QObject::connect(manager, SIGNAL(finished(QNetworkReply)), this, SIGNAL(replyLogin(QNetworkReply)));
-    manager->post(request, json.toBinaryData());
+    QNetworkReply *reply = mNetworkManager->post(request, json.toBinaryData());
+    connect(reply, SIGNAL(finished()), this, SLOT(reply()));
 }
 
-TinyTinyRSSLogin::replyLogin(QNetworkReply reply)
+void TinyTinyRSSLogin::reply()
 {
-    QString sessionId = "1234";
-    this->parent()->loggedIn(QString(sessionId));
+    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+
+    if (reply) {
+        if (reply->error() == QNetworkReply::NoError) {
+        //read data from reply
+        } else {
+        //get http status code
+        int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        //do some error management
+        }
+        reply->deleteLater();
+    }
+    mSessionId = "1234";
+    emit sessionIdChanged(mSessionId);
 }
