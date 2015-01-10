@@ -10,7 +10,8 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<TinyTinyRSSLogin>("TTRSS", 1, 0, "Login");
+    qmlRegisterType<TinyTinyRSSLogin>("TTRSS", 1, 0, "ServerLogin");
+    // qmlRegisterType<TinyTinyRSS>("TTRSS", 1, 0, "Server");
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
