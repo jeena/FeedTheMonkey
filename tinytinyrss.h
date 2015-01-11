@@ -2,25 +2,38 @@
 #define TINYTINYRSS_H
 
 #include <QObject>
-#include <QQuickItem>
 #include <QMap>
 #include <QNetworkReply>
+#include <QList>
 
-class TinyTinyRSS : QObject
+#include "post.h"
+
+class TinyTinyRSS : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QList<Post> posts READ posts NOTIFY postsChanged)
 
 public:
-    TinyTinyRSS(QString serverUrl, QString sessionId);
+    TinyTinyRSS(QObject *parent = 0);
     ~TinyTinyRSS();
-    void login();
-    void replyFinishedOperation(QNetworkReply *reply);
+    QList<Post> posts() const;
+
+    Q_INVOKABLE void initialize(const QString serverUrl, const QString sessionId);
+    Q_INVOKABLE void reload();
+
+signals:
+    void postsChanged(QList<Post>);
+
+private slots:
+    void reply();
 
 private:
-    QString serverUrl;
-    QString sessionId;
-
     void doOperation(QString operation, QVariantMap opts);
+
+    QString mServerUrl;
+    QString mSessionId;
+    QList<Post> mPosts;
+    QNetworkAccessManager *mNetworkManager;
 };
 
 #endif // TINYTINYRSS_H

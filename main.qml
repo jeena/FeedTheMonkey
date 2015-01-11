@@ -28,6 +28,13 @@ ApplicationWindow {
 
     ServerLogin {
         id: serverLogin
-        onSessionIdChanged: login.visible = false
+        onSessionIdChanged: {
+            login.visible = false;
+            server.initialize(serverUrl. sessionId);
+        }
+    }
+
+    Server {
+        id: server
     }
 }

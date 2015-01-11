@@ -39,14 +39,14 @@ void TinyTinyRSSLogin::reply()
 
     if (reply) {
         if (reply->error() == QNetworkReply::NoError) {
-        //read data from reply
+            QJsonDocument json = QJsonDocument::fromBinaryData(reply->readAll());
+            mSessionId = json.toVariant().toMap().value("session_id").toString();
+            emit sessionIdChanged(mSessionId);
         } else {
-        //get http status code
-        int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-        //do some error management
+            int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+            //do some error management
+            qWarning() << "HTTP error: " << httpStatus;
         }
         reply->deleteLater();
     }
-    mSessionId = "1234";
-    emit sessionIdChanged(mSessionId);
 }

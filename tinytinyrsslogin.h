@@ -30,7 +30,6 @@ private:
     QString mSessionId;
     QUrl mServerUrl;
     QNetworkAccessManager *mNetworkManager;
-
 };
 
 #endif // TINYTINYRSSLOGIN_H

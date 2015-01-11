@@ -4,7 +4,8 @@ QT += qml quick
 
 SOURCES += main.cpp \
     tinytinyrss.cpp \
-    tinytinyrsslogin.cpp
+    tinytinyrsslogin.cpp \
+    post.cpp
 
 RESOURCES += qml.qrc \
     html.qrc
@@ -25,4 +26,5 @@ OTHER_FILES += \
 
 HEADERS += \
     tinytinyrss.h \
-    tinytinyrsslogin.h
+    tinytinyrsslogin.h \
+    post.h
