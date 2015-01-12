@@ -9,7 +9,7 @@ TinyTinyRSS::TinyTinyRSS(QObject *parent) :
     QObject(parent)
 {
     mNetworkManager = new QNetworkAccessManager(this);
-    mPosts = QList<Post*>();
+    mPosts = QList<Post *>();
 }
 
 TinyTinyRSS::~TinyTinyRSS()
@@ -69,7 +69,8 @@ void TinyTinyRSS::reply()
             QJsonDocument json = QJsonDocument::fromJson(jsonString.toUtf8());
 
             QJsonArray posts = json.object().value("content").toArray();
-            for(int i = 0; posts.count(); i++)
+
+            for(int i = 0; i <= posts.count(); i++)
             {
                 QJsonObject postJson = posts.at(i).toObject();
                 Post *post = new Post(postJson, this);
@@ -77,6 +78,7 @@ void TinyTinyRSS::reply()
             }
 
             emit postsChanged(mPosts);
+
         } else {
             int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
             //do some error management

@@ -10,11 +10,21 @@ ApplicationWindow {
 
     menuBar: TheMenuBar {}
 
-    Content {
-        id: content
-        anchors.fill: parent
-        visible: false
+    Row {
+        ListView {
+            width: 300
+            model: server.posts
+            delegate: Text {
+                text: title
+            }
+        }
+        Content {
+            id: content
+            anchors.fill: parent
+            visible: false
+        }
     }
+
 
     Login {
         id: login

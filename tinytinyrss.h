@@ -11,7 +11,7 @@
 class TinyTinyRSS : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QList<Post*> posts READ posts NOTIFY postsChanged)
+    Q_PROPERTY(QList<Post *> posts READ posts NOTIFY postsChanged)
 
 public:
     TinyTinyRSS(QObject *parent = 0);
@@ -22,7 +22,7 @@ public:
     Q_INVOKABLE void reload();
 
 signals:
-    void postsChanged(QList<Post*>);
+    void postsChanged(QList<Post *>);
 
 private slots:
     void reply();
@@ -32,7 +32,7 @@ private:
 
     QString mServerUrl;
     QString mSessionId;
-    QList<Post*> mPosts;
+    QList<Post *> mPosts;
     QNetworkAccessManager *mNetworkManager;
 };
 
