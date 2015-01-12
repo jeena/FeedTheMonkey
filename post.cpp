@@ -7,7 +7,7 @@ Post::Post(QObject *parent) : QObject(parent),
 
 }
 
-Post::Post(QJsonDocument post, QObject *parent) : QObject(parent),
+Post::Post(QJsonObject post, QObject *parent) : QObject(parent),
     mStarred(false)
 {
     qDebug() << post;

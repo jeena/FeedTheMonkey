@@ -39,10 +39,9 @@ void TinyTinyRSSLogin::reply()
 
     if (reply) {
         if (reply->error() == QNetworkReply::NoError) {
-            QJsonDocument jdoc = QJsonDocument::fromBinaryData(reply->readAll());
-            qDebug() << jdoc;
-            //mSessionId = json.toVariant().toMap().value("session_id").toString();
-            //qDebug() << "sessionId: " << mSessionId;
+            QString jsonString = QString(reply->readAll());
+            QJsonDocument json = QJsonDocument::fromJson(jsonString.toUtf8());
+            mSessionId = json.object().value("content").toObject().value("session_id").toString();
             emit sessionIdChanged(mSessionId);
         } else {
             int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();

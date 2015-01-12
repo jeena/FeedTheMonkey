@@ -3,17 +3,26 @@
 #include <QJsonObject>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
+#include <QJsonArray>
 
 TinyTinyRSS::TinyTinyRSS(QObject *parent) :
     QObject(parent)
 {
     mNetworkManager = new QNetworkAccessManager(this);
+    mPosts = QList<Post*>();
+}
+
+TinyTinyRSS::~TinyTinyRSS()
+{
+    mPosts.empty();
+    delete mNetworkManager;
 }
 
 void TinyTinyRSS::initialize(const QString serverUrl, const QString sessionId)
 {
     mServerUrl = serverUrl;
     mSessionId = sessionId;
+    reload();
 }
 
 void TinyTinyRSS::reload()
@@ -26,11 +35,6 @@ void TinyTinyRSS::reload()
     opts.insert("skip", 0);
 
     doOperation("getHeadlines", opts);
-}
-
-TinyTinyRSS::~TinyTinyRSS()
-{
-    delete mNetworkManager;
 }
 
 void TinyTinyRSS::doOperation(QString operation, QVariantMap opts)
@@ -49,9 +53,9 @@ void TinyTinyRSS::doOperation(QString operation, QVariantMap opts)
     QJsonDocument json = QJsonDocument(jsonobj);
 
     QNetworkRequest request(mServerUrl);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    QNetworkReply *reply = mNetworkManager->post(request, json.toBinaryData());
+    QNetworkReply *reply = mNetworkManager->post(request, json.toJson());
     connect(reply, SIGNAL(finished()), this, SLOT(reply()));
 }
 
@@ -61,9 +65,18 @@ void TinyTinyRSS::reply()
 
     if (reply) {
         if (reply->error() == QNetworkReply::NoError) {
-            //QJsonDocument json = QJsonDocument::fromBinaryData(reply->readAll());
-            //mSessionId = json.toVariant().toMap().value("session_id");
-            //emit sessionIdChanged(mSessionId);
+            QString jsonString = QString(reply->readAll());
+            QJsonDocument json = QJsonDocument::fromJson(jsonString.toUtf8());
+
+            QJsonArray posts = json.object().value("content").toArray();
+            for(int i = 0; posts.count(); i++)
+            {
+                QJsonObject postJson = posts.at(i).toObject();
+                Post *post = new Post(postJson, this);
+                mPosts.append(post);
+            }
+
+            emit postsChanged(mPosts);
         } else {
             int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
             //do some error management

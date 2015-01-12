@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QUrl>
 #include <QDate>
-#include <QJsonDocument>
+#include <QJsonObject>
 
 class Post : public QObject
 {
@@ -18,7 +18,7 @@ class Post : public QObject
 
 public:
     Post(QObject *parent = 0);
-    Post(QJsonDocument post, QObject *parent = 0);
+    Post(QJsonObject post, QObject *parent = 0);
     ~Post();
     QString title() const { return mTitle; }
     QString author() const { return mAuthor; }
