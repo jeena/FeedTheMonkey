@@ -16,6 +16,18 @@ void TinyTinyRSS::initialize(const QString serverUrl, const QString sessionId)
     mSessionId = sessionId;
 }
 
+void TinyTinyRSS::reload()
+{
+    QVariantMap opts;
+    opts.insert("show_excerpt", false);
+    opts.insert("view_mode", "unread");
+    opts.insert("show_content", true);
+    opts.insert("feed_id", -4);
+    opts.insert("skip", 0);
+
+    doOperation("getHeadlines", opts);
+}
+
 TinyTinyRSS::~TinyTinyRSS()
 {
     delete mNetworkManager;

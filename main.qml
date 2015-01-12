@@ -30,7 +30,7 @@ ApplicationWindow {
         id: serverLogin
         onSessionIdChanged: {
             login.visible = false;
-            server.initialize(serverUrl. sessionId);
+            server.initialize(serverUrl, sessionId);
         }
     }
 

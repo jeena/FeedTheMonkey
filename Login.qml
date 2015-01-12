@@ -5,9 +5,9 @@ Rectangle {
     color: "white"
     anchors.fill: parent
 
-    property string serverUrl: serverUrl.getText()
-    property string userName: userName.getText()
-    property string password: password.getText()
+    property string serverUrl: serverUrl.text
+    property string userName: userName.text
+    property string password: password.text
 
     Column {
         width: parent.width

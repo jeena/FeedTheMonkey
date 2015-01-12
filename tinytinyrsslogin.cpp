@@ -27,9 +27,9 @@ void TinyTinyRSSLogin::login(const QString serverUrl, const QString user, const 
     QJsonDocument json = QJsonDocument(jsonobj);
 
     QNetworkRequest request(mServerUrl);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    QNetworkReply *reply = mNetworkManager->post(request, json.toBinaryData());
+    QNetworkReply *reply = mNetworkManager->post(request, json.toJson());
     connect(reply, SIGNAL(finished()), this, SLOT(reply()));
 }
 
@@ -39,13 +39,15 @@ void TinyTinyRSSLogin::reply()
 
     if (reply) {
         if (reply->error() == QNetworkReply::NoError) {
-            QJsonDocument json = QJsonDocument::fromBinaryData(reply->readAll());
-            mSessionId = json.toVariant().toMap().value("session_id").toString();
+            QJsonDocument jdoc = QJsonDocument::fromBinaryData(reply->readAll());
+            qDebug() << jdoc;
+            //mSessionId = json.toVariant().toMap().value("session_id").toString();
+            //qDebug() << "sessionId: " << mSessionId;
             emit sessionIdChanged(mSessionId);
         } else {
             int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
             //do some error management
-            qWarning() << "HTTP error: " << httpStatus;
+            qWarning() << "HTTP error: " << httpStatus << " :: " << reply->error();
         }
         reply->deleteLater();
     }

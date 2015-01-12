@@ -11,18 +11,18 @@
 class TinyTinyRSS : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QList<Post> posts READ posts NOTIFY postsChanged)
+    Q_PROPERTY(QList<Post*> posts READ posts NOTIFY postsChanged)
 
 public:
     TinyTinyRSS(QObject *parent = 0);
     ~TinyTinyRSS();
-    QList<Post> posts() const;
+    QList<Post *> posts() const { return mPosts; }
 
     Q_INVOKABLE void initialize(const QString serverUrl, const QString sessionId);
     Q_INVOKABLE void reload();
 
 signals:
-    void postsChanged(QList<Post>);
+    void postsChanged(QList<Post*>);
 
 private slots:
     void reply();
@@ -32,7 +32,7 @@ private:
 
     QString mServerUrl;
     QString mSessionId;
-    QList<Post> mPosts;
+    QList<Post*> mPosts;
     QNetworkAccessManager *mNetworkManager;
 };
 
