@@ -11,13 +11,18 @@ ApplicationWindow {
     menuBar: TheMenuBar {}
 
     Row {
-        ListView {
-            width: 300
-            model: server.posts
-            delegate: Text {
-                text: title
-            }
+        anchors.fill: parent
+        Component {
+            id: delegate
+            Text { text: title }
         }
+
+        ListView {
+            anchors.fill: parent
+            model: server.posts
+            delegate: delegate
+        }
+
         Content {
             id: content
             anchors.fill: parent

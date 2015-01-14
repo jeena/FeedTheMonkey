@@ -13,7 +13,7 @@ class Post : public QObject
     Q_PROPERTY(QString feedTitle READ feedTitle)
     Q_PROPERTY(QString id READ id)
     Q_PROPERTY(QString feedId READ feedId)
-    Q_PROPERTY(QString author READ author)
+    Q_PROPERTY(QString author READ author CONSTANT)
     Q_PROPERTY(QUrl link READ link)
     Q_PROPERTY(QDateTime date READ date)
     Q_PROPERTY(QString content READ content)
