@@ -8,6 +8,8 @@
 TinyTinyRSS::TinyTinyRSS(QObject *parent) :
     QObject(parent)
 {
+    qRegisterMetaType<QList<Post *> >();
+
     mNetworkManager = new QNetworkAccessManager(this);
     mPosts = QList<Post *>();
 }
@@ -86,4 +88,19 @@ void TinyTinyRSS::reply()
         }
         reply->deleteLater();
     }
+}
+
+QQmlListProperty<Post> TinyTinyRSS::posts()
+{
+    return QQmlListProperty<Post>(this, mPosts);
+}
+
+int TinyTinyRSS::postsCount() const
+{
+    return mPosts.count();
+}
+
+Post *TinyTinyRSS::post(int index) const
+{
+    return mPosts.at(index);
 }

@@ -9,7 +9,7 @@
 class Post : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString title READ title)
+    Q_PROPERTY(QString title READ title CONSTANT)
     Q_PROPERTY(QString feedTitle READ feedTitle)
     Q_PROPERTY(QString id READ id)
     Q_PROPERTY(QString feedId READ feedId)

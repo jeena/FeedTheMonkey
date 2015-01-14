@@ -5,21 +5,25 @@
 #include <QMap>
 #include <QNetworkReply>
 #include <QList>
+#include <QQmlListProperty>
 
 #include "post.h"
 
 class TinyTinyRSS : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QList<Post *> posts READ posts NOTIFY postsChanged)
+    Q_PROPERTY(QQmlListProperty<Post> posts READ posts NOTIFY postsChanged)
 
 public:
     TinyTinyRSS(QObject *parent = 0);
     ~TinyTinyRSS();
-    QList<Post *> posts() const { return mPosts; }
 
     Q_INVOKABLE void initialize(const QString serverUrl, const QString sessionId);
     Q_INVOKABLE void reload();
+
+    QQmlListProperty<Post> posts();
+    int postsCount() const;
+    Post *post(int) const;
 
 signals:
     void postsChanged(QList<Post *>);
@@ -32,7 +36,7 @@ private:
 
     QString mServerUrl;
     QString mSessionId;
-    QList<Post *> mPosts;
+    QList<Post*> mPosts;
     QNetworkAccessManager *mNetworkManager;
 };
 
