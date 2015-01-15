@@ -1,35 +1,39 @@
 import QtQuick 2.3
-import QtQuick.Controls 1.2
+import QtQuick.Controls 1.3
 import TTRSS 1.0
 
 ApplicationWindow {
     id: window
     visible: true
-    width: 360
-    height: 360
+    width: 1024
+    height: 800
 
     menuBar: TheMenuBar {}
 
-    Row {
-        anchors.fill: parent
-        Component {
-            id: delegate
-            Text { text: title }
-        }
+    Component {
+        id: delegate
+        Text { text: title }
+    }
 
+    ScrollView {
+        width: parent.width / 3
+        anchors.bottom: parent.bottom
+        anchors.top: parent.top
         ListView {
-            anchors.fill: parent
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            spacing: 5
             model: server.posts
             delegate: delegate
         }
-
-        Content {
-            id: content
-            anchors.fill: parent
-            visible: false
-        }
     }
 
+    Content {
+        width: parent.width / 3 * 2
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+    }
 
     Login {
         id: login

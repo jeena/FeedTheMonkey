@@ -11,7 +11,8 @@ Rectangle {
 
     Column {
         width: parent.width
-        anchors.margins: 20
+        anchors.margins: parent.width / 4
+        spacing: 10
 
         Text {
             text: qsTr("Please specify a server url, a username and a password.")
