@@ -1,5 +1,6 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.3
+import QtQuick.Layouts 1.1
 import TTRSS 1.0
 
 ApplicationWindow {
@@ -10,29 +11,39 @@ ApplicationWindow {
 
     menuBar: TheMenuBar {}
 
-    Component {
-        id: delegate
-        Text { text: title }
+    function loggedIn() {
+        login.visible = false;
+        server.initialize(serverLogin.serverUrl, serverLogin.sessionId);
     }
 
-    ScrollView {
-        width: parent.width / 3
-        anchors.bottom: parent.bottom
-        anchors.top: parent.top
-        ListView {
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            spacing: 5
-            model: server.posts
-            delegate: delegate
+    SplitView {
+        anchors.fill: parent
+        orientation: Qt.Horizontal
+
+        ScrollView {
+            Layout.minimumWidth: 400
+
+            ListView {
+                id: listView
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                spacing: 5
+                model: server.posts
+                delegate: PostListItem {
+                    listView: listView
+                }
+                highlight: Rectangle {
+                    color: "lightblue"
+                    opacity: 0.5
+                    focus: true
+                }
+            }
         }
-    }
 
-    Content {
-        width: parent.width / 3 * 2
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
+        Content {
+            Layout.minimumWidth: 50
+            Layout.fillWidth: true
+        }
     }
 
     Login {
@@ -47,13 +58,16 @@ ApplicationWindow {
 
     ServerLogin {
         id: serverLogin
-        onSessionIdChanged: {
-            login.visible = false;
-            server.initialize(serverUrl, sessionId);
-        }
+        onSessionIdChanged: loggedIn()
     }
 
     Server {
         id: server
+    }
+
+    Component.onCompleted: {
+        if(serverLogin.loggedIn()) {
+            loggedIn();
+        }
     }
 }

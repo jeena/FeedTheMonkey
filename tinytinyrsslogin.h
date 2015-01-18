@@ -18,6 +18,7 @@ public:
     QString sessionId() const { return mSessionId; }
     QUrl serverUrl() const { return mServerUrl; }
 
+    Q_INVOKABLE bool loggedIn();
     Q_INVOKABLE void login(const QString serverUrl, const QString user, const QString password);
 
 signals:

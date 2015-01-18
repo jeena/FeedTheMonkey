@@ -10,13 +10,14 @@ class Post : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString title READ title CONSTANT)
-    Q_PROPERTY(QString feedTitle READ feedTitle)
-    Q_PROPERTY(QString id READ id)
-    Q_PROPERTY(QString feedId READ feedId)
+    Q_PROPERTY(QString feedTitle READ feedTitle CONSTANT)
+    Q_PROPERTY(QString id READ id CONSTANT)
+    Q_PROPERTY(QString feedId READ feedId CONSTANT)
     Q_PROPERTY(QString author READ author CONSTANT)
-    Q_PROPERTY(QUrl link READ link)
-    Q_PROPERTY(QDateTime date READ date)
-    Q_PROPERTY(QString content READ content)
+    Q_PROPERTY(QUrl link READ link CONSTANT)
+    Q_PROPERTY(QDateTime date READ date CONSTANT)
+    Q_PROPERTY(QString content READ content CONSTANT)
+    Q_PROPERTY(QString excerpt READ excerpt CONSTANT)
     Q_PROPERTY(bool starred READ starred NOTIFY starredChanged)
     Q_PROPERTY(bool read READ read NOTIFY readChanged)
 
@@ -32,6 +33,7 @@ public:
     QUrl link() const { return mLink; }
     QDateTime date() const { return mDate; }
     QString content() const { return mContent; }
+    QString excerpt() const { return mExcerpt; }
     bool starred() const { return mStarred; }
     bool read() const { return mRead; }
 
@@ -50,6 +52,7 @@ private:
     QUrl mLink;
     QDateTime mDate;
     QString mContent;
+    QString mExcerpt;
     bool mStarred;
     bool mRead;
 };

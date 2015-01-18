@@ -2,16 +2,26 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkReply>
+#include <QSettings>
 
 TinyTinyRSSLogin::TinyTinyRSSLogin(QObject *parent) :
     QObject(parent)
 {
     mNetworkManager = new QNetworkAccessManager(this);
+
+    QSettings settings("net.jeena", "feedmonkey");
+    mSessionId = settings.value("sessionId").toString();
+    mServerUrl = settings.value("serverUrl").toString();
 }
 
 TinyTinyRSSLogin::~TinyTinyRSSLogin()
 {
     delete mNetworkManager;
+}
+
+bool TinyTinyRSSLogin::loggedIn()
+{
+    return !mSessionId.isEmpty();
 }
 
 void TinyTinyRSSLogin::login(const QString serverUrl, const QString user, const QString password)
@@ -39,10 +49,18 @@ void TinyTinyRSSLogin::reply()
 
     if (reply) {
         if (reply->error() == QNetworkReply::NoError) {
+
             QString jsonString = QString(reply->readAll());
             QJsonDocument json = QJsonDocument::fromJson(jsonString.toUtf8());
             mSessionId = json.object().value("content").toObject().value("session_id").toString();
+
             emit sessionIdChanged(mSessionId);
+
+            QSettings settings("net.jeena", "feedmonkey");
+            settings.setValue("sessionId", mSessionId);
+            settings.setValue("serverUrl", mServerUrl);
+            settings.sync();
+
         } else {
             int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
             //do some error management
