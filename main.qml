@@ -25,18 +25,15 @@ ApplicationWindow {
 
             ListView {
                 id: listView
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                spacing: 5
+                anchors.fill: parent
+                spacing: 1
                 model: server.posts
-                delegate: PostListItem {
-                    listView: listView
-                }
+                delegate: delegate
                 highlight: Rectangle {
                     color: "lightblue"
                     opacity: 0.5
-                    focus: true
                 }
+                focus: true
             }
         }
 
@@ -63,6 +60,13 @@ ApplicationWindow {
 
     Server {
         id: server
+    }
+
+    Component {
+        id: delegate
+        PostListItem {
+            listView: listView
+        }
     }
 
     Component.onCompleted: {
