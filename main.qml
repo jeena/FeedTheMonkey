@@ -34,10 +34,14 @@ ApplicationWindow {
                     opacity: 0.5
                 }
                 focus: true
+                onCurrentItemChanged: {
+                    content.experimental.evaluateJavaScript("setArticle(" + server.posts[currentIndex].jsonString + ")")
+                }
             }
         }
 
         Content {
+            id: content
             Layout.minimumWidth: 50
             Layout.fillWidth: true
         }
@@ -64,9 +68,7 @@ ApplicationWindow {
 
     Component {
         id: delegate
-        PostListItem {
-            listView: listView
-        }
+        PostListItem {}
     }
 
     Component.onCompleted: {

@@ -4,7 +4,7 @@ Item {
     property ListView listView
 
     height: column.height + 10
-    width: listView.parent.width
+    width: parent.parent.parent.width
 
     Rectangle {
         anchors.fill: parent
@@ -16,6 +16,7 @@ Item {
 
         Column {
             id: column
+            width: parent.width
 
             Row {
                 spacing: 10
@@ -51,7 +52,7 @@ Item {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            listView.currentIndex = index
+            parent.parent.parent.currentIndex = index
         }
     }
 }

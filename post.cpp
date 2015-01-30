@@ -1,5 +1,6 @@
 #include "post.h"
 #include <QDebug>
+#include <QJsonDocument>
 
 Post::Post(QObject *parent) : QObject(parent)
 {
@@ -22,6 +23,10 @@ Post::Post(QJsonObject post, QObject *parent) : QObject(parent)
     mExcerpt = post.value("excerpt").toString().trimmed();
     mStarred = post.value("marked").toBool();
     mRead = !post.value("unread").toBool();
+
+    QJsonDocument doc(post);
+    QString result(doc.toJson(QJsonDocument::Indented));
+    mJsonString = result;
 }
 
 Post::~Post()

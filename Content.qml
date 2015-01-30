@@ -1,8 +1,12 @@
 import QtWebKit 3.0
+import QtWebKit.experimental 1.0
 
 WebView {
-    id: webview
     url: "content.html"
+
+    // Enable communication between QML and WebKit
+    experimental.preferences.navigatorQtObjectEnabled: true;
+
     onNavigationRequested: {
         if (request.navigationType != WebView.LinkClickedNavigation) {
             request.action = WebView.AcceptRequest;

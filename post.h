@@ -20,6 +20,7 @@ class Post : public QObject
     Q_PROPERTY(QString excerpt READ excerpt CONSTANT)
     Q_PROPERTY(bool starred READ starred NOTIFY starredChanged)
     Q_PROPERTY(bool read READ read NOTIFY readChanged)
+    Q_PROPERTY(QString jsonString READ jsonString CONSTANT)
 
 public:
     Post(QObject *parent = 0);
@@ -36,6 +37,7 @@ public:
     QString excerpt() const { return mExcerpt; }
     bool starred() const { return mStarred; }
     bool read() const { return mRead; }
+    QString jsonString() const { return mJsonString; }
 
 signals:
     void starredChanged(bool);
@@ -55,6 +57,7 @@ private:
     QString mExcerpt;
     bool mStarred;
     bool mRead;
+    QString mJsonString;
 };
 
 #endif // POST_H
