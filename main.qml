@@ -24,6 +24,7 @@ ApplicationWindow {
     SplitView {
         anchors.fill: parent
         orientation: Qt.Horizontal
+        visible: serverLogin.loggedIn()
 
         Sidebar {
             id: sidebar
@@ -41,7 +42,7 @@ ApplicationWindow {
     Login {
         id: login
         anchors.fill: parent
-        visible: true
+        visible: !serverLogin.loggedIn()
 
         function login() {
             serverLogin.login(serverUrl, userName, password)

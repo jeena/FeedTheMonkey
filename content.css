@@ -1,37 +1,43 @@
 body {
-        font-family: "Ubuntu", "Lucida Grande", "Tahoma", sans-serif;
-        padding: 1em 2em 1em 2em;
-        background: transpatent;
+        font-family: sans-serif;
+        padding: 1em 1.5em;
+        font-weight: lighter;
+        background: #eee;
 }
-body.darwin {
-        font-family: "LucidaGrande", sans-serif;
-}
+
 h1 {
-        font-weight: normal;
+        font-weight: lighter;
         margin: 0;
         padding: 0;
 }
-header {
-        margin-bottom: 1em;
-        border-bottom: 1px solid #aaa;
-        padding-bottom: 1em;
+
+#date:not(:empty) {
+    border-bottom: 1px solid #aaa;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    display: block;
 }
+
 .starred:after {
         content: "*";
 }
+
 header p {
         color: #aaa;
         margin: 0;
         padding: 0
 }
+
 a {
-        color: #772953;
+        color: #333;
         text-decoration: none;
 }
+
 img {
         max-width: 100%;
         height: auto;
 }
+
 article {
         line-height: 1.6;
 }

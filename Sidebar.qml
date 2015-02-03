@@ -31,13 +31,17 @@ ScrollView {
         spacing: 1
         model: item.server.posts
 
-        delegate: Component {
-            PostListItem {}
-        }
+        delegate: PostListItem {}
 
-        highlight: Rectangle {
-            color: "lightblue"
-            opacity: 0.5
+        highlightFollowsCurrentItem: false
+        highlight: Component {
+            Rectangle {
+                width: listView.currentItem.width
+                height: listView.currentItem.height
+                color: "lightblue"
+                opacity: 0.5
+                y: listView.currentItem.y
+            }
         }
 
         onCurrentItemChanged: {
