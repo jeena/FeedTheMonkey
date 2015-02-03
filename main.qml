@@ -12,6 +12,7 @@ ApplicationWindow {
     menuBar: TheMenuBar {
         id: menu
         server: server
+        sidebar: sidebar
     }
 
     function loggedIn() {
@@ -25,6 +26,7 @@ ApplicationWindow {
         orientation: Qt.Horizontal
 
         Sidebar {
+            id: sidebar
             server: server
             content: content
         }

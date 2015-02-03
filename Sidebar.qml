@@ -9,9 +9,22 @@ ScrollView {
     property Server server
     property Content content
 
+    function next() {
+        if(listView.count > listView.currentIndex) {
+            listView.currentIndex++;
+        }
+    }
+
+    function previous() {
+        if(listView.currentIndex > 0) {
+            listView.currentIndex--;
+        }
+    }
+
     Layout.minimumWidth: 400
 
     ListView {
+        id: listView
 
         focus: true
         anchors.fill: parent

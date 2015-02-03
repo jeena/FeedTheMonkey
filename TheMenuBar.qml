@@ -5,16 +5,18 @@ MenuBar {
 
     property bool loggedIn: false
     property Server server
+    property Sidebar sidebar
 
     Menu {
         title: qsTr("File")
         MenuItem {
             text: qsTr("Close")
             shortcut: "Ctrl+W"
+            enabled: false
         }
         MenuItem {
             text: qsTr("Log Out")
-            enabled: loggedIn
+            enabled: false
         }
         MenuSeparator { }
         MenuItem {
@@ -29,37 +31,39 @@ MenuBar {
         MenuItem {
             text: qsTr("Reload")
             shortcut: "R"
-            enabled: loggedIn
+            enabled: false
         }
         MenuItem {
             text: qsTr("Show &Starred")
             shortcut: "Ctrl+S"
-            enabled: loggedIn
+            enabled: false
         }
         MenuItem {
             text: qsTr("Set &Starred")
             shortcut: "S"
-            enabled: loggedIn
+            enabled: false
         }
         MenuItem {
             text: qsTr("Set &Unread")
             shortcut: "U"
-            enabled: loggedIn
+            enabled: false
         }
         MenuItem {
             text: qsTr("Next")
             shortcut: "J"
             enabled: loggedIn
+            onTriggered: sidebar.next()
         }
         MenuItem {
             text: qsTr("Previous")
             shortcut: "K"
             enabled: loggedIn
+            onTriggered: sidebar.previous()
         }
         MenuItem {
             text: qsTr("Open in Browser")
             shortcut: "N"
-            enabled: loggedIn
+            enabled: false
         }
     }
 
@@ -68,14 +72,17 @@ MenuBar {
         MenuItem {
             text: qsTr("Zoom In")
             shortcut: "Ctrl++"
+            enabled: false
         }
         MenuItem {
             text: qsTr("Zoom Out")
             shortcut: "Ctrl+-"
+            enabled: false
         }
         MenuItem {
             text: qsTr("Reset")
             shortcut: "Ctrl+0"
+            enabled: false
         }
     }
 
@@ -84,6 +91,7 @@ MenuBar {
         MenuItem {
             text: qsTr("Reset to default")
             shortcut: "Ctrl+D"
+            enabled: false
         }
     }
 

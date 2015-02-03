@@ -16,7 +16,9 @@ ScrollView {
         property Post post: content.post
 
         function setPost() {
-            experimental.evaluateJavaScript("setArticle(" + post.jsonString + ")")
+            if(post) {
+                experimental.evaluateJavaScript("setArticle(" + post.jsonString + ")")
+            }
         }
 
         // Enable communication between QML and WebKit
@@ -31,12 +33,7 @@ ScrollView {
             }
         }
 
-        onLoadingChanged: {
-            setPost()
-        }
-
-        onPostChanged: {
-            setPost();
-        }
+        onLoadingChanged: setPost()
+        onPostChanged: setPost()
     }
 }

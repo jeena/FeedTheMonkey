@@ -35,5 +35,10 @@ function setArticle(article) {
         if(article.author && article.author.length > 0)
             $("author").innerHTML = "&ndash; " + article.author
         $("article").innerHTML = article.content;
+
+        var as = $("article").getElementsByTagName("a");
+        for(var i = 0; i <= as.length; i++) {
+            as[i].target = "";
+        }
     }
 }

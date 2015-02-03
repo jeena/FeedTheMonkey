@@ -20,7 +20,7 @@ Post::Post(QJsonObject post, QObject *parent) : QObject(parent)
     timestamp.setTime_t(post.value("updated").toInt());
     mDate = timestamp;
     mContent = post.value("content").toString().trimmed();
-    mExcerpt = post.value("excerpt").toString().trimmed();
+    mExcerpt = post.value("excerpt").toString().remove(QRegExp("<[^>]*>")).replace("&hellip;", " ...").trimmed().replace("(\\s+)", " ").replace("\n", "");
     mStarred = post.value("marked").toBool();
     mRead = !post.value("unread").toBool();
 
