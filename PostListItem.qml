@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Controls 1.3
 
 Component {
     id: component
@@ -25,26 +26,26 @@ Component {
 
                     Row {
                         spacing: 10
-                        Text {
+                        Label {
                             text: feedTitle
                             font.pointSize: 12
                             color: "gray"
                             wrapMode: Text.Wrap
                         }
-                        Text {
-                            text: date.toLocaleString(null)
+                        Label {
+                            text: date.toLocaleString(Qt.locale(), Locale.ShortFormat)
                             font.pointSize: 12
                             color: "gray"
                             wrapMode: Text.Wrap
                         }
                     }
-                    Text {
+                    Label {
                         text: title
                         font.pointSize: 16
                         wrapMode: Text.Wrap
                         width: parent.width
                     }
-                    Text {
+                    Label {
                         text: excerpt
                         font.pointSize: 12
                         color: "gray"
