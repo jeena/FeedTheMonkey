@@ -8,12 +8,8 @@ Component {
         width: parent.parent.parent.width
 
         Rectangle {
-            property variant colors: ["#AAFFFFFF", "transparent"]
             anchors.fill: parent
-            color: {
-                if(item.ListView.isCurrentItem) return "transparent"
-                return colors[index % 2]
-            }
+            color: "transparent"
 
             Rectangle {
                 anchors.fill: parent
@@ -56,6 +52,13 @@ Component {
                         width: parent.width
                     }
                 }
+            }
+
+            Rectangle {
+                anchors.top: parent.bottom
+                width: parent.width
+                height: 1
+                color: "lightgray"
             }
         }
 

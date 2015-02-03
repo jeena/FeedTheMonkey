@@ -2,12 +2,17 @@ import QtWebKit 3.0
 import QtWebKit.experimental 1.0
 import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
+import QtQuick.Controls.Styles 1.3
 import TTRSS 1.0
 
 ScrollView {
     id: content
     property Post post
     Layout.minimumWidth: 400
+
+    style: ScrollViewStyle {
+        transientScrollBars: true
+    }
 
     WebView {
         id: webView
