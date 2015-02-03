@@ -9,9 +9,13 @@ ApplicationWindow {
     width: 1024
     height: 800
 
-    menuBar: TheMenuBar {}
+    menuBar: TheMenuBar {
+        id: menu
+        server: server
+    }
 
     function loggedIn() {
+        menu.loggedIn = true;
         login.visible = false;
         server.initialize(serverLogin.serverUrl, serverLogin.sessionId);
     }
@@ -20,24 +24,9 @@ ApplicationWindow {
         anchors.fill: parent
         orientation: Qt.Horizontal
 
-        ScrollView {
-            Layout.minimumWidth: 400
-
-            ListView {
-                id: listView
-                anchors.fill: parent
-                spacing: 1
-                model: server.posts
-                delegate: delegate
-                highlight: Rectangle {
-                    color: "lightblue"
-                    opacity: 0.5
-                }
-                focus: true
-                onCurrentItemChanged: {
-                    content.experimental.evaluateJavaScript("setArticle(" + server.posts[currentIndex].jsonString + ")")
-                }
-            }
+        Sidebar {
+            server: server
+            content: content
         }
 
         Content {
@@ -64,11 +53,6 @@ ApplicationWindow {
 
     Server {
         id: server
-    }
-
-    Component {
-        id: delegate
-        PostListItem {}
     }
 
     Component.onCompleted: {

@@ -1,10 +1,10 @@
 import QtQuick.Controls 1.2
+import TTRSS 1.0
 
 MenuBar {
 
-    function loggedIn() {
-        return false;
-    }
+    property bool loggedIn: false
+    property Server server
 
     Menu {
         title: qsTr("File")
@@ -14,7 +14,7 @@ MenuBar {
         }
         MenuItem {
             text: qsTr("Log Out")
-            enabled: loggedIn()
+            enabled: loggedIn
         }
         MenuSeparator { }
         MenuItem {
@@ -29,37 +29,37 @@ MenuBar {
         MenuItem {
             text: qsTr("Reload")
             shortcut: "R"
-            enabled: loggedIn()
+            enabled: loggedIn
         }
         MenuItem {
             text: qsTr("Show &Starred")
             shortcut: "Ctrl+S"
-            enabled: loggedIn()
+            enabled: loggedIn
         }
         MenuItem {
             text: qsTr("Set &Starred")
             shortcut: "S"
-            enabled: loggedIn()
+            enabled: loggedIn
         }
         MenuItem {
             text: qsTr("Set &Unread")
             shortcut: "U"
-            enabled: loggedIn()
+            enabled: loggedIn
         }
         MenuItem {
             text: qsTr("Next")
             shortcut: "J"
-            enabled: loggedIn()
+            enabled: loggedIn
         }
         MenuItem {
             text: qsTr("Previous")
             shortcut: "K"
-            enabled: loggedIn()
+            enabled: loggedIn
         }
         MenuItem {
             text: qsTr("Open in Browser")
             shortcut: "N"
-            enabled: loggedIn()
+            enabled: loggedIn
         }
     }
 

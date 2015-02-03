@@ -1,7 +1,7 @@
 body {
         font-family: "Ubuntu", "Lucida Grande", "Tahoma", sans-serif;
         padding: 1em 2em 1em 2em;
-        font-size: 1.6em;
+        background: transpatent;
 }
 body.darwin {
         font-family: "LucidaGrande", sans-serif;
