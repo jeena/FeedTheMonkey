@@ -29,27 +29,35 @@ Component {
                         Label {
                             text: feedTitle
                             font.pointSize: 12
+                            textFormat: Text.PlainText
                             color: "gray"
-                            wrapMode: Text.Wrap
+                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                            renderType: Text.NativeRendering
                         }
                         Label {
                             text: date.toLocaleString(Qt.locale(), Locale.ShortFormat)
                             font.pointSize: 12
+                            textFormat: Text.PlainText
                             color: "gray"
-                            wrapMode: Text.Wrap
+                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                            renderType: Text.NativeRendering
                         }
                     }
                     Label {
                         text: title
                         font.pointSize: 16
-                        wrapMode: Text.Wrap
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        renderType: Text.NativeRendering
                         width: parent.width
                     }
                     Label {
                         text: excerpt
                         font.pointSize: 12
+                        textFormat: Text.PlainText
                         color: "gray"
-                        wrapMode: Text.Wrap
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        renderType: Text.NativeRendering
                         width: parent.width
                     }
                 }

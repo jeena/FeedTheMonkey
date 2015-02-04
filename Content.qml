@@ -13,7 +13,7 @@ ScrollView {
     }
 
     Item {
-        height: column.height + 20
+        height: column.height + 50
         width: parent.parent.width
 
         Rectangle {
@@ -42,23 +42,33 @@ ScrollView {
                     }
                     color: "gray"
                     font.pointSize: 16
-                    wrapMode: Text.Wrap
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     width: parent.width
+                    renderType: Text.NativeRendering
                 }
 
                 Label {
                     text: post ? post.title : ""
                     font.pointSize: 30
-                    wrapMode: Text.Wrap
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     width: parent.width
+                    renderType: Text.NativeRendering
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: Qt.openUrlExternally(post.link)
+                    }
                 }
 
                 Label {
                     text: post ? post.date.toLocaleString(Qt.locale(), Locale.LongFormat) : ""
                     color: "gray"
                     font.pointSize: 16
-                    wrapMode: Text.Wrap
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     width: parent.width
+                    renderType: Text.NativeRendering
                 }
 
                 Rectangle {
@@ -88,14 +98,15 @@ ScrollView {
 
                     Label {
                         id: contentLabel
-                        text: post ? post.content : ""
+                        text: post ? "<style>a { color: #555; }</style>" + post.content : ""
+                        textFormat: Text.RichText
                         font.pointSize: 16
-                        wrapMode: Text.Wrap
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         width: parent.width
+                        renderType: Text.NativeRendering
                         anchors.top: parent.top
                         anchors.topMargin: 20
                         lineHeight: 1.3
-                        linkColor: "#555"
                         onLinkActivated: {
                             Qt.openUrlExternally(link)
                         }
