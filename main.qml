@@ -5,9 +5,14 @@ import TTRSS 1.0
 
 ApplicationWindow {
     id: window
+    title: "FeedMonkey"
+
     visible: true
-    width: 1024
-    height: 800
+
+    contentItem.minimumWidth: 640
+    contentItem.minimumHeight: 480
+    contentItem.implicitWidth: 1024
+    contentItem.implicitHeight: 800
 
     menuBar: TheMenuBar {
         id: menu
@@ -30,12 +35,16 @@ ApplicationWindow {
             id: sidebar
             server: server
             content: content
+
+            Layout.minimumWidth: 200
+            implicitWidth: 300
         }
 
         Content {
             id: content
-            Layout.minimumWidth: 50
-            Layout.fillWidth: true
+
+            Layout.minimumWidth: 200
+            implicitWidth: 624
         }
     }
 

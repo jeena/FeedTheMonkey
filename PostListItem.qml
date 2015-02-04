@@ -54,7 +54,7 @@ Component {
                     Label {
                         text: excerpt
                         font.pointSize: 12
-                        textFormat: Text.PlainText
+                        textFormat: Text.RichText
                         color: "gray"
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         renderType: Text.NativeRendering

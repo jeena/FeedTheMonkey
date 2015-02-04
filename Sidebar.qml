@@ -26,8 +26,6 @@ ScrollView {
         }
     }
 
-    Layout.minimumWidth: 400
-
     ListView {
         id: listView
 
