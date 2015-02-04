@@ -49,6 +49,7 @@ ScrollView {
 
         onCurrentItemChanged: {
             item.content.post = server.posts[currentIndex]
+            content.flickableItem.contentY = 0
         }
     }
 }
