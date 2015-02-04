@@ -30,6 +30,7 @@ ApplicationWindow {
         anchors.fill: parent
         orientation: Qt.Horizontal
         visible: serverLogin.loggedIn()
+        focus: true
 
         Sidebar {
             id: sidebar
@@ -46,6 +47,11 @@ ApplicationWindow {
             Layout.minimumWidth: 200
             implicitWidth: 624
         }
+
+        Keys.onRightPressed: sidebar.next()
+        Keys.onLeftPressed: sidebar.previous()
+        Keys.onDownPressed: content.scrollDown()
+        Keys.onUpPressed: content.scrollUp()
     }
 
     Login {

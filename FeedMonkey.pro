@@ -7,8 +7,7 @@ SOURCES += main.cpp \
     tinytinyrsslogin.cpp \
     post.cpp
 
-RESOURCES += qml.qrc \
-    html.qrc
+RESOURCES += qml.qrc
 
 # Needed for bringing browser from background to foreground using QDesktopServices: http://bugreports.qt-project.org/browse/QTBUG-8336
 TARGET.CAPABILITY += SwEvent
@@ -19,10 +18,7 @@ QML_IMPORT_PATH =
 # Default rules for deployment.
 include(deployment.pri)
 
-OTHER_FILES += \
-    content.html \
-    content.css \
-    content.js
+OTHER_FILES +=
 
 HEADERS += \
     tinytinyrss.h \

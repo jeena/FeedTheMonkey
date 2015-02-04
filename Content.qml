@@ -5,9 +5,19 @@ import TTRSS 1.0
 
 ScrollView {
     property Post post
+    property int headLinefontSize: 23
+    property int textfontSize: 14
 
     style: ScrollViewStyle {
         transientScrollBars: true
+    }
+
+    function scrollDown() {
+        flickableItem.contentY += 30
+    }
+
+    function scrollUp() {
+
     }
 
     Item {
@@ -39,7 +49,7 @@ ScrollView {
                         }
                     }
                     color: "gray"
-                    font.pointSize: 16
+                    font.pointSize: textfontSize
                     textFormat: Text.PlainText
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     width: parent.width
@@ -48,7 +58,7 @@ ScrollView {
 
                 Label {
                     text: post ? post.title : ""
-                    font.pointSize: 30
+                    font.pointSize: headLinefontSize
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     width: parent.width
                     renderType: Text.NativeRendering
@@ -62,7 +72,7 @@ ScrollView {
                 Label {
                     text: post ? post.date.toLocaleString(Qt.locale(), Locale.LongFormat) : ""
                     color: "gray"
-                    font.pointSize: 16
+                    font.pointSize: textfontSize
                     textFormat: Text.PlainText
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     width: parent.width
@@ -98,7 +108,7 @@ ScrollView {
                         id: contentLabel
                         text: post ? "<style>a { color: #555; }</style>" + post.content : ""
                         textFormat: Text.RichText
-                        font.pointSize: 16
+                        font.pointSize: textfontSize
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         width: parent.width
                         renderType: Text.NativeRendering

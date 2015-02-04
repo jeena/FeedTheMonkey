@@ -2,8 +2,10 @@ import QtQuick 2.0
 import QtQuick.Controls 1.3
 
 Component {
-    id: component
     Item {
+        property int headLinefontSize: 14
+        property int smallfontSize: 10
+
         id: item
         height: column.height + 20
         width: parent.parent.parent.width
@@ -28,7 +30,7 @@ Component {
                         spacing: 10
                         Label {
                             text: feedTitle
-                            font.pointSize: 12
+                            font.pointSize: smallfontSize
                             textFormat: Text.PlainText
                             color: "gray"
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
@@ -36,7 +38,7 @@ Component {
                         }
                         Label {
                             text: date.toLocaleString(Qt.locale(), Locale.ShortFormat)
-                            font.pointSize: 12
+                            font.pointSize: smallfontSize
                             textFormat: Text.PlainText
                             color: "gray"
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
@@ -45,7 +47,7 @@ Component {
                     }
                     Label {
                         text: title
-                        font.pointSize: 16
+                        font.pointSize: headLinefontSize
                         textFormat: Text.PlainText
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         renderType: Text.NativeRendering
@@ -53,7 +55,7 @@ Component {
                     }
                     Label {
                         text: excerpt
-                        font.pointSize: 12
+                        font.pointSize: smallfontSize
                         textFormat: Text.RichText
                         color: "gray"
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere

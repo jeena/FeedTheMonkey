@@ -2,7 +2,6 @@ import QtQuick.Controls 1.2
 import TTRSS 1.0
 
 MenuBar {
-
     property bool loggedIn: false
     property Server server
     property Sidebar sidebar
