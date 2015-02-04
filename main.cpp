@@ -3,6 +3,7 @@
 #include <qdebug.h>
 #include <QMetaType>
 #include <QtQml>
+#include <QIcon>
 
 #include "tinytinyrsslogin.h"
 #include "tinytinyrss.h"

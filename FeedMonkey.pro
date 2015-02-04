@@ -7,7 +7,10 @@ SOURCES += main.cpp \
     tinytinyrsslogin.cpp \
     post.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    images.qrc
+
+RC_FILE = Icon.icns
 
 # Needed for bringing browser from background to foreground using QDesktopServices: http://bugreports.qt-project.org/browse/QTBUG-8336
 TARGET.CAPABILITY += SwEvent

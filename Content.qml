@@ -7,22 +7,53 @@ ScrollView {
     property Post post
     property int headLinefontSize: 23
     property int textfontSize: 14
+    property int scrollJump: 48
+    property int pageJump: parent.height
 
     style: ScrollViewStyle {
         transientScrollBars: true
     }
 
-    function scrollDown() {
-        flickableItem.contentY += 30
+    function scrollDown(jump) {
+        smoothScrolling.enabled = true
+
+        var top = Math.max(contentItem.height - parent.height, 0);
+
+        if(jump && flickableItem.contentY < top - jump) {
+            flickableItem.contentY += jump
+        } else {
+            flickableItem.contentY = top
+        }
     }
 
-    function scrollUp() {
+    function scrollUp(jump) {
+        smoothScrolling.enabled = true
+        if(jump && flickableItem.contentY >= jump) {
+            flickableItem.contentY -= jump;
+        } else {
+            flickableItem.contentY = 0;
+        }
+    }
 
+    Behavior on flickableItem.contentY {
+        id: smoothScrolling
+        enabled: false
+        NumberAnimation {
+            easing.type: Easing.OutCubic
+        }
     }
 
     Item {
         height: column.height + 50
         width: parent.parent.width
+
+        MouseArea {
+            onWheel: {
+                wheel.accepted = false
+                smoothScrolling.enabled = false
+            }
+            anchors.fill: parent
+        }
 
         Rectangle {
             anchors.fill: parent

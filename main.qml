@@ -50,8 +50,22 @@ ApplicationWindow {
 
         Keys.onRightPressed: sidebar.next()
         Keys.onLeftPressed: sidebar.previous()
-        Keys.onDownPressed: content.scrollDown()
-        Keys.onUpPressed: content.scrollUp()
+        Keys.onDownPressed: content.scrollDown(content.scrollJump)
+        Keys.onUpPressed: content.scrollUp(content.scrollJump)
+        Keys.onSpacePressed: content.scrollDown(content.pageJump)
+        Keys.onEnterPressed: Qt.openUrlExternally(content.post.link)
+        Keys.onReturnPressed: Qt.openUrlExternally(content.post.link)
+        Keys.onPressed: {
+            if(event.key === Qt.Key_Home) {
+                content.scrollUp();
+            } else if (event.key === Qt.Key_End) {
+                content.scrollDown();
+            } else if (event.key === Qt.Key_PageUp) {
+                content.scrollUp(content.pageJump)
+            } else if (event.key === Qt.Key_PageDown) {
+                content.scrollDown(content.pageJump)
+            }
+        }
     }
 
     Login {

@@ -1,2 +1,6 @@
-<RCC/>
-
+<RCC>
+    <qresource prefix="/">
+        <file>feedthemonkey.xpm</file>
+        <file>Icon.icns</file>
+    </qresource>
+</RCC>
