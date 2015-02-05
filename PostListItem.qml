@@ -4,7 +4,7 @@ import QtQuick.Controls 1.3
 Component {
     Item {
         property int headLinefontSize: 14
-        property int smallfontSize: 10
+        property int smallfontSize: 11
 
         id: item
         height: column.height + 20
@@ -47,6 +47,7 @@ Component {
                     }
                     Label {
                         text: title
+                        color: read ? "gray" : this.color
                         font.pointSize: headLinefontSize
                         textFormat: Text.PlainText
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere

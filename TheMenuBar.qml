@@ -62,7 +62,8 @@ MenuBar {
         MenuItem {
             text: qsTr("Open in Browser")
             shortcut: "N"
-            enabled: false
+            enabled: true
+            onTriggered: Qt.openUrlExternally(content.post.link)
         }
     }
 
