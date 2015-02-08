@@ -4,15 +4,18 @@ import QtQuick.Layouts 1.1
 import TTRSS 1.0
 
 ApplicationWindow {
-    id: window
+    id: app
     title: "FeedMonkey"
-
     visible: true
 
     contentItem.minimumWidth: 640
     contentItem.minimumHeight: 480
     contentItem.implicitWidth: 1024
     contentItem.implicitHeight: 800
+
+    property Server server: server
+    property Sidebar sidebar: sidebar
+    property Content content: content
 
     menuBar: TheMenuBar {
         id: menu
@@ -34,8 +37,8 @@ ApplicationWindow {
 
         Sidebar {
             id: sidebar
-            server: server
             content: content
+            server: server
 
             Layout.minimumWidth: 200
             implicitWidth: 300
@@ -43,6 +46,7 @@ ApplicationWindow {
 
         Content {
             id: content
+            app: app
 
             Layout.minimumWidth: 200
             implicitWidth: 624
@@ -50,7 +54,7 @@ ApplicationWindow {
 
         Keys.onRightPressed: sidebar.next()
         Keys.onLeftPressed: sidebar.previous()
-        /*
+
         Keys.onDownPressed: content.scrollDown(content.scrollJump)
         Keys.onUpPressed: content.scrollUp(content.scrollJump)
         Keys.onSpacePressed: content.scrollDown(content.pageJump)
@@ -66,7 +70,7 @@ ApplicationWindow {
             } else if (event.key === Qt.Key_PageDown) {
                 content.scrollDown(content.pageJump)
             }
-        }*/
+        }
     }
 
     Login {

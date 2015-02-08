@@ -10,6 +10,8 @@ import TTRSS 1.0
 ScrollView {
     id: content
     property Post post
+    property ApplicationWindow app
+
     property int headLinefontSize: 23
     property int textfontSize: 14
     property int scrollJump: 48
@@ -20,12 +22,30 @@ ScrollView {
         transientScrollBars: true
     }
 
+    function scrollDown(jump) {
+        if(!jump) {
+            webView.experimental.evaluateJavaScript("window.scrollTo(0, document.body.scrollHeight - " + height + ");")
+        } else {
+            webView.experimental.evaluateJavaScript("window.scrollBy(0, " + jump + ");")
+        }
+    }
+
+    function scrollUp(jump) {
+        if(!jump) {
+            webView.experimental.evaluateJavaScript("window.scrollTo(0, 0);")
+        } else {
+            webView.experimental.evaluateJavaScript("window.scrollBy(0, -" + jump + ");")
+        }
+    }
+
     Label { id: fontLabel }
 
     WebView {
         id: webView
         url: "content.html"
-        // experimental.transparentBackground: true
+
+        // Enable communication between QML and WebKit
+        experimental.preferences.navigatorQtObjectEnabled: true;
 
         property Post post: content.post
 
@@ -41,8 +61,6 @@ ScrollView {
             experimental.evaluateJavaScript("document.body.style.fontSize = '" + fontLabel.font.pointSize + "pt';");
         }
 
-        // Enable communication between QML and WebKit
-        experimental.preferences.navigatorQtObjectEnabled: true;
 
         onNavigationRequested: {
             if (request.navigationType != WebView.LinkClickedNavigation) {
@@ -60,6 +78,25 @@ ScrollView {
         }
 
         onPostChanged: setPost()
+
+        Keys.onRightPressed: app.sidebar.next()
+        Keys.onLeftPressed: app.sidebar.previous()
+        Keys.onDownPressed: content.scrollDown(content.scrollJump)
+        Keys.onUpPressed: content.scrollUp(content.scrollJump)
+        Keys.onSpacePressed: content.scrollDown(content.pageJump)
+        Keys.onEnterPressed: Qt.openUrlExternally(content.post.link)
+        Keys.onReturnPressed: Qt.openUrlExternally(content.post.link)
+        Keys.onPressed: {
+            if(event.key === Qt.Key_Home) {
+                content.scrollUp();
+            } else if (event.key === Qt.Key_End) {
+                content.scrollDown();
+            } else if (event.key === Qt.Key_PageUp) {
+                content.scrollUp(content.pageJump)
+            } else if (event.key === Qt.Key_PageDown) {
+                content.scrollDown(content.pageJump)
+            }
+        }
     }
 }
 
