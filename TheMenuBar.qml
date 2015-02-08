@@ -5,6 +5,7 @@ MenuBar {
     property bool loggedIn: false
     property Server server
     property Sidebar sidebar
+    property Content content
 
     Menu {
         title: qsTr("File")
@@ -45,7 +46,8 @@ MenuBar {
         MenuItem {
             text: qsTr("Set &Unread")
             shortcut: "U"
-            enabled: false
+            enabled: true
+            onTriggered: content.post.read = false
         }
         MenuItem {
             text: qsTr("Next")

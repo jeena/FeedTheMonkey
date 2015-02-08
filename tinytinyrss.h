@@ -21,6 +21,7 @@ public:
     Q_INVOKABLE void initialize(const QString serverUrl, const QString sessionId);
     Q_INVOKABLE void reload();
 
+
     QQmlListProperty<Post> posts();
     int postsCount() const;
     Post *post(int) const;
@@ -30,6 +31,7 @@ signals:
 
 private slots:
     void reply();
+    void onPostReadChanged(bool);
 
 private:
     void doOperation(QString operation, QVariantMap opts);

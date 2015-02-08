@@ -47,7 +47,7 @@ Component {
                     }
                     Label {
                         text: title
-                        color: read ? "gray" : this.color
+                        color: read ? "gray" : "black"
                         font.pointSize: headLinefontSize
                         textFormat: Text.RichText
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere

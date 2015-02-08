@@ -34,3 +34,8 @@ Post::~Post()
 
 }
 
+void Post::setRead(bool r)
+{
+    mRead = r;
+    emit readChanged(mRead);
+}

@@ -76,6 +76,7 @@ void TinyTinyRSS::reply()
             {
                 QJsonObject postJson = posts.at(i).toObject();
                 Post *post = new Post(postJson, this);
+                connect(post, SIGNAL(readChanged(bool)), this, SLOT(onPostReadChanged(bool)));
                 mPosts.append(post);
             }
 
@@ -88,6 +89,11 @@ void TinyTinyRSS::reply()
         }
         reply->deleteLater();
     }
+}
+
+void TinyTinyRSS::onPostReadChanged(bool r)
+{
+    qDebug() << r;
 }
 
 QQmlListProperty<Post> TinyTinyRSS::posts()

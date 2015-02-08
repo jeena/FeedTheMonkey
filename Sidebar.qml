@@ -9,6 +9,7 @@ ScrollView {
 
     property Server server
     property Content content
+    property Post previousPost
 
     style: ScrollViewStyle {
         transientScrollBars: true
@@ -48,8 +49,13 @@ ScrollView {
         }
 
         onCurrentItemChanged: {
+            if(previousPost) {
+                previousPost.read = true;
+            }
             item.content.post = server.posts[currentIndex]
             content.flickableItem.contentY = 0
+
+            previousPost = item.content.post
         }
     }
 }

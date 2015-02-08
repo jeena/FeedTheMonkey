@@ -21,6 +21,7 @@ ApplicationWindow {
         id: menu
         server: server
         sidebar: sidebar
+        content: content
     }
 
     function loggedIn() {
