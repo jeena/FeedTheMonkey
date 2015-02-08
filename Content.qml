@@ -49,6 +49,8 @@ ScrollView {
 
         MouseArea {
             onWheel: {
+                // If we use the mouse wheel we don't want any
+                // animation bahaviour because it slows it down
                 wheel.accepted = false
                 smoothScrolling.enabled = false
             }
@@ -135,20 +137,14 @@ ScrollView {
                     width: parent.width
                     color: "transparent"
 
-                    Label {
+                    RescalingRichText {
                         id: contentLabel
-                        text: post ? "<style>a { color: #555; }</style>" + post.content : ""
-                        textFormat: Text.RichText
-                        font.pointSize: textfontSize
-                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        text: post ? post.content : ""
+                        fontSize: textfontSize * 1.3
                         width: parent.width
-                        renderType: Text.NativeRendering
                         anchors.top: parent.top
-                        anchors.topMargin: 20
+                        anchors.topMargin: 0
                         lineHeight: 1.3
-                        onLinkActivated: {
-                            Qt.openUrlExternally(link)
-                        }
                     }
                 }
             }

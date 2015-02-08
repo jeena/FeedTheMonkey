@@ -49,7 +49,7 @@ Component {
                         text: title
                         color: read ? "gray" : this.color
                         font.pointSize: headLinefontSize
-                        textFormat: Text.PlainText
+                        textFormat: Text.RichText
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         renderType: Text.NativeRendering
                         width: parent.width

@@ -6,5 +6,6 @@
         <file>Login.qml</file>
         <file>PostListItem.qml</file>
         <file>Sidebar.qml</file>
+        <file>RescalingRichText.qml</file>
     </qresource>
 </RCC>
