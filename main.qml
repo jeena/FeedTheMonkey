@@ -29,6 +29,46 @@ ApplicationWindow {
         server.initialize(serverLogin.serverUrl, serverLogin.sessionId);
     }
 
+    function keyPressed(event) {
+       switch (event.key) {
+       case Qt.Key_Right:
+       case Qt.Key_J:
+       case Qt.Key_j:
+           sidebar.next()
+           break
+       case Qt.Key_Left:
+       case Qt.Key_K:
+       case Qt.Key_k:
+           sidebar.previous()
+           break
+       case Qt.Key_Home:
+           content.scrollUp()
+           break
+       case Qt.Key_End:
+           content.scrollDown()
+           break
+       case Qt.Key_PageUp:
+           content.scrollUp(content.pageJump)
+           break
+       case Qt.Key_PageDown:
+       case Qt.Key_Space:
+           content.scrollDown(content.pageJump)
+           break
+       case Qt.Key_Down:
+           content.scrollDown(content.scrollJump)
+           break
+       case Qt.Key_Up:
+           content.scrollUp(content.scrollJump)
+           break
+       case Qt.Key_Enter:
+       case Qt.Key_Return:
+           Qt.openUrlExternally(content.post.link)
+           break
+       default:
+           break
+       }
+    }
+
     SplitView {
         anchors.fill: parent
         orientation: Qt.Horizontal
@@ -52,25 +92,7 @@ ApplicationWindow {
             implicitWidth: 624
         }
 
-        Keys.onRightPressed: sidebar.next()
-        Keys.onLeftPressed: sidebar.previous()
-
-        Keys.onDownPressed: content.scrollDown(content.scrollJump)
-        Keys.onUpPressed: content.scrollUp(content.scrollJump)
-        Keys.onSpacePressed: content.scrollDown(content.pageJump)
-        Keys.onEnterPressed: Qt.openUrlExternally(content.post.link)
-        Keys.onReturnPressed: Qt.openUrlExternally(content.post.link)
-        Keys.onPressed: {
-            if(event.key === Qt.Key_Home) {
-                content.scrollUp();
-            } else if (event.key === Qt.Key_End) {
-                content.scrollDown();
-            } else if (event.key === Qt.Key_PageUp) {
-                content.scrollUp(content.pageJump)
-            } else if (event.key === Qt.Key_PageDown) {
-                content.scrollDown(content.pageJump)
-            }
-        }
+        Keys.onPressed: keyPressed(event)
     }
 
     Login {
