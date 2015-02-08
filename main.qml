@@ -50,6 +50,7 @@ ApplicationWindow {
 
         Keys.onRightPressed: sidebar.next()
         Keys.onLeftPressed: sidebar.previous()
+        /*
         Keys.onDownPressed: content.scrollDown(content.scrollJump)
         Keys.onUpPressed: content.scrollUp(content.scrollJump)
         Keys.onSpacePressed: content.scrollDown(content.pageJump)
@@ -65,7 +66,7 @@ ApplicationWindow {
             } else if (event.key === Qt.Key_PageDown) {
                 content.scrollDown(content.pageJump)
             }
-        }
+        }*/
     }
 
     Login {

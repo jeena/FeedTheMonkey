@@ -1,153 +1,65 @@
+import QtWebKit 3.0
+import QtWebKit.experimental 1.0
 import QtQuick 2.0
 import QtQuick.Controls 1.3
+import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.3
+import QtQuick.Controls 1.3
 import TTRSS 1.0
 
 ScrollView {
+    id: content
     property Post post
     property int headLinefontSize: 23
     property int textfontSize: 14
     property int scrollJump: 48
     property int pageJump: parent.height
+    Layout.minimumWidth: 400
 
     style: ScrollViewStyle {
         transientScrollBars: true
     }
 
-    function scrollDown(jump) {
-        smoothScrolling.enabled = true
+    Label { id: fontLabel }
 
-        var top = Math.max(contentItem.height - parent.height, 0);
+    WebView {
+        id: webView
+        url: "content.html"
+        // experimental.transparentBackground: true
 
-        if(jump && flickableItem.contentY < top - jump) {
-            flickableItem.contentY += jump
-        } else {
-            flickableItem.contentY = top
-        }
-    }
+        property Post post: content.post
 
-    function scrollUp(jump) {
-        smoothScrolling.enabled = true
-        if(jump && flickableItem.contentY >= jump) {
-            flickableItem.contentY -= jump;
-        } else {
-            flickableItem.contentY = 0;
-        }
-    }
-
-    Behavior on flickableItem.contentY {
-        id: smoothScrolling
-        enabled: false
-        NumberAnimation {
-            easing.type: Easing.OutCubic
-        }
-    }
-
-    Item {
-        height: column.height + 50
-        width: parent.parent.width
-
-        MouseArea {
-            onWheel: {
-                // If we use the mouse wheel we don't want any
-                // animation bahaviour because it slows it down
-                wheel.accepted = false
-                smoothScrolling.enabled = false
-            }
-            anchors.fill: parent
-        }
-
-        Rectangle {
-            anchors.fill: parent
-            width: parent.width
-            height: column.height
-            anchors.margins: 30
-            color: "transparent"
-
-            Column {
-                id: column
-                spacing: 10
-                width: parent.width
-
-                Label {
-                    text: {
-                        if(post) {
-                            var str = post.feedTitle
-                            if(post.author) {
-                                str += " - " + post.author;
-                            }
-                            return str;
-                        } else {
-                            return ""
-                        }
-                    }
-                    color: "gray"
-                    font.pointSize: textfontSize
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    width: parent.width
-                    renderType: Text.NativeRendering
-                }
-
-                Label {
-                    text: post ? post.title : ""
-                    font.pointSize: headLinefontSize
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    width: parent.width
-                    renderType: Text.NativeRendering
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: Qt.openUrlExternally(post.link)
-                    }
-                }
-
-                Label {
-                    text: post ? post.date.toLocaleString(Qt.locale(), Locale.LongFormat) : ""
-                    color: "gray"
-                    font.pointSize: textfontSize
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    width: parent.width
-                    renderType: Text.NativeRendering
-                }
-
-                Rectangle {
-                    width: parent.width
-                    height: 14
-                    color: "transparent"
-
-                    Rectangle {
-                        width: parent.width
-                        height: 1
-                        anchors.top: parent.top
-                        anchors.topMargin: 15
-                        color: "lightgray"
-                        visible: {
-                            if(post) {
-                                return true;
-                            }
-                            return false;
-                        }
-                    }
-                }
-
-                Rectangle {
-                    height: contentLabel.height + 20
-                    width: parent.width
-                    color: "transparent"
-
-                    RescalingRichText {
-                        id: contentLabel
-                        text: post ? post.content : ""
-                        fontSize: textfontSize * 1.3
-                        width: parent.width
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                        lineHeight: 1.3
-                    }
-                }
+        function setPost() {
+            if(post) {
+                experimental.evaluateJavaScript("setArticle(" + post.jsonString + ")")
             }
         }
+
+        function setDefaults() {
+            // font name needs to be enclosed in single quotes
+            experimental.evaluateJavaScript("document.body.style.fontFamily = \"'" + fontLabel.font.family + "'\";");
+            experimental.evaluateJavaScript("document.body.style.fontSize = '" + fontLabel.font.pointSize + "pt';");
+        }
+
+        // Enable communication between QML and WebKit
+        experimental.preferences.navigatorQtObjectEnabled: true;
+
+        onNavigationRequested: {
+            if (request.navigationType != WebView.LinkClickedNavigation) {
+                request.action = WebView.AcceptRequest;
+            } else {
+                request.action = WebView.IgnoreRequest;
+                Qt.openUrlExternally(request.url);
+            }
+        }
+
+        onLoadingChanged: {
+            if(loadRequest.status === WebView.LoadSucceededStatus) {
+                setDefaults()
+            }
+        }
+
+        onPostChanged: setPost()
     }
 }
+

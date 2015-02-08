@@ -8,7 +8,8 @@ SOURCES += main.cpp \
     post.cpp
 
 RESOURCES += qml.qrc \
-    images.qrc
+    images.qrc \
+    html.qrc
 
 RC_FILE = Icon.icns
 

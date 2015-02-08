@@ -1,14 +1,15 @@
 body {
-        font-family: sans-serif;
-        padding: 1em 1.5em;
-        font-weight: lighter;
-        background: #eee;
+    background: #eee;
+    font-family: sans-serif;
+    padding: 1em 1.5em;
+    font-weight: lighter;
+    font-size: 1em;
 }
 
 h1 {
-        font-weight: lighter;
-        margin: 0;
-        padding: 0;
+    font-weight: lighter;
+    margin: 0;
+    padding: 0;
 }
 
 #date:not(:empty) {
@@ -19,25 +20,25 @@ h1 {
 }
 
 .starred:after {
-        content: "*";
+    content: "*";
 }
 
 header p {
-        color: #aaa;
-        margin: 0;
-        padding: 0
+    color: #aaa;
+    margin: 0;
+    padding: 0
 }
 
 a {
-        color: #333;
-        text-decoration: none;
+    color: #333;
+    text-decoration: none;
 }
 
 img {
-        max-width: 100%;
-        height: auto;
+    max-width: 100%;
+    height: auto;
 }
 
 article {
-        line-height: 1.6;
+    line-height: 1.6;
 }
