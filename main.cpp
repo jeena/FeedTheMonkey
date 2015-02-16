@@ -12,6 +12,9 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    app.setOrganizationName("Jabs Nu");
+    app.setOrganizationDomain("jabs.nu");
+    app.setApplicationName("FeedMonkey");
 
     qmlRegisterType<TinyTinyRSSLogin>("TTRSS", 1, 0, "ServerLogin");
     qmlRegisterType<TinyTinyRSS>("TTRSS", 1, 0, "Server");

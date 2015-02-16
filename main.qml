@@ -10,11 +10,17 @@ ApplicationWindow {
     title: "FeedMonkey"
     visible: true
 
+    width: 800
+    height: 640
+    x: 200
+    y: 200
+
     property Server server: server
     property Sidebar sidebar: sidebar
     property Content content: content
 
     Settings {
+        category: "window"
         property alias x: app.x
         property alias y: app.y
         property alias width: app.width
