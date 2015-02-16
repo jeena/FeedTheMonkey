@@ -6,6 +6,9 @@
 #include <QNetworkReply>
 #include <QList>
 #include <QQmlListProperty>
+#include <QJsonObject>
+
+#include <functional>
 
 #include "post.h"
 
@@ -30,11 +33,11 @@ signals:
     void postsChanged(QList<Post *>);
 
 private slots:
-    void reply();
     void onPostReadChanged(bool);
 
 private:
-    void doOperation(QString operation, QVariantMap opts);
+    void doOperation(QString operation, QVariantMap opts, std::function<void (const QJsonObject &json)> callback);
+    void updateArticle(int articleId, int field, bool trueFalse, std::function<void (const QJsonObject &json)> callback);
 
     QString mServerUrl;
     QString mSessionId;

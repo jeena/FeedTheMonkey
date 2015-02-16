@@ -31,7 +31,8 @@ MenuBar {
         MenuItem {
             text: qsTr("Reload")
             shortcut: "R"
-            enabled: false
+            enabled: true
+            onTriggered: server.reload()
         }
         MenuItem {
             text: qsTr("Show &Starred")
@@ -47,7 +48,10 @@ MenuBar {
             text: qsTr("Set &Unread")
             shortcut: "U"
             enabled: true
-            onTriggered: content.post.read = false
+            onTriggered: {
+                content.post.dontChangeRead = true
+                content.post.read = false
+            }
         }
         MenuItem {
             text: qsTr("Next")

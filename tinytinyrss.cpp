@@ -1,6 +1,5 @@
 #include "tinytinyrss.h"
 #include <QJsonDocument>
-#include <QJsonObject>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QJsonArray>
@@ -16,7 +15,7 @@ TinyTinyRSS::TinyTinyRSS(QObject *parent) :
 
 TinyTinyRSS::~TinyTinyRSS()
 {
-    mPosts.empty();
+    mPosts.clear();
     delete mNetworkManager;
 }
 
@@ -36,10 +35,24 @@ void TinyTinyRSS::reload()
     opts.insert("feed_id", -4);
     opts.insert("skip", 0);
 
-    doOperation("getHeadlines", opts);
+    doOperation("getHeadlines", opts, [this] (const QJsonObject &json) {
+
+        mPosts.clear();
+
+        QJsonArray posts = json.value("content").toArray();
+        for(int i = 0; i <= posts.count(); i++)
+        {
+            QJsonObject postJson = posts.at(i).toObject();
+            Post *post = new Post(postJson, this);
+            connect(post, SIGNAL(readChanged(bool)), this, SLOT(onPostReadChanged(bool)));
+            mPosts.append(post);
+        }
+
+        emit postsChanged(mPosts);
+    });
 }
 
-void TinyTinyRSS::doOperation(QString operation, QVariantMap opts)
+void TinyTinyRSS::doOperation(QString operation, QVariantMap opts, std::function<void (const QJsonObject &json)> callback)
 {
     QVariantMap options;
     options.insert("sid", mSessionId);
@@ -58,42 +71,41 @@ void TinyTinyRSS::doOperation(QString operation, QVariantMap opts)
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     QNetworkReply *reply = mNetworkManager->post(request, json.toJson());
-    connect(reply, SIGNAL(finished()), this, SLOT(reply()));
-}
 
-void TinyTinyRSS::reply()
-{
-    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
-
-    if (reply) {
-        if (reply->error() == QNetworkReply::NoError) {
-            QString jsonString = QString(reply->readAll());
-            QJsonDocument json = QJsonDocument::fromJson(jsonString.toUtf8());
-
-            QJsonArray posts = json.object().value("content").toArray();
-
-            for(int i = 0; i <= posts.count(); i++)
-            {
-                QJsonObject postJson = posts.at(i).toObject();
-                Post *post = new Post(postJson, this);
-                connect(post, SIGNAL(readChanged(bool)), this, SLOT(onPostReadChanged(bool)));
-                mPosts.append(post);
+    connect(reply, &QNetworkReply::finished, [callback, reply] () {
+        if (reply) {
+            if (reply->error() == QNetworkReply::NoError) {
+                QString jsonString = QString(reply->readAll());
+                QJsonDocument json = QJsonDocument::fromJson(jsonString.toUtf8());
+                callback(json.object());
+            } else {
+                int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+                //do some error management
+                qWarning() << "HTTP error: " << httpStatus;
             }
-
-            emit postsChanged(mPosts);
-
-        } else {
-            int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-            //do some error management
-            qWarning() << "HTTP error: " << httpStatus;
+            reply->deleteLater();
         }
-        reply->deleteLater();
-    }
+    });
 }
 
 void TinyTinyRSS::onPostReadChanged(bool r)
 {
-    qDebug() << r;
+    Post *post = (Post *)sender();
+
+    updateArticle(post->id(), 2, !r, [post] (const QJsonObject &json) {
+        qDebug() << json;
+        // not doing anything with this yet.
+    });
+}
+
+void TinyTinyRSS::updateArticle(int articleId, int field, bool trueFalse, std::function<void (const QJsonObject &json)> callback)
+{
+    QVariantMap opts;
+    opts.insert("article_ids", articleId);
+    opts.insert("field", field);
+    opts.insert("mode", trueFalse ? 1 : 0);
+
+    doOperation("updateArticle", opts, callback);
 }
 
 QQmlListProperty<Post> TinyTinyRSS::posts()

@@ -2,6 +2,8 @@ TEMPLATE = app
 
 QT += qml quick
 
+CONFIG += c++11
+
 SOURCES += main.cpp \
     tinytinyrss.cpp \
     tinytinyrsslogin.cpp \

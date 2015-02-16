@@ -1,6 +1,8 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.3
+import QtQuick.Window 2.0
 import QtQuick.Layouts 1.1
+import Qt.labs.settings 1.0
 import TTRSS 1.0
 
 ApplicationWindow {
@@ -8,14 +10,16 @@ ApplicationWindow {
     title: "FeedMonkey"
     visible: true
 
-    contentItem.minimumWidth: 640
-    contentItem.minimumHeight: 480
-    contentItem.implicitWidth: 1024
-    contentItem.implicitHeight: 800
-
     property Server server: server
     property Sidebar sidebar: sidebar
     property Content content: content
+
+    Settings {
+        property alias x: app.x
+        property alias y: app.y
+        property alias width: app.width
+        property alias height: app.height
+    }
 
     menuBar: TheMenuBar {
         id: menu

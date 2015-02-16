@@ -50,8 +50,13 @@ ScrollView {
 
         onCurrentItemChanged: {
             if(previousPost) {
-                previousPost.read = true;
+                if(!previousPost.dontChangeRead) {
+                    previousPost.read = true;
+                } else {
+                    previousPost.dontChangeRead = false;
+                }
             }
+
             item.content.post = server.posts[currentIndex]
             content.flickableItem.contentY = 0
 
