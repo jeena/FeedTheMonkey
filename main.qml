@@ -25,6 +25,7 @@ ApplicationWindow {
         property alias y: app.y
         property alias width: app.width
         property alias height: app.height
+        property alias sidebarWidth: sidebar.width
     }
 
     menuBar: TheMenuBar {
