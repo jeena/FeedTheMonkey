@@ -1,13 +1,17 @@
 import QtQuick.Controls 1.2
+import QtQuick 2.0
 import TTRSS 1.0
 
 MenuBar {
+    id: menuBar
     property bool loggedIn: false
     property Server server
     property Sidebar sidebar
     property Content content
+    property bool visible: true
 
     Menu {
+        visible: menuBar.visible
         title: qsTr("File")
         MenuItem {
             text: qsTr("Close")
@@ -27,6 +31,7 @@ MenuBar {
     }
 
     Menu {
+        visible: menuBar.visible
         title: qsTr("Action")
         MenuItem {
             text: qsTr("Reload")
@@ -74,6 +79,7 @@ MenuBar {
     }
 
     Menu {
+        visible: menuBar.visible
         title: qsTr("View")
         MenuItem {
             text: qsTr("Zoom In")
@@ -93,6 +99,7 @@ MenuBar {
     }
 
     Menu {
+        visible: menuBar.visible
         title: qsTr("Window")
         MenuItem {
             text: qsTr("Reset to default")
@@ -102,6 +109,7 @@ MenuBar {
     }
 
     Menu {
+        visible: menuBar.visible
         title: qsTr("Help")
         MenuItem {
             text: qsTr("About")

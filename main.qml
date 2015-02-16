@@ -28,7 +28,7 @@ ApplicationWindow {
         property alias sidebarWidth: sidebar.width
     }
 
-    menuBar: TheMenuBar {
+    property TheMenuBar menu: TheMenuBar {
         id: menu
         server: server
         sidebar: sidebar
@@ -42,43 +42,43 @@ ApplicationWindow {
     }
 
     function keyPressed(event) {
-       switch (event.key) {
-       case Qt.Key_Right:
-       case Qt.Key_J:
-       case Qt.Key_j:
-           sidebar.next()
-           break
-       case Qt.Key_Left:
-       case Qt.Key_K:
-       case Qt.Key_k:
-           sidebar.previous()
-           break
-       case Qt.Key_Home:
-           content.scrollUp()
-           break
-       case Qt.Key_End:
-           content.scrollDown()
-           break
-       case Qt.Key_PageUp:
-           content.scrollUp(content.pageJump)
-           break
-       case Qt.Key_PageDown:
-       case Qt.Key_Space:
-           content.scrollDown(content.pageJump)
-           break
-       case Qt.Key_Down:
-           content.scrollDown(content.scrollJump)
-           break
-       case Qt.Key_Up:
-           content.scrollUp(content.scrollJump)
-           break
-       case Qt.Key_Enter:
-       case Qt.Key_Return:
-           Qt.openUrlExternally(content.post.link)
-           break
-       default:
-           break
-       }
+        switch (event.key) {
+        case Qt.Key_Right:
+        case Qt.Key_J:
+        case Qt.Key_j:
+            sidebar.next()
+            break
+        case Qt.Key_Left:
+        case Qt.Key_K:
+        case Qt.Key_k:
+            sidebar.previous()
+            break
+        case Qt.Key_Home:
+            content.scrollUp()
+            break
+        case Qt.Key_End:
+            content.scrollDown()
+            break
+        case Qt.Key_PageUp:
+            content.scrollUp(content.pageJump)
+            break
+        case Qt.Key_PageDown:
+        case Qt.Key_Space:
+            content.scrollDown(content.pageJump)
+            break
+        case Qt.Key_Down:
+            content.scrollDown(content.scrollJump)
+            break
+        case Qt.Key_Up:
+            content.scrollUp(content.scrollJump)
+            break
+        case Qt.Key_Enter:
+        case Qt.Key_Return:
+            Qt.openUrlExternally(content.post.link)
+            break
+        default:
+            break
+        }
     }
 
     SplitView {
@@ -105,6 +105,15 @@ ApplicationWindow {
         }
 
         Keys.onPressed: keyPressed(event)
+        Keys.onReleased: {
+            switch (event.key) {
+            case Qt.Key_Alt:
+                app.menuBar = menu
+                break
+            default:
+                break
+            }
+        }
     }
 
     Login {
