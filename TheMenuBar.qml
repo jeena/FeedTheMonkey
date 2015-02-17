@@ -84,17 +84,20 @@ MenuBar {
         MenuItem {
             text: qsTr("Zoom In")
             shortcut: "Ctrl++"
-            enabled: false
+            enabled: true
+            onTriggered: app.zoomIn()
         }
         MenuItem {
             text: qsTr("Zoom Out")
             shortcut: "Ctrl+-"
-            enabled: false
+            enabled: true
+            onTriggered: app.zoomOut()
         }
         MenuItem {
             text: qsTr("Reset")
             shortcut: "Ctrl+0"
-            enabled: false
+            enabled: true
+            onTriggered: app.zoomReset()
         }
     }
 

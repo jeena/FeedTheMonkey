@@ -19,6 +19,9 @@ ApplicationWindow {
     property Sidebar sidebar: sidebar
     property Content content: content
 
+    property int defaultTextFontSize: 13
+    property int textFontSize: defaultTextFontSize
+
     Settings {
         category: "window"
         property alias x: app.x
@@ -26,6 +29,7 @@ ApplicationWindow {
         property alias width: app.width
         property alias height: app.height
         property alias sidebarWidth: sidebar.width
+        //property alias textFontSize: app.textFontSize
     }
 
     property TheMenuBar menu: TheMenuBar {
@@ -39,6 +43,18 @@ ApplicationWindow {
         menu.loggedIn = true;
         login.visible = false;
         server.initialize(serverLogin.serverUrl, serverLogin.sessionId);
+    }
+
+    function zoomIn() {
+        textFontSize *= 1.2
+    }
+
+    function zoomOut() {
+        textFontSize *= 0.8
+    }
+
+    function zoomReset() {
+        textFontSize = defaultTextFontSize
     }
 
     function keyPressed(event) {
@@ -94,6 +110,7 @@ ApplicationWindow {
 
             Layout.minimumWidth: 200
             implicitWidth: 300
+            textFontSize: app.textFontSize
         }
 
         Content {
@@ -102,6 +119,7 @@ ApplicationWindow {
 
             Layout.minimumWidth: 200
             implicitWidth: 624
+            textFontSize: app.textFontSize
         }
 
         Keys.onPressed: keyPressed(event)

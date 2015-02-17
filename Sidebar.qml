@@ -10,6 +10,7 @@ ScrollView {
     property Server server
     property Content content
     property Post previousPost
+    property int textFontSize: 14
 
     style: ScrollViewStyle {
         transientScrollBars: true
@@ -35,7 +36,11 @@ ScrollView {
         spacing: 1
         model: item.server.posts
 
-        delegate: PostListItem {}
+        delegate: Component {
+            PostListItem {
+                textFontSize: item.textFontSize
+            }
+        }
 
         highlightFollowsCurrentItem: false
         highlight: Component {

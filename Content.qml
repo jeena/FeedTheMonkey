@@ -12,11 +12,11 @@ ScrollView {
     property Post post
     property ApplicationWindow app
 
-    property int headLinefontSize: 23
-    property int textfontSize: 14
+    property int textFontSize: 14
     property int scrollJump: 48
     property int pageJump: parent.height
     Layout.minimumWidth: 400
+    onTextFontSizeChanged: webView.setDefaults()
 
     style: ScrollViewStyle {
         transientScrollBars: true
@@ -58,7 +58,7 @@ ScrollView {
         function setDefaults() {
             // font name needs to be enclosed in single quotes
             experimental.evaluateJavaScript("document.body.style.fontFamily = \"'" + fontLabel.font.family + "'\";");
-            experimental.evaluateJavaScript("document.body.style.fontSize = '" + fontLabel.font.pointSize + "pt';");
+            experimental.evaluateJavaScript("document.body.style.fontSize = '" + content.textFontSize + "pt';");
         }
 
 

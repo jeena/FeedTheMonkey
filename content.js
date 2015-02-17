@@ -45,5 +45,5 @@ function setArticle(article) {
 
 function setFont(font, size) {
     document.body.style.fontFamily = font;
-    //document.body.style.fontSize = size + "pt";
+    document.body.style.fontSize = size + "pt";
 }
