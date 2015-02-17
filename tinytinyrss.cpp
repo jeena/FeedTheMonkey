@@ -52,6 +52,14 @@ void TinyTinyRSS::reload()
     });
 }
 
+void TinyTinyRSS::loggedOut()
+{
+    mServerUrl = nullptr;
+    mSessionId = nullptr;
+    mPosts.clear();
+    emit postsChanged(mPosts);
+}
+
 void TinyTinyRSS::doOperation(QString operation, QVariantMap opts, std::function<void (const QJsonObject &json)> callback)
 {
     QVariantMap options;

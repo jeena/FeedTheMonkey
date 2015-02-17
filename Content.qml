@@ -38,6 +38,10 @@ ScrollView {
         }
     }
 
+    function loggedOut() {
+        post = null
+    }
+
     Label { id: fontLabel }
 
     WebView {
@@ -52,6 +56,8 @@ ScrollView {
         function setPost() {
             if(post) {
                 experimental.evaluateJavaScript("setArticle(" + post.jsonString + ")")
+            } else {
+                experimental.evaluateJavaScript("setArticle('logout')")
             }
         }
 

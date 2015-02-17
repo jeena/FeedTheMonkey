@@ -4,12 +4,15 @@
 #include <QNetworkReply>
 #include <QSettings>
 
+#define APP_URL "net.jeena"
+#define APP_NAME "FeedMonkey"
+
 TinyTinyRSSLogin::TinyTinyRSSLogin(QObject *parent) :
     QObject(parent)
 {
     mNetworkManager = new QNetworkAccessManager(this);
 
-    QSettings settings("net.jeena", "feedmonkey");
+    QSettings settings;
     mSessionId = settings.value("sessionId").toString();
     mServerUrl = settings.value("serverUrl").toString();
 }
@@ -43,6 +46,24 @@ void TinyTinyRSSLogin::login(const QString serverUrl, const QString user, const 
     connect(reply, SIGNAL(finished()), this, SLOT(reply()));
 }
 
+void TinyTinyRSSLogin::logout()
+{
+    if(mSessionId.length() > 0 && mServerUrl.toString().length() > 0) {
+        QVariantMap options;
+        options.insert("op", "logout");
+        options.insert("sid", mSessionId);
+
+        QJsonObject jsonobj = QJsonObject::fromVariantMap(options);
+        QJsonDocument json = QJsonDocument(jsonobj);
+
+        QNetworkRequest request(mServerUrl);
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+        QNetworkReply *reply = mNetworkManager->post(request, json.toJson());
+        connect(reply, SIGNAL(finished()), this, SLOT(reply()));
+    }
+}
+
 void TinyTinyRSSLogin::reply()
 {
     QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
@@ -56,7 +77,7 @@ void TinyTinyRSSLogin::reply()
 
             emit sessionIdChanged(mSessionId);
 
-            QSettings settings("net.jeena", "feedmonkey");
+            QSettings settings;
             settings.setValue("sessionId", mSessionId);
             settings.setValue("serverUrl", mServerUrl);
             settings.sync();

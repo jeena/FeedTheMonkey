@@ -23,6 +23,7 @@ public:
 
     Q_INVOKABLE void initialize(const QString serverUrl, const QString sessionId);
     Q_INVOKABLE void reload();
+    Q_INVOKABLE void loggedOut();
 
 
     QQmlListProperty<Post> posts();

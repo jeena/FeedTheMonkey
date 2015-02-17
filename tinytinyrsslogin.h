@@ -20,6 +20,7 @@ public:
 
     Q_INVOKABLE bool loggedIn();
     Q_INVOKABLE void login(const QString serverUrl, const QString user, const QString password);
+    Q_INVOKABLE void logout();
 
 signals:
     void sessionIdChanged(QString);

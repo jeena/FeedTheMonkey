@@ -10,6 +10,9 @@ ApplicationWindow {
     title: "FeedMonkey"
     visible: true
 
+    minimumWidth: 480
+    minimumHeight: 320
+
     width: 800
     height: 640
     x: 200
@@ -19,42 +22,60 @@ ApplicationWindow {
     property Sidebar sidebar: sidebar
     property Content content: content
 
-    property int defaultTextFontSize: 13
-    property int textFontSize: defaultTextFontSize
+    property variant fontSizes: [7,9,11,13,15,17,19,21,23,25,27,29,31]
+    property int defaultTextFontSizeIndex: 4
+    property int textFontSizeIndex: defaultTextFontSizeIndex
+    property int textFontSize: fontSizes[textFontSizeIndex]
 
     Settings {
+        id: settings
         category: "window"
         property alias x: app.x
         property alias y: app.y
         property alias width: app.width
         property alias height: app.height
         property alias sidebarWidth: sidebar.width
-        //property alias textFontSize: app.textFontSize
+        property alias textFontSizeIndex: app.textFontSizeIndex
     }
 
     property TheMenuBar menu: TheMenuBar {
         id: menu
+        serverLogin: serverLogin
         server: server
         sidebar: sidebar
         content: content
     }
 
     function loggedIn() {
-        menu.loggedIn = true;
-        login.visible = false;
-        server.initialize(serverLogin.serverUrl, serverLogin.sessionId);
+        if(serverLogin.loggedIn()) {
+            menu.loggedIn = true;
+            contentView.visible = true
+            login.visible = false;
+            server.initialize(serverLogin.serverUrl, serverLogin.sessionId);
+        } else {
+            menu.loggedIn = false
+            contentView.visible = false
+            login.visible = true
+            server.loggedOut()
+            content.loggedOut()
+        }
     }
 
     function zoomIn() {
-        textFontSize *= 1.2
+        if(textFontSizeIndex + 1 < fontSizes.length) {
+            textFontSize = fontSizes[++textFontSizeIndex]
+        }
     }
 
     function zoomOut() {
-        textFontSize *= 0.8
+        if(textFontSizeIndex - 1 > 0) {
+            textFontSize = fontSizes[--textFontSizeIndex]
+        }
     }
 
     function zoomReset() {
-        textFontSize = defaultTextFontSize
+        textFontSizeIndex = defaultTextFontSizeIndex
+        textFontSize = fontSizes[textFontSizeIndex]
     }
 
     function keyPressed(event) {
@@ -98,6 +119,7 @@ ApplicationWindow {
     }
 
     SplitView {
+        id: contentView
         anchors.fill: parent
         orientation: Qt.Horizontal
         visible: serverLogin.loggedIn()
@@ -140,13 +162,14 @@ ApplicationWindow {
         visible: !serverLogin.loggedIn()
 
         function login() {
+            console.log("FOO")
             serverLogin.login(serverUrl, userName, password)
         }
     }
 
     ServerLogin {
         id: serverLogin
-        onSessionIdChanged: loggedIn()
+        onSessionIdChanged: app.loggedIn()
     }
 
     Server {

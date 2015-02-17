@@ -5,6 +5,7 @@ import TTRSS 1.0
 MenuBar {
     id: menuBar
     property bool loggedIn: false
+    property ServerLogin serverLogin
     property Server server
     property Sidebar sidebar
     property Content content
@@ -20,7 +21,8 @@ MenuBar {
         }
         MenuItem {
             text: qsTr("Log Out")
-            enabled: false
+            enabled: loggedIn
+            onTriggered: serverLogin.logout()
         }
         MenuSeparator { }
         MenuItem {
@@ -36,7 +38,7 @@ MenuBar {
         MenuItem {
             text: qsTr("Reload")
             shortcut: "R"
-            enabled: true
+            enabled: loggedIn
             onTriggered: server.reload()
         }
         MenuItem {
@@ -52,7 +54,7 @@ MenuBar {
         MenuItem {
             text: qsTr("Set &Unread")
             shortcut: "U"
-            enabled: true
+            enabled: loggedIn
             onTriggered: {
                 content.post.dontChangeRead = true
                 content.post.read = false
@@ -73,7 +75,7 @@ MenuBar {
         MenuItem {
             text: qsTr("Open in Browser")
             shortcut: "N"
-            enabled: true
+            enabled: loggedIn
             onTriggered: Qt.openUrlExternally(content.post.link)
         }
     }
@@ -84,19 +86,19 @@ MenuBar {
         MenuItem {
             text: qsTr("Zoom In")
             shortcut: "Ctrl++"
-            enabled: true
+            enabled: loggedIn
             onTriggered: app.zoomIn()
         }
         MenuItem {
             text: qsTr("Zoom Out")
             shortcut: "Ctrl+-"
-            enabled: true
+            enabled: loggedIn
             onTriggered: app.zoomOut()
         }
         MenuItem {
             text: qsTr("Reset")
             shortcut: "Ctrl+0"
-            enabled: true
+            enabled: loggedIn
             onTriggered: app.zoomReset()
         }
     }

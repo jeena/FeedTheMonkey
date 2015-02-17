@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.2
 
 Rectangle {
-    color: "white"
+    color: "transparent"
     anchors.fill: parent
 
     property string serverUrl: serverUrl.text
@@ -10,7 +10,8 @@ Rectangle {
     property string password: password.text
 
     Column {
-        width: parent.width
+        anchors.centerIn: parent
+        width: parent.width / 2
         anchors.margins: parent.width / 4
         spacing: 10
 
@@ -20,6 +21,7 @@ Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.margins: 20
+            font.pointSize: 20
         }
 
         TextField {
