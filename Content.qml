@@ -73,6 +73,7 @@ ScrollView {
 
         onLoadingChanged: {
             if(loadRequest.status === WebView.LoadSucceededStatus) {
+                setPost()
                 setDefaults()
             }
         }
