@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>TheMenuBar.qml</file>
+        <file>Content.qml</file>
+        <file>Login.qml</file>
+        <file>PostListItem.qml</file>
+        <file>Sidebar.qml</file>
+    </qresource>
+</RCC>

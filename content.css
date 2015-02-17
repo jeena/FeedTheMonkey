@@ -1,0 +1,46 @@
+body {
+    background: #eee;
+    font-family: sans-serif;
+    padding: 1em 1.5em;
+    font-weight: lighter;
+}
+
+h1 {
+    font-weight: lighter;
+    font-size: 1.4em;
+    margin: 0;
+    padding: 0;
+}
+
+#date:not(:empty) {
+    border-bottom: 1px solid #aaa;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    display: block;
+}
+
+.starred:after {
+    content: "*";
+}
+
+header p {
+    color: #aaa;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8em;
+}
+
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+article {
+    line-height: 1.6;
+    font-size: 0.8em;
+}
