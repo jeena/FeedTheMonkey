@@ -1,6 +1,6 @@
-<img align=right src="http://jabs.nu/feedthemonkey/feedthemonkey-icon.png" width='256' alt='Icon'>
-
 # Feed the Monkey
+
+<img align=right src="http://jabs.nu/feedthemonkey/feedthemonkey-icon.png" width='256' alt='Icon'>
 
 Feed the Monkey is a desktop client for [TinyTinyRSS](http://tt-rss.org). That means that
 it doesn't work as a standalone feed reader but only as a client for the TinyTinyRSS API
