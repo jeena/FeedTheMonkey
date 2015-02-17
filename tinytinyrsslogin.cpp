@@ -5,7 +5,7 @@
 #include <QSettings>
 
 #define APP_URL "net.jeena"
-#define APP_NAME "FeedMonkey"
+#define APP_NAME "FeedTheMonkey"
 
 TinyTinyRSSLogin::TinyTinyRSSLogin(QObject *parent) :
     QObject(parent)

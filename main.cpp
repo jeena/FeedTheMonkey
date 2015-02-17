@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     app.setOrganizationName("Jeena");
     app.setOrganizationDomain("jeena.net");
-    app.setApplicationName("FeedMonkey");
+    app.setApplicationName("FeedTheMonkey");
 
     qmlRegisterType<TinyTinyRSSLogin>("TTRSS", 1, 0, "ServerLogin");
     qmlRegisterType<TinyTinyRSS>("TTRSS", 1, 0, "Server");

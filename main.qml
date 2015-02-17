@@ -7,7 +7,7 @@ import TTRSS 1.0
 
 ApplicationWindow {
     id: app
-    title: "FeedMonkey"
+    title: "FeedTheMonkey"
     visible: true
 
     minimumWidth: 480
