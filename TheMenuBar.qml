@@ -15,17 +15,6 @@ MenuBar {
         visible: menuBar.visible
         title: qsTr("File")
         MenuItem {
-            text: qsTr("Close")
-            shortcut: "Ctrl+W"
-            enabled: false
-        }
-        MenuItem {
-            text: qsTr("Log Out")
-            enabled: loggedIn
-            onTriggered: serverLogin.logout()
-        }
-        MenuSeparator { }
-        MenuItem {
             text: qsTr("Exit")
             shortcut: "Ctrl+Q"
             onTriggered: Qt.quit()
@@ -40,16 +29,6 @@ MenuBar {
             shortcut: "R"
             enabled: loggedIn
             onTriggered: server.reload()
-        }
-        MenuItem {
-            text: qsTr("Show &Starred")
-            shortcut: "Ctrl+S"
-            enabled: false
-        }
-        MenuItem {
-            text: qsTr("Set &Starred")
-            shortcut: "S"
-            enabled: false
         }
         MenuItem {
             text: qsTr("Set &Unread")
@@ -78,6 +57,11 @@ MenuBar {
             enabled: loggedIn
             onTriggered: Qt.openUrlExternally(content.post.link)
         }
+        MenuItem {
+            text: qsTr("Log Out")
+            enabled: loggedIn
+            onTriggered: serverLogin.logout()
+        }
     }
 
     Menu {
@@ -100,16 +84,6 @@ MenuBar {
             shortcut: "Ctrl+0"
             enabled: loggedIn
             onTriggered: app.zoomReset()
-        }
-    }
-
-    Menu {
-        visible: menuBar.visible
-        title: qsTr("Window")
-        MenuItem {
-            text: qsTr("Reset to default")
-            shortcut: "Ctrl+D"
-            enabled: false
         }
     }
 
