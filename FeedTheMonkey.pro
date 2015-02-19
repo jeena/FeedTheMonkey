@@ -13,7 +13,22 @@ RESOURCES += qml.qrc \
     images.qrc \
     html.qrc
 
-RC_FILE = Icon.icns
+mac {
+    RC_FILE = Icon.icns
+}
+
+unix {
+    target.path = $$PREFIX/usr/local/bin
+
+    shortcutfiles.files += feedthemonkey.desktop
+    shortcutfiles.path = $$PREFIX/usr/share/applications/
+    data.files += feedthemonkey.xpm
+    data.path = $$PREFIX/usr/share/pixmaps/
+
+    INSTALLS += shortcutfiles
+    INSTALLS += data
+}
+
 
 # Needed for bringing browser from background to foreground using QDesktopServices: http://bugreports.qt-project.org/browse/QTBUG-8336
 TARGET.CAPABILITY += SwEvent
@@ -30,3 +45,8 @@ HEADERS += \
     tinytinyrss.h \
     tinytinyrsslogin.h \
     post.h
+
+DISTFILES += \
+    feedthemonkey.desktop \
+    README.md \
+    LICENSE.txt
