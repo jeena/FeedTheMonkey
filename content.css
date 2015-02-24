@@ -35,15 +35,15 @@ a {
     text-decoration: none;
 }
 
+article {
+    line-height: 1.6;
+    font-size: 0.8em;
+}
+
 article a {
     text-decoration: underline;
 
 img {
     max-width: 100%;
     height: auto;
-}
-
-article {
-    line-height: 1.6;
-    font-size: 0.8em;
 }
