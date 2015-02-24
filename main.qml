@@ -23,7 +23,7 @@ ApplicationWindow {
     property Content content: content
 
     property variant fontSizes: [7,9,11,13,15,17,19,21,23,25,27,29,31]
-    property int defaultTextFontSizeIndex: 4
+    property int defaultTextFontSizeIndex: 3
     property int textFontSizeIndex: defaultTextFontSizeIndex
     property int textFontSize: fontSizes[textFontSizeIndex]
 

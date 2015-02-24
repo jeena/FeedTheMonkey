@@ -1,7 +1,12 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background: #eee;
     font-family: sans-serif;
-    padding: 1em 1.5em;
+    padding: 10pt 15pt;
     font-weight: lighter;
 }
 
@@ -35,15 +40,15 @@ a {
     text-decoration: none;
 }
 
+article {
+    line-height: 1.6;
+}
+
 article a {
     text-decoration: underline;
+}
 
 img {
     max-width: 100%;
     height: auto;
-}
-
-article {
-    line-height: 1.6;
-    font-size: 0.8em;
 }
