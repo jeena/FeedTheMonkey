@@ -4,17 +4,17 @@ TEMPLATE = app
 QT += qml quick
 CONFIG += c++11
 
-SOURCES += main.cpp \
-    tinytinyrss.cpp \
-    tinytinyrsslogin.cpp \
-    post.cpp
+SOURCES += \
+    src/main.cpp \
+    src/post.cpp \
+    src/tinytinyrss.cpp \
+    src/tinytinyrsslogin.cpp
 
-RESOURCES += qml.qrc \
-    images.qrc \
-    html.qrc
+RESOURCES += \
+    resources/resources.qrc \
 
 mac {
-    RC_FILE = Icon.icns
+    RC_FILE = misc/Icon.icns
 }
 
 unix {
@@ -42,11 +42,11 @@ include(deployment.pri)
 OTHER_FILES +=
 
 HEADERS += \
-    tinytinyrss.h \
-    tinytinyrsslogin.h \
-    post.h
+    src/post.h \
+    src/tinytinyrss.h \
+    src/tinytinyrsslogin.h
 
 DISTFILES += \
-    feedthemonkey.desktop \
+    misc/feedthemonkey.desktop \
     README.md \
     LICENSE.txt

@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="">
+        <file>html/content.css</file>
+        <file>html/content.html</file>
+        <file>html/content.js</file>
+    </qresource>
+    <qresource prefix="">
+        <file>qml/main.qml</file>
+        <file>qml/TheMenuBar.qml</file>
+        <file>qml/Content.qml</file>
+        <file>qml/Login.qml</file>
+        <file>qml/PostListItem.qml</file>
+        <file>qml/Sidebar.qml</file>
+    </qresource>
+    <qresource prefix="">
+        <file>misc/feedthemonkey.xpm</file>
+        <file>misc/Icon.icns</file>
+	    <file>misc/feedthemonkey.desktop</file>
+    </qresource>
+</RCC>
