@@ -48,7 +48,18 @@ article a {
     text-decoration: underline;
 }
 
+blockquote {
+    font-style: italic;
+}
+
 img {
     max-width: 100%;
     height: auto;
+}
+
+div > a:only-child img, figure > a:only-child img, p > a:only-child img,
+figure > img:only-child, div > img:only-child, p > img:only-child {
+    display: block;
+    margin: 1em auto;
+    float: none !important;
 }
