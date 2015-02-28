@@ -11,7 +11,9 @@ SOURCES += \
     src/tinytinyrsslogin.cpp
 
 RESOURCES += \
-    resources/resources.qrc \
+    html/html.qrc \
+    misc/misc.qrc \
+    qml/qml.qrc \
 
 mac {
     RC_FILE = misc/Icon.icns

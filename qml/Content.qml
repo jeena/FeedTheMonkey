@@ -46,7 +46,7 @@ ScrollView {
 
     WebView {
         id: webView
-        url: "content.html"
+        url: "../html/content.html"
 
         // Enable communication between QML and WebKit
         experimental.preferences.navigatorQtObjectEnabled: true;

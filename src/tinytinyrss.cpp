@@ -100,7 +100,7 @@ void TinyTinyRSS::onPostReadChanged(bool r)
 {
     Post *post = (Post *)sender();
 
-    updateArticle(post->id(), 2, !r, [post] (const QJsonObject &json) {
+    updateArticle(post->id(), 2, !r, [post] (const QJsonObject &) {
         // not doing anything with this yet.
     });
 }
