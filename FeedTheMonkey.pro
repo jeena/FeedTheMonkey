@@ -17,6 +17,7 @@ RESOURCES += \
 
 mac {
     RC_FILE = misc/Icon.icns
+    TARGET = FeedTheMonkey
 }
 
 unix {
