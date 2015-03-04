@@ -23,9 +23,9 @@ mac {
 unix {
     target.path = $$PREFIX/usr/local/bin
 
-    shortcutfiles.files = feedthemonkey.desktop
+    shortcutfiles.files = misc/feedthemonkey.desktop
     shortcutfiles.path = $$PREFIX/usr/share/applications/
-    data.files += feedthemonkey.xpm
+    data.files += misc/feedthemonkey.xpm
     data.path = $$PREFIX/usr/share/pixmaps/
 
     INSTALLS += shortcutfiles
@@ -50,5 +50,7 @@ HEADERS += \
 
 DISTFILES += \
     misc/feedthemonkey.desktop \
+    misc/feedthemonkey.xpm \
+    misc/Icon.icns \
     README.md \
     LICENSE.txt
