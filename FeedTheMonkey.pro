@@ -12,7 +12,6 @@ SOURCES += \
 
 RESOURCES += \
     html/html.qrc \
-    misc/misc.qrc \
     qml/qml.qrc \
 
 mac {
@@ -21,12 +20,16 @@ mac {
 }
 
 unix {
-    target.path = $$PREFIX/usr/local/bin
+    isEmpty(PREFIX) {
+        PREFIX = /usr/local
+    }
+
+    target.path = $$PREFIX/bin
 
     shortcutfiles.files = misc/feedthemonkey.desktop
-    shortcutfiles.path = $$PREFIX/usr/share/applications/
+    shortcutfiles.path = $$PREFIX/share/applications/
     data.files += misc/feedthemonkey.xpm
-    data.path = $$PREFIX/usr/share/pixmaps/
+    data.path = $$PREFIX/share/pixmaps/
 
     INSTALLS += shortcutfiles
     INSTALLS += data
