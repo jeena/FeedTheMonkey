@@ -13,13 +13,13 @@ source=("https://github.com/jeena/${_name}/archive/v${pkgver}.tar.gz")
 md5sums=('SKIP')
 
 build() {
-	cd "$_name-$pkgver"
+	cd "${_name}-$pkgver"
 	qmake-qt5 PREFIX=${pkgdir}/usr
 	make
 }
 
 package() {
-	cd "$_name-$pkgver"
+	cd "${_name}-$pkgver"
 	make install
-	install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${_name}/LICENSE"
+	install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
