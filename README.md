@@ -16,7 +16,7 @@ License: BSD
 
 ## Installation
 
-Clone the repo, install the Qt 5.4 SDK on your computer and use QtCreator to compile and run it.
+Download the latest release for Linux and OS X from: https://github.com/jeena/FeedTheMonkey/releases/latest
 
 ## Keyboard shortcuts
 
