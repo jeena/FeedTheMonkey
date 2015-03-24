@@ -5,7 +5,7 @@
 #
 # Download and compile https://github.com/MaximAlien/macdeployqt do not
 # use the .dmg which is too old. Move the new macdeployqt so it is in
-# your PATH.
+# $QTDIR/bin/macdeployqt.
 #
 # Use fixqtlibspath.sh to fix your Qt installation, you need to change the
 # path in this script, you don't have to run the Predator part.
