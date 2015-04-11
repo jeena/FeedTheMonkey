@@ -78,6 +78,11 @@ ApplicationWindow {
         textFontSize = fontSizes[textFontSizeIndex]
     }
 
+    function removeHTML(str) {
+        forEscapingHTML.text = str
+        return forEscapingHTML.getText(0, forEscapingHTML.length)
+    }
+
     function keyPressed(event) {
         switch (event.key) {
         case Qt.Key_Right:
@@ -113,6 +118,10 @@ ApplicationWindow {
         case Qt.Key_Return:
             Qt.openUrlExternally(content.post.link)
             break
+        case Qt.Key_S: {
+            console.log(Qt.openUrlExternally("speaker:"+ removeHTML(content.post.content)))
+            break
+        }
         default:
             break
         }
@@ -174,6 +183,12 @@ ApplicationWindow {
 
     Server {
         id: server
+    }
+
+    TextArea {
+        id: forEscapingHTML
+        visible: false
+        textFormat: TextEdit.RichText
     }
 
     Component.onCompleted: {
