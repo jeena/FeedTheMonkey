@@ -17,7 +17,7 @@ h1 {
     padding: 0;
 }
 
-#date:not(:empty) {
+#date {
     border-bottom: 1px solid #aaa;
     margin-bottom: 1em;
     padding-bottom: 1em;
