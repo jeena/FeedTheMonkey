@@ -40,7 +40,7 @@ void TinyTinyRSS::reload()
         mPosts.clear();
 
         QJsonArray posts = json.value("content").toArray();
-        for(int i = 0; i <= posts.count(); i++)
+        for(int i = 0; i < posts.count(); i++)
         {
             QJsonObject postJson = posts.at(i).toObject();
             Post *post = new Post(postJson, this);
