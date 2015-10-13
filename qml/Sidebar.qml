@@ -63,7 +63,7 @@ ScrollView {
             }
 
             item.content.post = server.posts[currentIndex]
-            content.flickableItem.contentY = 0
+            //content.flickableItem.contentY = 0
 
             previousPost = item.content.post
         }

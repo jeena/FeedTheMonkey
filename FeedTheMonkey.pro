@@ -1,7 +1,7 @@
 TARGET = feedthemonkey
 
 TEMPLATE = app
-QT += qml quick
+QT += qml quick webenginewidgets
 CONFIG += c++11
 
 SOURCES += \

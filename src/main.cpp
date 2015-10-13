@@ -4,6 +4,7 @@
 #include <QMetaType>
 #include <QtQml>
 #include <QIcon>
+#include <QtWebEngine/qtwebengineglobal.h>
 
 #include "tinytinyrsslogin.h"
 #include "tinytinyrss.h"
@@ -15,6 +16,8 @@ int main(int argc, char *argv[])
     app.setOrganizationName("Jeena");
     app.setOrganizationDomain("jeena.net");
     app.setApplicationName("FeedTheMonkey");
+
+    QtWebEngine::initialize();
 
     qmlRegisterType<TinyTinyRSSLogin>("TTRSS", 1, 0, "ServerLogin");
     qmlRegisterType<TinyTinyRSS>("TTRSS", 1, 0, "Server");
