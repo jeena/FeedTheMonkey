@@ -45,7 +45,6 @@ void Post::setRead(bool r)
 
 void Post::setDontChangeRead(bool r)
 {
-    qDebug() << "setDontChangeRead " << r << " " << mDontChangeRead;
     if(mDontChangeRead == r) return;
 
     mDontChangeRead = r;
