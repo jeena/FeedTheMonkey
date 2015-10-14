@@ -56,7 +56,9 @@ Item {
 
         function setDefaults() {
             // font name needs to be enclosed in single quotes
-            runJavaScript("document.body.style.fontFamily = \"'" + fontLabel.font.family + "'\";");
+            // and this is needed for El Capitain because ".SF NS Text" won't work
+            var defFont = ', system, -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue", "Lucida Grande"';
+            runJavaScript("document.body.style.fontFamily = \"'" + fontLabel.font.family + "'" + defFont + "\";");
             runJavaScript("document.body.style.fontSize = '" + content.textFontSize + "pt';");
         }
 
