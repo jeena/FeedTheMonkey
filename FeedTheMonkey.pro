@@ -1,7 +1,13 @@
+requires(contains(QT_CONFIG, accessibility))
+
+qtHaveModule(widgets) {
+    QT += widgets # QApplication is required to get native styling with QtQuickControls
+}
+
 TARGET = feedthemonkey
 
 TEMPLATE = app
-QT += qml quick webenginewidgets
+QT += qml quick webenginewidgets webengine
 CONFIG += c++11
 
 SOURCES += \
