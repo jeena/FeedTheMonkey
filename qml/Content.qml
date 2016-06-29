@@ -48,9 +48,9 @@ Item {
 
         function setPost() {
             if(post) {
-                runJavaScript("setArticle(" + post.jsonString + ")")
+                webView.runJavaScript("setArticle(" + post.jsonString + ")")
             } else {
-                runJavaScript("setArticle('logout')")
+                webView.runJavaScript("setArticle('logout')")
             }
         }
 
@@ -58,8 +58,8 @@ Item {
             // font name needs to be enclosed in single quotes
             // and this is needed for El Capitain because ".SF NS Text" won't work
             var defFont = ', system, -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue", "Lucida Grande"';
-            runJavaScript("document.body.style.fontFamily = \"'" + fontLabel.font.family + "'" + defFont + "\";");
-            runJavaScript("document.body.style.fontSize = '" + content.textFontSize + "pt';");
+            webView.runJavaScript("document.body.style.fontFamily = \"'" + fontLabel.font.family + "'" + defFont + "\";");
+            webView.runJavaScript("document.body.style.fontSize = '" + content.textFontSize + "pt';");
         }
 
 
