@@ -1,4 +1,5 @@
 import QtQuick.Controls 1.2
+import QtQuick.Window 2.0
 import QtQuick 2.0
 import TTRSS 1.0
 
@@ -10,6 +11,7 @@ MenuBar {
     property Sidebar sidebar
     property Content content
     property bool visible: true
+    property var oldVisibility
 
     Menu {
         visible: menuBar.visible
@@ -72,7 +74,6 @@ MenuBar {
             shortcut: "1"
             onTriggered: app.toggleNightmode()
         }
-
         MenuItem {
             text: qsTr("Zoom In")
             shortcut: "Ctrl++"
@@ -90,6 +91,20 @@ MenuBar {
             shortcut: "Ctrl+0"
             enabled: loggedIn
             onTriggered: app.zoomReset()
+        }
+        MenuItem {
+            text: qsTr("Fullscreen")
+            shortcut: "F11"
+            enabled: loggedIn
+            onTriggered: {
+                if(app.visibility == Window.FullScreen) {
+                    app.visibility = oldVisibility
+                } else {
+                    oldVisibility = app.visibility
+                    app.showFullScreen()
+                }
+
+            }
         }
     }
 
