@@ -12,10 +12,12 @@ Item {
     property ApplicationWindow app
 
     property int textFontSize: 14
+    property bool nightmode
     property int scrollJump: 48
     property int pageJump: parent.height
     Layout.minimumWidth: 400
     onTextFontSizeChanged: webView.setDefaults()
+    onNightmodeChanged: webView.setDefaults()
 
     function scrollDown(jump) {
         if(!jump) {
@@ -60,6 +62,7 @@ Item {
             var defFont = ', system, -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue", "Lucida Grande"';
             webView.runJavaScript("document.body.style.fontFamily = \"'" + fontLabel.font.family + "'" + defFont + "\";");
             webView.runJavaScript("document.body.style.fontSize = '" + content.textFontSize + "pt';");
+            webView.runJavaScript("setNightmode(" + (content.nightmode ? "true" : "false") + ")")
         }
 
 

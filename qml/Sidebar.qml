@@ -11,6 +11,7 @@ ScrollView {
     property Content content
     property Post previousPost
     property int textFontSize: 14
+    property bool nightmode
 
     style: ScrollViewStyle {
         transientScrollBars: true
@@ -39,6 +40,7 @@ ScrollView {
         delegate: Component {
             PostListItem {
                 textFontSize: item.textFontSize
+                nightmode: app.nightmode
             }
         }
 
@@ -47,7 +49,7 @@ ScrollView {
             Rectangle {
                 width: listView.currentItem.width
                 height: listView.currentItem.height
-                color: "lightblue"
+                color: nightmode ? "#222" : "lightblue"
                 opacity: 0.5
                 y: listView.currentItem.y
             }

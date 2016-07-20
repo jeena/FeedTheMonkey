@@ -68,6 +68,12 @@ MenuBar {
         visible: menuBar.visible
         title: qsTr("View")
         MenuItem {
+            text: qsTr("Night mode")
+            shortcut: "1"
+            onTriggered: app.toggleNightmode()
+        }
+
+        MenuItem {
             text: qsTr("Zoom In")
             shortcut: "Ctrl++"
             enabled: loggedIn

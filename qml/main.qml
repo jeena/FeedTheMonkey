@@ -9,6 +9,7 @@ ApplicationWindow {
     id: app
     title: "FeedTheMonkey"
     visible: true
+    color: nightmode ? "#111" : "#eee"
 
     minimumWidth: 480
     minimumHeight: 320
@@ -26,6 +27,7 @@ ApplicationWindow {
     property int defaultTextFontSizeIndex: 3
     property int textFontSizeIndex: defaultTextFontSizeIndex
     property int textFontSize: fontSizes[textFontSizeIndex]
+    property bool nightmode: false
 
     Settings {
         id: settings
@@ -36,6 +38,7 @@ ApplicationWindow {
         property alias height: app.height
         property alias sidebarWidth: sidebar.width
         property alias textFontSizeIndex: app.textFontSizeIndex
+        property alias nightmode: app.nightmode
     }
 
     property TheMenuBar menu: TheMenuBar {
@@ -59,6 +62,10 @@ ApplicationWindow {
             server.loggedOut()
             content.loggedOut()
         }
+    }
+
+    function toggleNightmode() {
+        app.nightmode = !app.nightmode
     }
 
     function zoomIn() {
@@ -94,6 +101,9 @@ ApplicationWindow {
         case Qt.Key_K:
         case Qt.Key_k:
             sidebar.previous()
+            break
+        case Qt.Key_1:
+            toggleNightmode()
             break
         case Qt.Key_Home:
             content.scrollUp()
@@ -133,6 +143,10 @@ ApplicationWindow {
         orientation: Qt.Horizontal
         visible: serverLogin.loggedIn()
         focus: true
+        handleDelegate: Rectangle {
+            width: 1
+            color: app.nightmode ? "#333" : "#aaa"
+        }
 
         Sidebar {
             id: sidebar
@@ -142,6 +156,7 @@ ApplicationWindow {
             Layout.minimumWidth: 200
             implicitWidth: 300
             textFontSize: app.textFontSize
+            nightmode: app.nightmode
         }
 
         Content {
@@ -151,6 +166,7 @@ ApplicationWindow {
             Layout.minimumWidth: 200
             implicitWidth: 624
             textFontSize: app.textFontSize
+            nightmode: app.nightmode
         }
 
         Keys.onPressed: keyPressed(event)

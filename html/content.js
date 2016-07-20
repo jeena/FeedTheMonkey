@@ -47,3 +47,8 @@ function setFont(font, size) {
     document.body.style.fontFamily = font;
     document.body.style.fontSize = size + "pt";
 }
+
+function setNightmode(nightmode) {
+    if(nightmode) document.body.className = "nightmode";
+    else document.body.className = "";
+}
