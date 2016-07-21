@@ -37,7 +37,7 @@ function setArticle(article) {
         $("article").innerHTML = article.content;
 
         var as = $("article").getElementsByTagName("a");
-        for(var i = 0; i <= as.length; i++) {
+        for(var i = 0; i < as.length; i++) {
             as[i].target = "";
         }
     }

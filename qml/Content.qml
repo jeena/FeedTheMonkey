@@ -59,10 +59,11 @@ Item {
         function setDefaults() {
             // font name needs to be enclosed in single quotes
             // and this is needed for El Capitain because ".SF NS Text" won't work
-            var defFont = ', system, -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue", "Lucida Grande"';
-            webView.runJavaScript("document.body.style.fontFamily = \"'" + fontLabel.font.family + "'" + defFont + "\";");
+            var defFont = ", system, -apple-system, '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande'";
+            var font = "'" + fontLabel.font.family + "'" + defFont;
+            webView.runJavaScript("document.body.style.fontFamily = \"" + font + "\";");
             webView.runJavaScript("document.body.style.fontSize = '" + content.textFontSize + "pt';");
-            webView.runJavaScript("setNightmode(" + (content.nightmode ? "true" : "false") + ")")
+            webView.runJavaScript("if(typeof setNightmode == \"function\") setNightmode(" + (content.nightmode ? "true" : "false") + ")")
         }
 
 
