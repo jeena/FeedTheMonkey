@@ -12,8 +12,6 @@ You need to have Qt 5.4 installed be able to compile and have a account on a Tin
 This version 2 is still in a early stage so there are no binaries available yet but will be
 as soon as I figure out how to package and distribute them.
 
-License: BSD
-
 ## Installation
 
 Download the latest release for Linux and OS X from: https://github.com/jeena/FeedTheMonkey/releases/latest
@@ -42,3 +40,22 @@ the use on a desktop computer but I'd like to see it on a mobile device too.
 ## Screenshot
 
 ![Feed the Monkey screenshot](http://jabs.nu/feedthemonkey/screenshot.png)
+
+## License
+
+This file is part of FeedTheMonkey.
+
+Copyright 2015 Jeena
+
+FeedTheMonkey is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+FeedTheMonkey is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with FeedTheMonkey. If not, see <http://www.gnu.org/licenses/>.
