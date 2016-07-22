@@ -64,6 +64,7 @@ private:
     bool mRead;
     bool mDontChangeRead;
     QString mJsonString;
+    QString html2text(const QString htmlString);
 };
 
 #endif // POST_H
