@@ -24,6 +24,8 @@ The keyboard shortcuts are inspired by other feed readers which are inspired by 
 `k` or `←` show previous article  
 `n` or `Return` open current article in the default browser  
 `r` reload articles  
+`F11` Full screen
+`1` Night mode
 `Ctrl Q` quit  
 `Ctrl +` zoom in  
 `Ctrl -` zoom out  
