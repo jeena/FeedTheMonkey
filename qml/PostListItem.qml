@@ -14,8 +14,7 @@ Item {
     }
 
     id: item
-    height: column.height + 20
-    width: parent.parent.parent.width
+    height: d.height + t.height + e.height + 20
 
     Item {
         anchors.fill: parent
@@ -31,42 +30,59 @@ Item {
                 id: column
                 width: parent.width
 
-                Row {
-                    spacing: 10
+                Item {
+                    width: parent.width
+                    height: d.height
+
                     Label {
                         text: feedTitle
                         font.pointSize: smallfontSize
                         textFormat: Text.PlainText
                         color: nightmode ? "#888" : "gray"
-                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        wrapMode: Text.WrapAnywhere
                         renderType: Text.NativeRendering
+                        elide: Text.ElideLeft
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        anchors.right: d.left
+                        maximumLineCount: 1
                     }
                     Label {
+                        id: d
                         text: date.toLocaleString(Qt.locale(), Locale.ShortFormat)
                         font.pointSize: smallfontSize
                         textFormat: Text.PlainText
                         color: nightmode ? "#888" : "gray"
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         renderType: Text.NativeRendering
+                        anchors.right: parent.right
+                        anchors.top: parent.top
                     }
                 }
                 Label {
+                    id: t
                     text: title
                     color: nightmode ? (read ? "#888" : "#aaa") : (read ? "gray" : "black")
                     font.pointSize: textFontSize
-                    textFormat: Text.RichText
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WrapAnywhere
                     renderType: Text.NativeRendering
                     width: parent.width
+                    elide: Text.ElideRight
+                    maximumLineCount: 1
+
                 }
                 Label {
+                    id: e
                     text: excerpt
                     font.pointSize: smallfontSize
-                    textFormat: Text.RichText
+                    //textFormat: Text.RichText
                     color: nightmode ? "#888" : "gray"
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    wrapMode: Text.WrapAnywhere
                     renderType: Text.NativeRendering
                     width: parent.width
+                    elide: Text.ElideRight
+                    maximumLineCount: 1
                 }
             }
         }

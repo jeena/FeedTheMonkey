@@ -41,6 +41,7 @@ ScrollView {
             PostListItem {
                 textFontSize: item.textFontSize
                 nightmode: app.nightmode
+                width: listView.width
             }
         }
 
