@@ -69,7 +69,7 @@ ScrollView {
             Rectangle {
                 width: listView.currentItem.width
                 height: listView.currentItem.height
-                color: nightmode ? "#222" : "lightblue"
+                color: nightmode ? "#444" : "lightblue"
                 opacity: 0.5
                 y: listView.currentItem.y
             }
