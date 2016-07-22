@@ -2,19 +2,19 @@
 
 <img align=right src="http://jabs.nu/feedthemonkey/feedthemonkey-icon.png" width='256' alt='Icon'>
 
-Feed the Monkey is a desktop client for [TinyTinyRSS](http://tt-rss.org). That means that
+FeedTheMonkey is a desktop client for [TinyTinyRSS](http://tt-rss.org). That means that
 it doesn't work as a standalone feed reader but only as a client for the TinyTinyRSS API
 which it uses to get the normalized feeds and to synchronize the "article read" marks.
 
-It is written in C++ with Qt and QML, it also uses WebKit to show the contents.
-
-You need to have Qt 5.4 installed be able to compile and have a account on a TinyTinyRSS server.
-This version 2 is still in a early stage so there are no binaries available yet but will be
-as soon as I figure out how to package and distribute them.
+It is written in C++ with Qt and QML, it also uses Blink to show the contents. You need
+to have Qt 5.6 installed to be able to compile and have a account on a TinyTinyRSS server.
 
 ## Installation
 
-Download the latest release for Linux and OS X from: https://github.com/jeena/FeedTheMonkey/releases/latest
+Download the latest release code from: https://github.com/jeena/FeedTheMonkey/releases/latest
+
+You can compile and install it everywhere Qt is suported, this means on macOS, Windows
+and Linux. For ArchLinux I package it and it's available on https://aur.archlinux.org/packages/feedthemonkey/
 
 ## Keyboard shortcuts
 
@@ -24,14 +24,14 @@ The keyboard shortcuts are inspired by other feed readers which are inspired by 
 `k` or `←` show previous article  
 `n` or `Return` open current article in the default browser  
 `r` reload articles  
-`F11` Full screen
-`1` Night mode
+`F11` full screen  
+`1` night mode  
 `Ctrl Q` quit  
 `Ctrl +` zoom in  
 `Ctrl -` zoom out  
-`Ctrl 0` reset zoom
+`Ctrl 0` reset zoom  
 
-On OS X use `Cmd` instead of `Ctrl`.
+On macOS use `Cmd` instead of `Ctrl`.
 
 ## Trivia
 
