@@ -81,7 +81,7 @@ Item {
                 Label {
                     id: t
                     text: title
-                    color: nightmode ? (read ? "#888" : "#aaa") : (read ? "gray" : "black")
+                    color: nightmode ? (read ? "#555" : "#aaa") : (read ? "gray" : "black")
                     font.pointSize: textFontSize
                     textFormat: Text.PlainText
                     wrapMode: Text.WrapAnywhere
