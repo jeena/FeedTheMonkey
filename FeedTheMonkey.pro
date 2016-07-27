@@ -9,6 +9,7 @@ TARGET = feedthemonkey
 TEMPLATE = app
 QT += qml quick webenginewidgets webengine
 CONFIG += c++11
+CONFIG += qtquickcompiler
 
 SOURCES += \
     src/main.cpp \
