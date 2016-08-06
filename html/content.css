@@ -29,9 +29,24 @@ body {
     font-weight: lighter;
 }
 
-body.nightmode {
+.nightmode {
     background: #111;
     color: #aaa;
+}
+
+.nightmode::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.nightmode::-webkit-scrollbar-track-piece  {
+    background-color: #111;
+}
+
+.nightmode::-webkit-scrollbar-thumb:vertical {
+    height: 30px;
+    background-color: #444;
+    border-radius: 5px;
 }
 
 h1 {
