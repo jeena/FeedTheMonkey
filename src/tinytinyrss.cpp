@@ -62,7 +62,7 @@ void TinyTinyRSS::reload()
         for(int i = 0; i < posts.count(); i++)
         {
             QJsonObject postJson = posts.at(i).toObject();
-            Post *post = new Post(postJson, this);
+            Post *post = new Post(postJson, mNetworkManager, this);
             connect(post, SIGNAL(readChanged(bool)), this, SLOT(onPostReadChanged(bool)));
             mPosts.append(post);
         }
