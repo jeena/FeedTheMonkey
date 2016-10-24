@@ -24,7 +24,6 @@
 #include <QUrl>
 #include <QDate>
 #include <QJsonObject>
-#include <QNetworkReply>
 
 class Post : public QObject
 {
@@ -36,16 +35,16 @@ class Post : public QObject
     Q_PROPERTY(QString author READ author CONSTANT)
     Q_PROPERTY(QUrl link READ link CONSTANT)
     Q_PROPERTY(QDateTime date READ date CONSTANT)
-    Q_PROPERTY(QString content READ content NOTIFY contentChanged)
+    Q_PROPERTY(QString content READ content CONSTANT)
     Q_PROPERTY(QString excerpt READ excerpt CONSTANT)
     Q_PROPERTY(bool starred READ starred NOTIFY starredChanged)
     Q_PROPERTY(bool read READ read WRITE setRead NOTIFY readChanged)
     Q_PROPERTY(bool dontChangeRead READ dontChangeRead WRITE setDontChangeRead NOTIFY dontChangeReadChanged)
-    Q_PROPERTY(QString jsonString READ jsonString NOTIFY jsonStringChanged)
+    Q_PROPERTY(QString jsonString READ jsonString CONSTANT)
 
 public:
     Post(QObject *parent = 0);
-    Post(QJsonObject post, QNetworkAccessManager *networkManager, QObject *parent = 0);
+    Post(QJsonObject post, QObject *parent = 0);
     ~Post();
     QString title() const { return mTitle; }
     QString feedTitle() const { return mFeedTitle; }
@@ -64,11 +63,9 @@ public:
     QString jsonString() const { return mJsonString; }
 
 signals:
-    void contentChanged(QString);
     void starredChanged(bool);
     void readChanged(bool);
     void dontChangeReadChanged(bool);
-    void jsonStringChanged(QString);
 
 public slots:
 
@@ -86,10 +83,7 @@ private:
     bool mRead;
     bool mDontChangeRead;
     QString mJsonString;
-
     QString html2text(const QString htmlString);
-    void cacheImgs();
-    QNetworkAccessManager *mNetworkManager;
 };
 
 #endif // POST_H
