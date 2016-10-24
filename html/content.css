@@ -110,3 +110,7 @@ figure > img:only-child, div > img:only-child, p > img:only-child {
     margin: 1em auto;
     float: none !important;
 }
+
+pre {
+    overflow: auto;
+}
