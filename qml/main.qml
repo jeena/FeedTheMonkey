@@ -47,6 +47,18 @@ ApplicationWindow {
     property int textFontSizeIndex: defaultTextFontSizeIndex
     property int textFontSize: fontSizes[textFontSizeIndex]
     property bool nightmode: false
+    property bool showMenuBar: false
+
+    menuBar: TheMenuBar {
+        id: menu
+        serverLogin: serverLogin
+        server: server
+        sidebar: sidebar
+        content: content
+        visible: app.showMenuBar
+        __contentItem.visible: visible
+    }
+
 
     Settings {
         id: settings
@@ -58,14 +70,6 @@ ApplicationWindow {
         property alias sidebarWidth: sidebar.width
         property alias textFontSizeIndex: app.textFontSizeIndex
         property alias nightmode: app.nightmode
-    }
-
-    property TheMenuBar menu: TheMenuBar {
-        id: menu
-        serverLogin: serverLogin
-        server: server
-        sidebar: sidebar
-        content: content
     }
 
     function loggedIn() {
@@ -192,7 +196,7 @@ ApplicationWindow {
         Keys.onReleased: {
             switch (event.key) {
             case Qt.Key_Alt:
-                app.menuBar = menu
+                app.showMenuBar = !app.showMenuBar
                 break
             default:
                 break
