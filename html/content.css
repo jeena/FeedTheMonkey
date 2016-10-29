@@ -27,6 +27,7 @@ body {
     font-family: sans-serif;
     padding: 2em;
     font-weight: lighter;
+    word-wrap: break-word;
 }
 
 .nightmode {
