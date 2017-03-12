@@ -18,7 +18,7 @@ script:
   - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage" 
   - chmod a+x linuxdeployqt*.AppImage
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
-  - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -qmldir=/opt/qt58/qml/ -bundle-non-qt-libs -verbose=3 2>&1 | grep Deploying -C 5
-  - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -qmldir=/opt/qt58/qml/ -appimage -verbose=3 2>&1 | grep Deploying -C 5
+  - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -qmldir=./qml/ -qmldir=/opt/qt5*/qml/ -bundle-non-qt-libs -verbose=3 2>&1 | grep Deploying -C 5
+  - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -qmldir=./qml/ -qmldir=/opt/qt5*/qml/ -appimage -verbose=3 2>&1 | grep Deploying -C 5
   - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
   - curl --upload-file ./FeedTheMonkey*.AppImage https://transfer.sh/FeedTheMonkey-git.$(git rev-parse --short HEAD)-x86_64.AppImage
