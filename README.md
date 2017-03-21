@@ -11,10 +11,12 @@ to have Qt 5.6 installed to be able to compile and have a account on a TinyTinyR
 
 ## Installation
 
-Download the latest release code from: https://github.com/jeena/FeedTheMonkey/releases/latest
+If you run Linux then there is an AppImage on the [Latest release](https://github.com/jeena/FeedTheMonkey/releases/latest) page. You download it, make executable and are able to run, it should work on most of the distributions out there.
+
+For ArchLinux I package it and it's available on https://aur.archlinux.org/packages/feedthemonkey/
 
 You can compile and install it everywhere Qt is suported, this means on macOS, Windows
-and Linux. For ArchLinux I package it and it's available on https://aur.archlinux.org/packages/feedthemonkey/
+and Linux.
 
 ## Keyboard shortcuts
 
@@ -47,7 +49,7 @@ the use on a desktop computer but I'd like to see it on a mobile device too.
 
 This file is part of FeedTheMonkey.
 
-Copyright 2015 Jeena
+Copyright 2015-2017 Jeena
 
 FeedTheMonkey is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
