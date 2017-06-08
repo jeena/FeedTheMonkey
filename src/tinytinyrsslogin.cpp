@@ -88,23 +88,35 @@ void TinyTinyRSSLogin::reply()
     QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
 
     if (reply) {
+
         if (reply->error() == QNetworkReply::NoError) {
 
             QString jsonString = QString(reply->readAll());
             QJsonDocument json = QJsonDocument::fromJson(jsonString.toUtf8());
-            mSessionId = json.object().value("content").toObject().value("session_id").toString();
+            if(json.object().value("content").toObject().value("error").toString().length() > 0) {
 
-            emit sessionIdChanged(mSessionId);
+                mLoginError = json.object().value("content").toObject().value("error").toString();
+                qWarning() << mLoginError;
+                emit loginErrorChanged(mLoginError);
 
-            QSettings settings;
-            settings.setValue("sessionId", mSessionId);
-            settings.setValue("serverUrl", mServerUrl);
-            settings.sync();
+            } else {
+                mSessionId = json.object().value("content").toObject().value("session_id").toString();
 
+                emit sessionIdChanged(mSessionId);
+
+                QSettings settings;
+                settings.setValue("sessionId", mSessionId);
+                settings.setValue("serverUrl", mServerUrl);
+                settings.sync();
+            }
         } else {
-            int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-            //do some error management
-            qWarning() << "HTTP error: " << httpStatus << " :: " << reply->error();
+            mLoginError = "HTTP error: "
+                    + reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString()
+                    + " :: "
+                    + reply->errorString();
+            qWarning() << mLoginError;
+
+            emit loginErrorChanged(mLoginError);
         }
         reply->deleteLater();
     }

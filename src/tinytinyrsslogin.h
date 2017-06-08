@@ -30,12 +30,14 @@ class TinyTinyRSSLogin : public QObject
     Q_OBJECT
     Q_PROPERTY(QString sessionId READ sessionId NOTIFY sessionIdChanged)
     Q_PROPERTY(QUrl serverUrl READ serverUrl)
+    Q_PROPERTY(QString loginError READ loginError NOTIFY loginErrorChanged)
 
 public:
     TinyTinyRSSLogin(QObject *parent = 0);
     ~TinyTinyRSSLogin();
     QString sessionId() const { return mSessionId; }
     QUrl serverUrl() const { return mServerUrl; }
+    QString loginError() const { return mLoginError; }
 
     Q_INVOKABLE bool loggedIn();
     Q_INVOKABLE void login(const QString serverUrl, const QString user, const QString password);
@@ -43,6 +45,7 @@ public:
 
 signals:
     void sessionIdChanged(QString);
+    void loginErrorChanged(QString);
 
 private slots:
     void reply();
@@ -50,6 +53,7 @@ private slots:
 private:
     QString mSessionId;
     QUrl mServerUrl;
+    QString mLoginError;
     QNetworkAccessManager *mNetworkManager;
 };
 
