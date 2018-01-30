@@ -85,9 +85,14 @@ Item {
             webView.runJavaScript("if(typeof setNightmode == \"function\") setNightmode(" + (content.nightmode ? "true" : "false") + ")")
         }
 
-
         onNavigationRequested: {
-            if (request.navigationType != WebEngineView.LinkClickedNavigation) {
+            if (request.url == "feedthemonkey:previous") {
+                request.action = WebEngineView.IgnoreRequest;
+                app.showPreviousPost();
+            } else if (request.url == "feedthemonkey:next") {
+                request.action = WebEngineView.IgnoreRequest;
+                app.showNextPost();
+            } else if (request.navigationType != WebEngineView.LinkClickedNavigation) {
                 request.action = WebEngineView.AcceptRequest;
             } else {
                 request.action = WebEngineView.IgnoreRequest;

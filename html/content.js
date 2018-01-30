@@ -71,3 +71,15 @@ function setNightmode(nightmode) {
     if(nightmode) document.body.className = "nightmode";
     else document.body.className = "";
 }
+
+document.onkeydown = checkKey;
+
+function checkKey(e) {
+    e = e || window.event;
+    if (e.keyCode == '37') {
+        window.location.href = "feedthemonkey:previous";
+    }
+    else if (e.keyCode == '39') {
+        window.location.href = "feedthemonkey:next";
+    }
+}

@@ -114,6 +114,14 @@ ApplicationWindow {
         return forEscapingHTML.getText(0, forEscapingHTML.length)
     }
 
+    function showNextPost() {
+        sidebar.next()
+    }
+
+    function showPreviousPost() {
+        sidebar.previous()
+    }
+
     function keyPressed(event) {
         switch (event.key) {
         case Qt.Key_Right:
