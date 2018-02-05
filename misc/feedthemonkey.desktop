@@ -1,5 +1,4 @@
 [Desktop Entry]
-Version=2.0.0
 Comment=A desktop client for the TinyTinyRSS feed reader.
 Exec=feedthemonkey
 GenericName=Feed Reader
@@ -9,4 +8,4 @@ NoDisplay=false
 StartupNotify=true
 Terminal=false
 Type=Application
-Categories=Network;Qt
+Categories=Network;Qt;
