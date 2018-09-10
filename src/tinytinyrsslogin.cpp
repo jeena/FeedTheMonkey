@@ -99,6 +99,18 @@ void TinyTinyRSSLogin::reply()
                 qWarning() << mLoginError;
                 emit loginErrorChanged(mLoginError);
 
+                if(mLoginError == "NOT_LOGGED_IN") {
+                    mSessionId = nullptr;
+                    mServerUrl = nullptr;
+
+                    QSettings settings;
+                    settings.remove("sessionId");
+                    settings.remove("serverUrl");
+                    settings.sync();
+
+                    emit sessionIdChanged(mSessionId);
+                }
+
             } else {
                 mSessionId = json.object().value("content").toObject().value("session_id").toString();
 

@@ -60,7 +60,6 @@ ApplicationWindow {
         __contentItem.visible: visible
     }
 
-
     Settings {
         id: settings
         category: "window"
