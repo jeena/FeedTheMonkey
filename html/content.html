@@ -79,17 +79,18 @@
         else document.body.className = "";
     }
 
-    document.onkeydown = checkKey;
-
     function checkKey(e) {
         e = e || window.event;
-        if (e.keyCode === '37') {
+        if (e.keyCode === 37) {
             window.location.href = "feedthemonkey:previous";
         }
-        else if (e.keyCode === '39') {
+        else if (e.keyCode === 39) {
             window.location.href = "feedthemonkey:next";
         }
     }
+
+    window.addEventListener("keydown", checkKey);
+
     </script>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 </head>

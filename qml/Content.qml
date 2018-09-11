@@ -17,7 +17,7 @@
  * along with FeedTheMonkey.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtWebEngine 1.0
+import QtWebEngine 1.7
 import QtQuick 2.0
 import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
@@ -87,12 +87,14 @@ Item {
 
         onNavigationRequested: {
             if (request.url == "feedthemonkey:previous") {
-                request.action = WebEngineView.IgnoreRequest;
+                // This is commented out because for some reason this reloads the page forever.
+                // This will show the error that the feedthemonkey:previous location is not supported
+                //request.action = WebEngineNavigationRequest.IgnoreRequest;
                 app.showPreviousPost();
             } else if (request.url == "feedthemonkey:next") {
-                request.action = WebEngineView.IgnoreRequest;
+                //request.action = WebEngineNavigationRequest.IgnoreRequest;
                 app.showNextPost();
-            } else if (request.navigationType != WebEngineView.LinkClickedNavigation) {
+            } else if (request.navigationType !== WebEngineNavigationRequest.LinkClickedNavigation) {
                 request.action = WebEngineView.AcceptRequest;
             } else {
                 request.action = WebEngineView.IgnoreRequest;
