@@ -21,4 +21,4 @@ script:
   - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -qmldir=./qml/ -bundle-non-qt-libs
   - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -qmldir=./qml/ -appimage
   - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
-  - curl --upload-file ./FeedTheMonkey*.AppImage https://transfer.sh/FeedTheMonkey-git.$(git rev-parse --short HEAD)-x86_64.AppImage
+  - curl -F "file=@$(echo ./FeedTheMonkey*.AppImage) https://file.io
