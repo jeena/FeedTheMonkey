@@ -17,7 +17,7 @@
  * along with FeedTheMonkey.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtWebEngine 1.7
+import QtWebEngine 1.8
 import QtQuick 2.0
 import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
