@@ -36,6 +36,11 @@ MenuBar {
         visible: menuBar.visible
         title: qsTr("File")
         MenuItem {
+            text: qsTr("Close &Window")
+            shortcut: "Ctrl+W"
+            onTriggered: Qt.quit()
+        }
+        MenuItem {
             text: qsTr("Exit")
             shortcut: "Ctrl+Q"
             onTriggered: Qt.quit()
