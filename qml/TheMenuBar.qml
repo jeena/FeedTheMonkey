@@ -132,7 +132,7 @@ MenuBar {
         title: qsTr("Help")
         MenuItem {
             text: qsTr("About")
-            onTriggered: Qt.openUrlExternally("http://jabs.nu/feedthemonkey");
+            onTriggered: Qt.openUrlExternally("http://jeena.net/feedthemonkey/index.html");
         }
     }
 

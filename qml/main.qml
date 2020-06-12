@@ -159,10 +159,6 @@ ApplicationWindow {
         case Qt.Key_Return:
             Qt.openUrlExternally(content.post.link)
             break
-        case Qt.Key_S: {
-            console.log(Qt.openUrlExternally("speaker:"+ removeHTML(content.post.content)))
-            break
-        }
         default:
             break
         }
