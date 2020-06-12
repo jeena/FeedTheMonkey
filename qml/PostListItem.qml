@@ -33,7 +33,7 @@ Item {
     }
 
     id: item
-    height: d.height + t.height + e.height + 20
+    height: d.height + t.height + e.height + 2
 
     Item {
         anchors.fill: parent
@@ -81,7 +81,7 @@ Item {
                 Label {
                     id: t
                     text: title
-                    color: nightmode ? (read ? "#555" : "#aaa") : (read ? "gray" : "black")
+                    color: nightmode ? (read ? "#888" : "#ddd") : (read ? "gray" : "black")
                     font.pointSize: textFontSize
                     textFormat: Text.PlainText
                     wrapMode: Text.WrapAnywhere

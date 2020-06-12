@@ -55,6 +55,14 @@ ScrollView {
         }
     }
 
+    Rectangle {
+        width: 1
+        color: app.nightmode ? "#111" : "lightgray"
+        anchors.right: parent.right
+        anchors.top: parent.top
+        height: parent.height
+    }
+
     ListView {
         id: listView
 
@@ -74,12 +82,12 @@ ScrollView {
         highlightFollowsCurrentItem: false
         highlight: Component {
             Rectangle {
-                width: listView.currentItem.width
+                width: listView.currentItem.width -1
                 height: listView.currentItem.height
-                color: nightmode ? "#444" : "lightblue"
-                opacity: 0.5
+                color: nightmode ? "#15539e" : "lightblue"
                 y: listView.currentItem.y
             }
+
         }
 
         onCurrentItemChanged: {

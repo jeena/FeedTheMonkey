@@ -25,14 +25,12 @@ html, body {
 body {
     background: #eee;
     font-family: sans-serif;
-    padding: 2em;
-    font-weight: lighter;
     word-wrap: break-word;
 }
 
 .nightmode {
-    background: #111;
-    color: #aaa;
+    background: #353535;
+    color: #ddd;
 }
 
 .nightmode::-webkit-scrollbar {
@@ -51,32 +49,28 @@ body {
 }
 
 h1 {
-    font-weight: lighter;
     font-size: 1.4em;
     margin: 0;
     padding: 0;
-}
-
-#date {
-    border-bottom: 1px solid #aaa;
-    margin-bottom: 1em;
-    padding-bottom: 1em;
-    display: block;
-}
-
-.nightmode #date {
-    border-bottom-color: #333;
 }
 
 .starred:after {
     content: "*";
 }
 
+header {
+    padding: 2em;
+    border-bottom: 1px solid #aaa;
+}
+
+.nightmode header {
+    border-bottom-color: #222;
+}
+
 header p {
-    color: #aaa;
+    color: #666;
     margin: 0;
     padding: 0;
-    font-size: 0.8em;
 }
 
 .nightmode header p {
@@ -90,6 +84,7 @@ a {
 
 article {
     line-height: 1.6;
+    margin: 2em;
 }
 
 article a {

@@ -29,7 +29,7 @@ ApplicationWindow {
     id: app
     title: "FeedTheMonkey"
     visible: true
-    color: nightmode ? "#111" : "#eee"
+    color: nightmode ? "#2d2d2d" : "#eee"
 
     minimumWidth: 480
     minimumHeight: 320
