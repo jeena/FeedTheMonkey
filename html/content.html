@@ -81,11 +81,13 @@
 
     function checkKey(e) {
         e = e || window.event;
+
         if (e.keyCode === 37) {
             window.location.href = "feedthemonkey:previous";
-        }
-        else if (e.keyCode === 39) {
+        } else if (e.keyCode === 39) {
             window.location.href = "feedthemonkey:next";
+        } else if(e.keyCode == 13) {
+            window.location.href = "feedthemonkey:open";
         }
     }
 

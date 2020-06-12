@@ -86,13 +86,14 @@ Item {
 
         onNavigationRequested: {
             if (request.url == "feedthemonkey:previous") {
-                // This is commented out because for some reason this reloads the page forever.
-                // This will show the error that the feedthemonkey:previous location is not supported
-                //request.action = WebEngineNavigationRequest.IgnoreRequest;
+                request.action = WebEngineView.IgnoreRequest;
                 app.showPreviousPost();
             } else if (request.url == "feedthemonkey:next") {
-                //request.action = WebEngineNavigationRequest.IgnoreRequest;
+                request.action = WebEngineView.IgnoreRequest;
                 app.showNextPost();
+            } else if (request.url == "feedthemonkey:open") {
+                request.action = WebEngineView.IgnoreRequest;
+                Qt.openUrlExternally(post.link)
             } else if (request.navigationType !== WebEngineNavigationRequest.LinkClickedNavigation) {
                 request.action = WebEngineView.AcceptRequest;
             } else {
