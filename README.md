@@ -1,6 +1,6 @@
 # FeedTheMonkey
 
-<img align=right src="http://jabs.nu/feedthemonkey/feedthemonkey-icon.png" width='256' alt='Icon'>
+<img align=right src="http://jeena.net/feedthemonkey/feedthemonkey-icon.png" width='256' alt='Icon'>
 
 FeedTheMonkey is a desktop client for [TinyTinyRSS](http://tt-rss.org). That means that
 it doesn't work as a standalone feed reader but only as a client for the TinyTinyRSS API
@@ -43,7 +43,7 @@ the use on a desktop computer but I'd like to see it on a mobile device too.
 
 ## Screenshot
 
-![Feed the Monkey screenshot](http://jabs.nu/feedthemonkey/screenshot.png)
+![Feed the Monkey screenshot](http://jeena.net/feedthemonkey/feedthemonkey-dark.png)
 
 ## License
 
