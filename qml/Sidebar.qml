@@ -48,6 +48,13 @@ ScrollView {
         }
     }
 
+    onWidthChanged: {
+        // Hide sidebar if smaller than 200px wide
+        if(width < 200) {
+            width = 0;
+        }
+    }
+
     ListView {
         id: listView
 
@@ -85,8 +92,6 @@ ScrollView {
             }
 
             item.content.post = server.posts[currentIndex]
-            //content.flickableItem.contentY = 0
-
             previousPost = item.content.post
         }
     }

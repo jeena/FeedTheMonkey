@@ -184,7 +184,6 @@ ApplicationWindow {
             content: content
             server: server
 
-            Layout.minimumWidth: 200
             implicitWidth: 300
             textFontSize: app.textFontSize
             nightmode: app.nightmode
