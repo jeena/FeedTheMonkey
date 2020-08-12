@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/html">
-        <file>content.css</file>
-        <file>content.html</file>
-    </qresource>
-</RCC>

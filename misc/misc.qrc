@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/misc">
-        <file>feedthemonkey.xpm</file>
-        <file>Icon.icns</file>
-	<file>feedthemonkey.desktop</file>
-    </qresource>
-</RCC>

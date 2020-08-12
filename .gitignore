@@ -1,3 +1,3 @@
-.DS_Store
-FeedTheMonkey.pro.user*
-build
+#Added by cargo
+
+/target

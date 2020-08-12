@@ -1,3 +1,4 @@
+
 # FeedTheMonkey
 
 <img align=right src="http://jeena.net/feedthemonkey/feedthemonkey-icon.png" width='256' alt='Icon'>
@@ -6,17 +7,11 @@ FeedTheMonkey is a desktop client for [TinyTinyRSS](http://tt-rss.org). That mea
 it doesn't work as a standalone feed reader but only as a client for the TinyTinyRSS API
 which it uses to get the normalized feeds and to synchronize the "article read" marks.
 
-It is written in C++ with Qt and QML, it also uses Blink to show the contents. You need
-to have Qt 5.6 installed to be able to compile and have a account on a TinyTinyRSS server.
+It is written in Rust and GTK. You need to have an account on a TinyTinyRSS server.
 
 ## Installation
 
-If you run Linux then there is an AppImage on the [Latest release](https://github.com/jeena/FeedTheMonkey/releases/latest) page. You download it, make executable and are able to run, it should work on most of the distributions out there.
-
-For ArchLinux I package it and it's available on https://aur.archlinux.org/packages/feedthemonkey/
-
-You can compile and install it everywhere Qt is suported, this means on macOS, Windows
-and Linux.
+TBD
 
 ## Keyboard shortcuts
 
@@ -33,13 +28,11 @@ The keyboard shortcuts are inspired by other feed readers which are inspired by 
 `Ctrl -` zoom out  
 `Ctrl 0` reset zoom  
 
-On macOS use `Cmd` instead of `Ctrl`.
-
 ## Trivia
 
-This is version 2 of FeedTheMonkey, you can find version 1 which was written in PyQt in the v1 branch
-of this repo. My goal is to make this usable on many different targets, for now it is only for
-the use on a desktop computer but I'd like to see it on a mobile device too.
+This is version 3 of FeedTheMonkey, you can find version 1 which was written
+in PyQt in the v1 branch of this repo and version 2 which was written in C++
+and Qt/QML in the v2 branch.
 
 ## Screenshot
 
@@ -49,7 +42,7 @@ the use on a desktop computer but I'd like to see it on a mobile device too.
 
 This file is part of FeedTheMonkey.
 
-Copyright 2015-2017 Jeena
+Copyright 2020 Jeena
 
 FeedTheMonkey is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
