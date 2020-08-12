@@ -5,10 +5,17 @@ authors = ["Jeena <hello@jeena.net>"]
 edition = "2018"
 readme = "README.md"
 repository = "https://github.com/jeena/feedthemonkey"
-descrition = "Desktop client for the TinyTinyRSS feed reader"
-licese = "GPL-3.0-or-later"
-license-file = "COPYING"
+description = "Desktop client for the TinyTinyRSS feed reader"
+license = "GPL-3.0-or-later"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+
+[dependencies.gtk]
+version = "0.9.0"
+features = ["v3_16"]
+
+[dependencies.gio]
+version = ""
+features = ["v2_44"]
