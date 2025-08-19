@@ -1,3 +1,5 @@
+⚠️ This repository has moved to https://git.jeena.net/jeena/FeedTheMonkey
+
 # FeedTheMonkey
 
 <img align=right src="http://jeena.net/feedthemonkey/feedthemonkey-icon.png" width='256' alt='Icon'>
